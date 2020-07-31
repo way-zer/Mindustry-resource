@@ -9,7 +9,7 @@ import {
   PlusOutlined,
   SmileFilled,
 } from '@ant-design/icons';
-import { colorize, modeFilters, modeMap } from '@/utils/_util';
+import { colorize, modeFilters, modeMap } from '@/utils/mindustry';
 import { AddModel } from '@/pages/servers/_addModel';
 
 const renderAddress = (_: any, v: Info) => {

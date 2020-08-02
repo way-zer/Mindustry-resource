@@ -12,7 +12,7 @@ import {
   Upload,
 } from 'antd';
 import { BarsOutlined, CopyOutlined, InboxOutlined } from '@ant-design/icons';
-import { useModel } from 'umi';
+import { useModel, history } from 'umi';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
 
@@ -20,14 +20,15 @@ function onChange(callback: (response: any) => void) {
   return function({ file }: UploadChangeParam<UploadFile>) {
     if (file.status === 'done') {
       message.success('上传成功');
-      callback(file.response);
+      history.push('/maps/' + file.response + '/detail');
+      // callback(file.response);
     } else if (file.status === 'error') {
       message.error('上传失败' + file.response);
     }
   };
 }
 
-export default function() {
+export default function MapsIndex(props: { children: React.ReactNode }) {
   const { maps, pullMore, loading, uploadFinish } = useModel('maps');
   return (
     <PageHeader
@@ -43,12 +44,27 @@ export default function() {
           <Col xs={24} sm={12} md={8} lg={6} key={map.hash}>
             <Card
               cover={
-                <img
-                  className={'mapPreview'}
-                  src={map.imgUrl}
-                  alt={'map Preview'}
-                  style={{ objectFit: 'contain' }}
-                />
+                <div
+                  style={{
+                    width: '100%',
+                    height: '0',
+                    paddingBottom: '100%',
+                    position: 'relative',
+                  }}
+                >
+                  <img
+                    src={map.preview}
+                    alt={'map Preview'}
+                    style={{
+                      objectFit: 'contain',
+                      width: '96%',
+                      height: '96%',
+                      position: 'absolute',
+                      left: '2%',
+                      top: '2%',
+                    }}
+                  />
+                </div>
               }
               actions={[
                 <Tooltip title={'拷贝换图指令'}>
@@ -65,7 +81,11 @@ export default function() {
                   </Popover>
                 </Tooltip>,
                 <Tooltip title={'查看详情'}>
-                  <BarsOutlined />
+                  <BarsOutlined
+                    onClick={() => {
+                      history.push('/maps/' + map.hash + '/detail');
+                    }}
+                  />
                 </Tooltip>,
               ]}
             >
@@ -100,6 +120,7 @@ export default function() {
           加载更多
         </Button>
       </Spin>
+      {props.children}
     </PageHeader>
   );
 }

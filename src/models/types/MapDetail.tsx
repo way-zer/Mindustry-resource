@@ -1,4 +1,4 @@
-export interface MapInfo {
+export interface MapDetail {
   version: number;
   build: number;
   timestamp: number;
@@ -8,6 +8,8 @@ export interface MapInfo {
   rules: Rules;
   tags: { [key: string]: string };
   mods: any[];
+  preview: string;
+  hash: string;
 }
 
 export interface Rules {

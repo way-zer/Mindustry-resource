@@ -1,17 +1,28 @@
 import { useCallback, useEffect, useState } from 'react';
 import { request } from '@@/plugin-request/request';
+import { MapDetail } from '@/models/types/MapDetail';
 
 export interface MapInfo {
   hash: string;
   name: string;
   desc: string;
-  imgUrl: string;
+  preview: string;
 }
 
 function fetchMaps(begin: number): Promise<MapInfo[]> {
   return request('/api/maps/list', {
     params: { begin },
   });
+}
+
+export function fetchDetail(id: string): MapDetail {
+  const [detail, setDetail] = useState({} as MapDetail);
+  useEffect(() => {
+    request('/api/maps/' + id + '/detail').then((d: MapDetail) => {
+      setDetail(d);
+    });
+  }, [id]);
+  return detail;
 }
 
 export default function() {

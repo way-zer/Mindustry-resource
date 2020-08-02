@@ -18,6 +18,11 @@ export default defineConfig({
       target: 'http://wayzerpi.lan:9090/',
       changeOrigin: true,
     },
+    '/api/': {
+      target: 'http://wayzerpi.lan:9090/',
+      changeOrigin: true,
+    },
   },
   hash: true,
+  mock: false,
 });

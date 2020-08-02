@@ -18,7 +18,7 @@ function fetchMaps(begin: number): Promise<MapInfo[]> {
 export function fetchDetail(id: string): MapDetail {
   const [detail, setDetail] = useState({} as MapDetail);
   useEffect(() => {
-    request('/api/maps/' + id + '/detail').then((d: MapDetail) => {
+    request('/api/maps/' + id + '/detail.json').then((d: MapDetail) => {
       setDetail(d);
     });
   }, [id]);

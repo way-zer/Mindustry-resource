@@ -12,7 +12,7 @@ import {
   Upload,
 } from 'antd';
 import { BarsOutlined, CopyOutlined, InboxOutlined } from '@ant-design/icons';
-import { useModel, history } from 'umi';
+import { history, useModel } from 'umi';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
 
@@ -20,8 +20,9 @@ function onChange(callback: (response: any) => void) {
   return function({ file }: UploadChangeParam<UploadFile>) {
     if (file.status === 'done') {
       message.success('上传成功');
-      history.push('/maps/' + file.response + '/detail');
-      // callback(file.response);
+      if (typeof file.response === 'string')
+        history.push('/maps/' + file.response + '/detail');
+      else callback(file.response);
     } else if (file.status === 'error') {
       message.error('上传失败' + file.response);
     }

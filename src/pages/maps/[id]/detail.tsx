@@ -3,6 +3,7 @@ import {history, IRouteComponentProps} from "umi";
 import {Col, Modal, Popover, Row, Skeleton, Tooltip} from 'antd';
 import {CopyOutlined} from '@ant-design/icons';
 import {fetchDetail} from "@/models/maps";
+import {copyContent} from "@/utils/common";
 
 export default function DetailModal(props: IRouteComponentProps<{ id: string }>) {
   const id = props.match.params.id
@@ -34,21 +35,23 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
           <Col md={10} sm={20}>
             <h4>地图名: {name}</h4>
             <h5>宽高: {width}x{height}</h5>
-            <h5>识别码:
-              <Tooltip title={'拷贝换图指令'}>
-                <Popover
-                  content={
-                    <>
-                      拷贝下列指令到支持的服务器使用
-                      <pre>/vote map {detail.hash}</pre>
-                    </>
-                  }
-                  trigger={'click'}
-                >
-                  <>{detail.hash}<CopyOutlined/></>
-                </Popover>
-              </Tooltip>
-            </h5>
+            {/*<h5>*/}
+            <Tooltip title={'拷贝换图指令'}>
+              <Popover
+                content={
+                  <>
+                    <pre>/vote map {detail.hash}</pre>
+                    粘贴指令到支持网络换图的服务器使用
+                  </>
+                }
+                trigger={'click'}
+              >
+                <h5 onClick={copyContent.bind(null, () => {
+                  return document.getElementsByClassName("ant-popover-inner-content")[0].getElementsByTagName("pre")[0]
+                })}>识别码: {detail.hash}<CopyOutlined/></h5>
+              </Popover>
+            </Tooltip>
+            {/*</h5>*/}
             <h5>作者: {author}</h5>
             <h5>描述: {description}</h5>
             <h5>规则:</h5>
@@ -69,7 +72,7 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
             {props.children}
           </Col>
         </Row>
-        <p style={{textAlign:"center"}}>可以直接分享该页链接给他人</p>
+        <p style={{textAlign: "center"}}>可以直接分享该页链接给他人</p>
       </div>
     </Skeleton>
   </Modal>

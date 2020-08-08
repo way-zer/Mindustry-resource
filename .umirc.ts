@@ -19,7 +19,7 @@ export default defineConfig({
       changeOrigin: true,
     },
     '/api/': {
-      target: 'http://wayzerpi.lan:9090/',
+      target: 'http://mdt.wayzer.top/',
       changeOrigin: true,
     },
   },

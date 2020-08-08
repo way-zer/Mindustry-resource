@@ -15,6 +15,7 @@ import { BarsOutlined, CopyOutlined, InboxOutlined } from '@ant-design/icons';
 import { history, useModel } from 'umi';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
+import { copyContent } from '@/utils/common';
 
 function onChange(callback: (response: any) => void) {
   return function({ file }: UploadChangeParam<UploadFile>) {
@@ -72,13 +73,21 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
                   <Popover
                     content={
                       <>
-                        拷贝下列指令到支持的服务器使用
                         <pre>/vote map {map.hash}</pre>
+                        粘贴指令到支持网络换图的服务器使用
                       </>
                     }
                     trigger={'click'}
                   >
-                    <CopyOutlined />
+                    <CopyOutlined
+                      onClick={copyContent.bind(null, () => {
+                        return document
+                          .getElementsByClassName(
+                            'ant-popover-inner-content',
+                          )[0]
+                          .getElementsByTagName('pre')[0];
+                      })}
+                    />
                   </Popover>
                 </Tooltip>,
                 <Tooltip title={'查看详情'}>

@@ -153,7 +153,7 @@ export default class ServerList extends React.Component<
   }
 
   fetch() {
-    request('/servers/list').then((data: Info[]) => {
+    request('/api/servers/list').then((data: Info[]) => {
       this.setState({ data });
     });
   }

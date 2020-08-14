@@ -38,7 +38,7 @@ export class AddModel extends React.Component<
   check() {
     const value = this.inputR.current!!.state.value;
     this.setState({ loading: true });
-    request('/servers/add?address=' + value, { skipErrorHandler: true })
+    request('/api/servers/add?address=' + value, { skipErrorHandler: true })
       .then(() => {
         this.props.close(true);
       })

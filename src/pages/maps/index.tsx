@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -41,6 +42,13 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
         ]
       }
     >
+      <Alert
+        message={
+          '使用指令换图时,若模式不对,可在指令后面附加模式参数,例如"/vote map xxxx A-TD"代表进攻塔防模式,S-TD为生存塔防,S生存,A进攻,P为PVP,C为沙盒'
+        }
+        banner
+        closable
+      />
       <Row gutter={16}>
         {maps.map(map => (
           <Col xs={24} sm={12} md={8} lg={6} key={map.hash}>

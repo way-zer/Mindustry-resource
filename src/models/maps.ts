@@ -6,6 +6,7 @@ export interface MapInfo {
   hash: string;
   name: string;
   desc: string;
+  tags: string[];
   preview: string;
 }
 

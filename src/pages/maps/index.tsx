@@ -109,6 +109,13 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
                   <BarsOutlined
                     onClick={() => {
                       history.push('/maps/' + map.hash + '/detail');
+                      {
+                        map.tags.map(it => (
+                          <Tag color={it.split('§')[1] || 'default'}>
+                            {colorize(it.split('§')[0])}
+                          </Tag>
+                        ));
+                      }
                     }}
                   />
                 </Tooltip>,

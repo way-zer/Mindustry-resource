@@ -42,6 +42,8 @@ export interface Loadout {
 export interface Spawn {
   type: string;
   end?: number;
+  amount?: number;
+  spacing?: number;
   scaling: number;
   begin?: number;
   effect?: number;

@@ -9,7 +9,7 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
   const id = props.match.params.id
   const detail = fetchDetail(id)
 
-  const {name, author, description, width, height} = detail.tags || {}
+  const {name, author, description, width, height,build,mods} = detail.tags || {}
   const rules = detail.rules || {}
   return <Modal visible onCancel={() => {
     history.goBack()
@@ -55,25 +55,31 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
             {/*</h5>*/}
             <h5>作者: {author}</h5>
             <h5>描述: {description}</h5>
+            <h5>游戏版本: {build}</h5>
+            <h5>所需Mod: {mods}</h5>
             <h5>规则:</h5>
             <ul>
               <li>刷怪: {rules.waves ? "开" : "关"} 进攻模式: {rules.attackMode ? "开" : "关"}</li>
-              <li>单位血量: {rules.unitHealthMultiplier}</li>
-              <li>单位伤害: {rules.unitDamageMultiplier}</li>
-              <li>玩家血量: {rules.playerHealthMultiplier}</li>
-              <li>玩家伤害: {rules.playerDamageMultiplier}</li>
-              <li>建筑血量: {rules.blockHealthMultiplier}</li>
-              <li>核心保护: {rules.enemyCoreBuildRadius / 8}</li>
-              <li>重生时间: {rules.respawnTime / 60}</li>
-              <li>每波间隔: {rules.waveSpacing / 60}</li>
+              <li>单位血量: {rules.unitHealthMultiplier||"1"}倍</li>
+              <li>单位伤害: {rules.unitDamageMultiplier||"1"}倍</li>
+              <li>玩家血量: {rules.playerHealthMultiplier||"1"}倍</li>
+              <li>玩家伤害: {rules.playerDamageMultiplier||"1"}倍</li>
+              <li>建筑血量: {rules.blockHealthMultiplier||"1"}倍</li>
+              <li>核心保护: {rules.enemyCoreBuildRadius / 8}格</li>
+              <li>重生时间: {rules.respawnTime / 60}秒</li>
+              <li>每波间隔: {rules.waveSpacing / 60}秒</li>
               <li>禁用建筑: {rules.bannedBlocks?.values}</li>
-              <li>初始物资: {rules.loadout?.map(d => (`${d.item}:${d.amount} `))}</li>
-              <li>太阳能倍数: {rules.solarPowerMultiplier}</li>
+              <li>初始物资: <ul>{rules.loadout?.map(d => (<li>{d.item}: {d.amount}</li>))}</ul></li>
+              <li>波次刷怪: <ul>{rules.spawns?.map(d => (<li>{d.type}{d.effect?"(BOSS)":""}:从{d.begin||1}{d.end?"到"+d.end:"开始"} 每{d.spacing?1+d.spacing:1}波生成{d.amount||1}{d.scaling?`+${d.scaling}T`:""}只</li>))}</ul></li>
+              <li>太阳能发电: {rules.solarPowerMultiplier||"1"}倍</li>
             </ul>
             {props.children}
           </Col>
         </Row>
-        <p style={{textAlign: "center"}}>可以直接分享该页链接给他人</p>
+        <p style={{textAlign: "center"}}>
+          可以直接分享该页链接给他人<br/>
+          <pre>{window.location.toString()}</pre>
+        </p>
       </div>
     </Skeleton>
   </Modal>

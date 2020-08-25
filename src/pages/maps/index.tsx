@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Alert,
+  Badge,
   Button,
   Card,
   Col,
@@ -9,6 +10,7 @@ import {
   Popover,
   Row,
   Spin,
+  Tag,
   Tooltip,
   Upload,
 } from 'antd';
@@ -17,6 +19,7 @@ import { history, useModel } from 'umi';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
 import { copyContent } from '@/utils/common';
+import { colorize } from '@/utils/mindustry';
 
 function onChange(callback: (response: any) => void) {
   return function({ file }: UploadChangeParam<UploadFile>) {
@@ -77,7 +80,10 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
                 </div>
               }
               actions={[
-                <Tooltip title={'拷贝换图指令'}>
+                <Tooltip
+                  title={'拷贝换图指令'}
+                  destroyTooltipOnHide={{ keepParent: false }}
+                >
                   <Popover
                     content={
                       <>
@@ -86,6 +92,7 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
                       </>
                     }
                     trigger={'click'}
+                    destroyTooltipOnHide={{ keepParent: false }}
                   >
                     <CopyOutlined
                       onClick={copyContent.bind(null, () => {

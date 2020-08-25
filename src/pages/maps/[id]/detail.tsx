@@ -36,7 +36,7 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
             <h4>地图名: {name}</h4>
             <h5>宽高: {width}x{height}</h5>
             {/*<h5>*/}
-            <Tooltip title={'拷贝换图指令'}>
+            <Tooltip title={'拷贝换图指令'} destroyTooltipOnHide={{keepParent:false}}>
               <Popover
                 content={
                   <>
@@ -45,6 +45,7 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
                   </>
                 }
                 trigger={'click'}
+                destroyTooltipOnHide={{keepParent:false}}
               >
                 <h5 onClick={copyContent.bind(null, () => {
                   return document.getElementsByClassName("ant-popover-inner-content")[0].getElementsByTagName("pre")[0]

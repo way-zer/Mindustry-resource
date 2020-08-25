@@ -68,9 +68,18 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
               <li>核心保护: {rules.enemyCoreBuildRadius / 8}格</li>
               <li>重生时间: {rules.respawnTime / 60}秒</li>
               <li>每波间隔: {rules.waveSpacing / 60}秒</li>
-              <li>禁用建筑: {rules.bannedBlocks?.values}</li>
-              <li>初始物资: <ul>{rules.loadout?.map(d => (<li>{d.item}: {d.amount}</li>))}</ul></li>
-              <li>波次刷怪: <ul>{rules.spawns?.map(d => (<li>{d.type}{d.effect?"(BOSS)":""}:从{d.begin||1}{d.end?"到"+d.end:"开始"} 每{d.spacing?1+d.spacing:1}波生成{d.amount||1}{d.scaling?`+${d.scaling}T`:""}只</li>))}</ul></li>
+              <li><details>
+                <summary>禁用建筑: </summary>
+                <ul>{rules.bannedBlocks?.values?.map(d => (<li>{d}</li>))}</ul>
+              </details></li>
+              <li><details>
+                <summary>初始物资: </summary>
+                <ul>{rules.loadout?.map(d => (<li>{d.item}: {d.amount}</li>))}</ul>
+              </details></li>
+              <li><details>
+                <summary>波次刷怪:</summary>
+                <ul>{rules.spawns?.map(d => (<li>{d.type}{d.effect?"(BOSS)":""}:从{d.begin||1}{d.end?"到"+d.end:"开始"} 每{d.spacing?1+d.spacing:1}波生成{d.amount||1}{d.scaling?`+${d.scaling}T`:""}只</li>))}</ul>
+              </details></li>
               <li>太阳能发电: {rules.solarPowerMultiplier||"1"}倍</li>
             </ul>
             {props.children}

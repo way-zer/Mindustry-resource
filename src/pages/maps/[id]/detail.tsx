@@ -12,7 +12,7 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
   const {name, author, description, width, height,build,mods} = detail.tags || {}
   const rules = detail.rules || {}
   return <Modal visible onCancel={() => {
-    history.goBack()
+    history.push("/maps")
   }} cancelText={"关闭"} footer={null} width={"100%"}>
     <Skeleton loading={!detail}>
       <div style={{padding: "16px"}}>

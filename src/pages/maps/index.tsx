@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Alert,
-  Badge,
   Button,
   Card,
   Col,
@@ -109,18 +108,16 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
                   <BarsOutlined
                     onClick={() => {
                       history.push('/maps/' + map.hash + '/detail');
-                      {
-                        map.tags.map(it => (
-                          <Tag color={it.split('§')[1] || 'default'}>
-                            {colorize(it.split('§')[0])}
-                          </Tag>
-                        ));
-                      }
                     }}
                   />
                 </Tooltip>,
               ]}
             >
+              {map.tags.map(it => (
+                <Tag color={it.split('§')[1] || 'default'}>
+                  {colorize(it.split('§')[0])}
+                </Tag>
+              ))}
               <Card.Meta title={map.name} description={map.desc} />
             </Card>
           </Col>

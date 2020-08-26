@@ -13,36 +13,31 @@ import { colorize, modeFilters, modeMap } from '@/utils/mindustry';
 import { AddModel } from '@/pages/servers/_addModel';
 
 const renderAddress = (_: any, v: Info) => {
-  if (v.online)
-    return (
-      <Tooltip title={'延迟' + v.timeMs + 'ms'}>
-        <div>
-          <SmileFilled style={{ marginRight: '0.5rem', color: 'green' }} />
-          {v.address}
-        </div>
-      </Tooltip>
-    );
-  else {
+  let tooltip: string;
+  let icon: React.ReactElement;
+  if (v.online) {
+    tooltip = '延迟' + v.timeMs + 'ms';
+    icon = <SmileFilled style={{ marginRight: '0.5rem', color: 'green' }} />;
+  } else {
     const d = (Date.now() - v.lastOnline) / 1000;
-    if (d < 60)
-      return (
-        <Tooltip title={'暂时连接失败'}>
-          <div>
-            <MehFilled style={{ marginRight: '0.5rem', color: 'yellow' }} />
-            {v.address}
-          </div>
-        </Tooltip>
-      );
-    else
-      return (
-        <Tooltip title={'最后在线' + (d / 60).toFixed(2) + '分钟前'}>
-          <div>
-            <FrownFilled style={{ marginRight: '0.5rem', color: 'red' }} />
-            {v.address}
-          </div>
-        </Tooltip>
-      );
+    if (d < 60) {
+      tooltip = '暂时连接失败';
+      icon = <MehFilled style={{ marginRight: '0.5rem', color: 'yellow' }} />;
+    } else {
+      tooltip = '最后在线' + (d / 60).toFixed(2) + '分钟前';
+      icon = <FrownFilled style={{ marginRight: '0.5rem', color: 'red' }} />;
+    }
   }
+  return (
+    <Tooltip title={tooltip}>
+      <div>
+        {icon}
+        {v.address}
+        <br />
+        版本 {v.version}
+      </div>
+    </Tooltip>
+  );
 };
 const renderInfo = (_: any, v: Info) => {
   return (
@@ -112,12 +107,18 @@ export default class ServerList extends React.Component<
           size={'middle'}
           pagination={false}
           rowKey="address"
+          loading={!this.state.data.length}
         >
           <Table.Column
             title="地址"
             dataIndex="address"
             fixed="left"
             render={renderAddress}
+            onFilter={(f, v) => (v.version > 8000 ? 6 : 5) == f}
+            filters={[
+              { text: '5.0 正式版', value: 5 },
+              { text: '6.0 BE测试版', value: 6 },
+            ]}
           />
           <Table.Column title="名字" dataIndex="name" render={renderInfo} />
           {/*<Column title="介绍" dataIndex="description"/>*/}

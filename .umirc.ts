@@ -25,4 +25,25 @@ export default defineConfig({
   },
   hash: true,
   mock: false,
+  chunks: ['umi', 'vendors.umi'],
+  chainWebpack: function(config, { webpack }) {
+    config.merge({
+      optimization: {
+        minimize: true,
+        splitChunks: {
+          chunks: 'all',
+          minSize: 30000,
+          minChunks: 1,
+          automaticNameDelimiter: '.',
+          cacheGroups: {
+            vendors: {
+              test: /[\\/]node_modules[\\/]/,
+              minChunks: 1, //敲黑板
+              priority: -10, //优先级更高
+            },
+          },
+        },
+      },
+    });
+  },
 });

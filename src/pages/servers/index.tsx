@@ -108,6 +108,8 @@ export default class ServerList extends React.Component<
           pagination={false}
           rowKey="address"
           loading={!this.state.data.length}
+          style={{ whiteSpace: 'nowrap' }}
+          scroll={{ x: true }}
         >
           <Table.Column
             title="地址"

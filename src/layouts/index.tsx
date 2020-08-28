@@ -18,6 +18,9 @@ export default function({ children, location }: IRouteComponentProps) {
       <Menu.Item key={'servers'}>
         <Link to={'/servers'}>服务器列表</Link>
       </Menu.Item>
+      <Menu.Item key={'game'}>
+        <Link to={'/game'}>获取游戏</Link>
+      </Menu.Item>
     </Menu>
   );
   return (

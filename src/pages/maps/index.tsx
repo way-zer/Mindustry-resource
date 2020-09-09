@@ -19,6 +19,7 @@ import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
 import { copyContent } from '@/utils/common';
 import { colorize } from '@/utils/mindustry';
+import SquaredImage from '@/components/squaredImage';
 
 function onChange(callback: (response: any) => void) {
   return function({ file }: UploadChangeParam<UploadFile>) {
@@ -55,29 +56,7 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
         {maps.map(map => (
           <Col xs={24} sm={12} md={8} lg={6} key={map.hash}>
             <Card
-              cover={
-                <div
-                  style={{
-                    width: '100%',
-                    height: '0',
-                    paddingBottom: '100%',
-                    position: 'relative',
-                  }}
-                >
-                  <img
-                    src={map.preview}
-                    alt={'map Preview'}
-                    style={{
-                      objectFit: 'contain',
-                      width: '96%',
-                      height: '96%',
-                      position: 'absolute',
-                      left: '2%',
-                      top: '2%',
-                    }}
-                  />
-                </div>
-              }
+              cover={<SquaredImage src={map.preview} />}
               actions={[
                 <Tooltip
                   title={'拷贝换图指令'}

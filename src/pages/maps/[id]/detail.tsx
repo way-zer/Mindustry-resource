@@ -4,6 +4,7 @@ import {Col, Modal, Popover, Row, Skeleton, Tooltip} from 'antd';
 import {CopyOutlined} from '@ant-design/icons';
 import {fetchDetail} from "@/models/maps";
 import {copyContent} from "@/utils/common";
+import SquaredImage from "@/components/squaredImage";
 
 export default function DetailModal(props: IRouteComponentProps<{ id: string }>) {
   const id = props.match.params.id
@@ -18,19 +19,7 @@ export default function DetailModal(props: IRouteComponentProps<{ id: string }>)
       <div style={{padding: "16px"}}>
         <Row gutter={32} justify={"center"}>
           <Col md={10} xs={18}>
-            <div style={{width: '100%', height: '0', paddingBottom: '100%', position: 'relative'}}>
-              <img
-                src={detail.preview} alt={'map Preview'}
-                style={{
-                  objectFit: 'contain',
-                  width: '96%',
-                  height: '96%',
-                  position: 'absolute',
-                  left: '2%',
-                  top: '2%',
-                }}
-              />
-            </div>
+            <SquaredImage src={detail.preview}/>
           </Col>
           <Col md={10} sm={20}>
             <h4>地图名: {name}</h4>

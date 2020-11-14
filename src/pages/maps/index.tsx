@@ -20,6 +20,7 @@ import { UploadFile } from 'antd/es/upload/interface';
 import { copyContent } from '@/utils/common';
 import { colorize } from '@/utils/mindustry';
 import SquaredImage from '@/components/squaredImage';
+import { requestToken } from '@/utils/reCaptcha';
 
 function onChange(callback: (response: any) => void) {
   return function({ file }: UploadChangeParam<UploadFile>) {
@@ -104,7 +105,11 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
         <Col xs={24} sm={12} md={8} lg={6} key={'upload'}>
           <Card style={{ height: '100%' }}>
             <Upload.Dragger
-              action={'/api/maps/upload'}
+              action={async () => {
+                return (
+                  '/api/maps/upload?token=' + (await requestToken('mapUpload'))
+                );
+              }}
               onChange={onChange(uploadFinish)}
               multiple={false}
               style={{ height: '100%' }}

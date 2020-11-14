@@ -1,13 +1,13 @@
 export interface MapDetail {
-  version: number;
+  // version: number;
   build: number;
-  timestamp: number;
-  timePlayed: number;
-  map: null;
-  wave: number;
+  // timestamp: number;
+  // timePlayed: number;
+  // map: null;
+  // wave: number;
   rules: Rules;
   tags: { [key: string]: string };
-  mods: any[];
+  // mods: any[];
   preview: string;
   hash: string;
 }

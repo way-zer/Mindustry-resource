@@ -77,6 +77,7 @@ export default class ServerList extends React.Component<
         title={'公共服务器列表'}
         extra={[
           <Switch
+            key={'refresh'}
             checkedChildren={'自动刷新'}
             unCheckedChildren={'自动刷新'}
             defaultChecked={true}
@@ -85,6 +86,7 @@ export default class ServerList extends React.Component<
             }}
           />,
           <Button
+            key={'add'}
             icon={<PlusOutlined />}
             onClick={() => {
               this.setState({ modal: true });

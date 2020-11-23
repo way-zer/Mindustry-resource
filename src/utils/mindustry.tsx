@@ -70,7 +70,11 @@ export function colorize(text: string) {
         return;
       }
     }
-    out.push(<span style={{ color: lastColor }}>{v}</span>);
+    out.push(
+      <span style={{ color: lastColor }} key={out.length}>
+        {v}
+      </span>,
+    );
   });
   return out;
 }

@@ -93,8 +93,8 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
                 </Tooltip>,
               ]}
             >
-              {map.tags.map(it => (
-                <Tag color={it.split('§')[1] || 'default'}>
+              {map.tags.map((it, i) => (
+                <Tag color={it.split('§')[1] || 'default'} key={i}>
                   {colorize(it.split('§')[0])}
                 </Tag>
               ))}

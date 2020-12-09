@@ -6,6 +6,7 @@ export interface MapDetail {
   // map: null;
   // wave: number;
   rules: Rules;
+  user: string;
   tags: { [key: string]: string };
   // mods: any[];
   preview: string;

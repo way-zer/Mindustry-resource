@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Alert,
   Button,
   Card,
   Col,
+  Input,
   message,
   PageHeader,
   Popover,
@@ -22,12 +23,16 @@ import { colorize } from '@/utils/mindustry';
 import SquaredImage from '@/components/squaredImage';
 import { requestToken } from '@/utils/reCaptcha';
 
+async function uploadUrl() {
+  return '/api/maps/upload?token=' + (await requestToken('mapUpload'));
+}
+
 function onChange(callback: (response: any) => void) {
   return function({ file }: UploadChangeParam<UploadFile>) {
     if (file.status === 'done') {
       message.success('上传成功');
       if (typeof file.response === 'string')
-        history.push('/maps/' + file.response + '/detail');
+        history!!.push('/maps/' + file.response + '/detail');
       else callback(file.response);
     } else if (file.status === 'error') {
       message.error('上传失败' + file.response);
@@ -36,15 +41,56 @@ function onChange(callback: (response: any) => void) {
 }
 
 export default function MapsIndex(props: { children: React.ReactNode }) {
-  const { maps, pullMore, loading, uploadFinish } = useModel('maps');
+  const {
+    maps,
+    searchKey,
+    pullMore,
+    loading,
+    uploadFinish,
+    onSearch,
+  } = useModel('maps');
+  let searchFromLocation = decodeURI(history!!.location.search.substring(1));
+  useEffect(() => {
+    if (
+      history!!.location.pathname == '/maps' &&
+      searchFromLocation != searchKey
+    ) {
+      if (searchFromLocation) {
+        onSearch(searchFromLocation).then();
+      } else {
+        history!!.replace({ search: searchKey });
+      }
+    }
+    //Run once
+    if (maps.length || loading) return;
+    console.log('Effect');
+    pullMore().then();
+  }, [searchFromLocation]);
   return (
     <PageHeader
       title={'地图分享'}
-      extra={
-        [
-          // <Upload style={{padding: "0 16px"}}><Button><UploadOutlined/>上传新地图</Button></Upload>
-        ]
-      }
+      extra={[
+        <Input.Search
+          key={'search'}
+          placeholder={'查找地图'}
+          allowClear
+          style={{ width: 'unset' }}
+          onSearch={async it => {
+            await onSearch(it);
+            history!!.push({ search: it });
+          }}
+          defaultValue={searchFromLocation || searchKey}
+          loading={loading}
+        />,
+        <Upload
+          key={'upload'}
+          action={uploadUrl}
+          onChange={onChange(uploadFinish)}
+          accept={'.msav'}
+        >
+          <Button>上传新地图</Button>
+        </Upload>,
+      ]}
     >
       <Alert
         message={
@@ -87,7 +133,7 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
                 <Tooltip title={'查看详情'}>
                   <BarsOutlined
                     onClick={() => {
-                      history.push('/maps/' + map.hash + '/detail');
+                      history!!.push('/maps/' + map.hash + '/detail');
                     }}
                   />
                 </Tooltip>,
@@ -105,11 +151,8 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
         <Col xs={24} sm={12} md={8} lg={6} key={'upload'}>
           <Card style={{ height: '100%' }}>
             <Upload.Dragger
-              action={async () => {
-                return (
-                  '/api/maps/upload?token=' + (await requestToken('mapUpload'))
-                );
-              }}
+              accept={'.msav'}
+              action={uploadUrl}
               onChange={onChange(uploadFinish)}
               multiple={false}
               style={{ height: '100%' }}

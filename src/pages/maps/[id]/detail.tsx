@@ -42,6 +42,7 @@ export default function DetailModal(props:PropsWithChildren<any>) {
               </Popover>
             </Tooltip>
             {/*</h5>*/}
+            <h5>上传者: <Tooltip title={"点击查看该用户更多地图"}><a href={"/maps?"+encodeURI("@user:"+detail.user)}>{detail.user}</a></Tooltip></h5>
             <h5>作者: {author}</h5>
             <h5>描述: {description}</h5>
             <h5>游戏版本: {build}</h5>
@@ -59,15 +60,15 @@ export default function DetailModal(props:PropsWithChildren<any>) {
               <li>每波间隔: {rules.waveSpacing / 60}秒</li>
               <li><details>
                 <summary>禁用建筑: </summary>
-                <ul>{rules.bannedBlocks?.values?.map(d => (<li>{d}</li>))}</ul>
+                <ul>{rules.bannedBlocks?.values?.map(d => (<li key={d}>{d}</li>))}</ul>
               </details></li>
               <li><details>
                 <summary>初始物资: </summary>
-                <ul>{rules.loadout?.map(d => (<li>{d.item}: {d.amount}</li>))}</ul>
+                <ul>{rules.loadout?.map(d => (<li key={d.item}>{d.item}: {d.amount}</li>))}</ul>
               </details></li>
               <li><details>
                 <summary>波次刷怪:</summary>
-                <ul>{rules.spawns?.map(d => (<li>{d.type}{d.effect?"(BOSS)":""}:从{d.begin||1}{d.end?"到"+d.end:"开始"} 每{d.spacing?1+d.spacing:1}波生成{d.amount||1}{d.scaling?`+${d.scaling}T`:""}只</li>))}</ul>
+                <ul>{rules.spawns?.map((d,i) => (<li key={i}>{d.type}{d.effect?"(BOSS)":""}:从{d.begin||1}{d.end?"到"+d.end:"开始"} 每{d.spacing?1+d.spacing:1}波生成{d.amount||1}{d.scaling?`+${d.scaling}T`:""}只</li>))}</ul>
               </details></li>
               <li>太阳能发电: {rules.solarPowerMultiplier||"1"}倍</li>
             </ul>

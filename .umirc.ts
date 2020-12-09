@@ -4,32 +4,32 @@ export default defineConfig({
   title: false,
   nodeModulesTransform: {
     type: 'none',
+    exclude: [],
   },
   proxy: {
     '/servers/list': {
-      target: 'http://vps.wayzer.top/',
+      target: 'https://vps.wayzer.top/',
       changeOrigin: true,
     },
     '/servers/add': {
-      target: 'http://vps.wayzer.top/',
-      changeOrigin: true,
-    },
-    '/map/': {
-      target: 'http://wayzerpi.lan:9090/',
+      target: 'https://vps.wayzer.top/',
       changeOrigin: true,
     },
     '/api/': {
-      target: 'http://mdt.wayzer.top/',
+      target: 'https://mdt.wayzer.top/',
       changeOrigin: true,
     },
   },
+  fastRefresh: {},
   hash: true,
-  mock: false,
+  mock: {
+    exclude: ['mock/maps.ts'],
+  },
   chunks: ['umi', 'vendors.umi'],
-  chainWebpack: function(config, { webpack }) {
+  chainWebpack: function(config) {
     config.merge({
       optimization: {
-        minimize: true,
+        minimize: process.env.NODE_ENV === 'production',
         splitChunks: {
           chunks: 'all',
           minSize: 30000,

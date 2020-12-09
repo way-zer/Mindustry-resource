@@ -1,13 +1,13 @@
-import React from "react";
-import {history, IRouteComponentProps} from "umi";
+import React, {PropsWithChildren} from "react";
+import {history,useParams} from "umi";
 import {Col, Modal, Popover, Row, Skeleton, Tooltip} from 'antd';
 import {CopyOutlined} from '@ant-design/icons';
 import {fetchDetail} from "@/models/maps";
 import {copyContent} from "@/utils/common";
 import SquaredImage from "@/components/squaredImage";
 
-export default function DetailModal(props: IRouteComponentProps<{ id: string }>) {
-  const id = props.match.params.id
+export default function DetailModal(props:PropsWithChildren<any>) {
+  const {id} = useParams<{id:string}>()
   const detail = fetchDetail(id)
 
   const {name, author, description, width, height,build,mods} = detail.tags || {}

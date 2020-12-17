@@ -86,7 +86,7 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
           key={'upload'}
           action={uploadUrl}
           onChange={onChange(uploadFinish)}
-          accept={'.msav'}
+          // accept={'.msav'}
         >
           <Button>上传新地图</Button>
         </Upload>,
@@ -151,7 +151,7 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
         <Col xs={24} sm={12} md={8} lg={6} key={'upload'}>
           <Card style={{ height: '100%' }}>
             <Upload.Dragger
-              accept={'.msav'}
+              // accept={'.msav'}
               action={uploadUrl}
               onChange={onChange(uploadFinish)}
               multiple={false}

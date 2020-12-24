@@ -7,21 +7,26 @@ import {
   Input,
   message,
   PageHeader,
-  Popover,
   Row,
   Spin,
   Tag,
   Tooltip,
   Upload,
 } from 'antd';
-import { BarsOutlined, CopyOutlined, InboxOutlined } from '@ant-design/icons';
+import {
+  BarsOutlined,
+  CopyOutlined,
+  InboxOutlined,
+  DownloadOutlined,
+} from '@ant-design/icons';
 import { history, useModel } from 'umi';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
-import { copyContent } from '@/utils/common';
 import { colorize } from '@/utils/mindustry';
 import SquaredImage from '@/components/squaredImage';
 import { requestToken } from '@/utils/reCaptcha';
+import { ActionCopy } from '@/pages/maps/_components/ActionCopy';
+import { ActionDownload } from '@/pages/maps/_components/ActionDownload';
 
 async function uploadUrl() {
   return '/api/maps/upload?token=' + (await requestToken('mapUpload'));
@@ -105,32 +110,17 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
             <Card
               cover={<SquaredImage src={map.preview} />}
               actions={[
-                <Tooltip
-                  title={'拷贝换图指令'}
-                  destroyTooltipOnHide={{ keepParent: false }}
-                >
-                  <Popover
-                    content={
-                      <>
-                        <pre>/vote map {map.hash}</pre>
-                        粘贴指令到支持网络换图的服务器使用
-                      </>
-                    }
-                    trigger={'click'}
-                    destroyTooltipOnHide={{ keepParent: false }}
-                  >
-                    <CopyOutlined
-                      onClick={copyContent.bind(null, () => {
-                        return document
-                          .getElementsByClassName(
-                            'ant-popover-inner-content',
-                          )[0]
-                          .getElementsByTagName('pre')[0];
-                      })}
-                    />
-                  </Popover>
-                </Tooltip>,
-                <Tooltip title={'查看详情'}>
+                <ActionCopy
+                  hash={map.hash}
+                  key={'copy'}
+                  content={it => <CopyOutlined onClick={it} />}
+                />,
+                <ActionDownload
+                  hash={map.hash}
+                  key={'download'}
+                  content={it => <DownloadOutlined onClick={it} />}
+                />,
+                <Tooltip title={'查看详情'} key={'detail'}>
                   <BarsOutlined
                     onClick={() => {
                       history!!.push('/maps/' + map.hash + '/detail');

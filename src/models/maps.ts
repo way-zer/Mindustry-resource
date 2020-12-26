@@ -10,7 +10,7 @@ export interface MapInfo {
   preview: string;
 }
 
-function fetchMaps(begin: number, search: string): Promise<MapInfo[]> {
+export function fetchMaps(begin: number, search: string): Promise<MapInfo[]> {
   return request('/api/maps/list', {
     params: { begin, search },
   });

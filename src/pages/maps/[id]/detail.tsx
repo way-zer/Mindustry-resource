@@ -1,11 +1,36 @@
 import React, {PropsWithChildren} from "react";
 import {history, useParams} from "umi";
-import {Col, Modal, Row, Skeleton, Tooltip} from 'antd';
-import {CopyOutlined, DownloadOutlined} from '@ant-design/icons';
+import {Button, Col, Modal, Row, Skeleton, Tooltip} from 'antd';
+import {CopyOutlined, DeleteOutlined, DownloadOutlined} from '@ant-design/icons';
 import {fetchDetail} from "@/models/maps";
 import SquaredImage from "@/components/squaredImage";
 import {ActionCopy} from "@/pages/maps/_components/ActionCopy";
 import {ActionDownload} from "@/pages/maps/_components/ActionDownload";
+import {MapDetail} from "@/models/types/MapDetail";
+import {useModel} from "@@/plugin-model/useModel";
+import {ActionMarkOutDate} from "@/pages/maps/_components/ActionMarkOutDate";
+
+function DetailActions({detail}: { detail: MapDetail }) {
+  const {info} = useModel("user")
+  const admin = (info?.name || "UnLogin") == detail.user || info?.role == "Admin" || info?.role == "SuperAdmin" || true
+  return <Row gutter={8} justify={"center"}>
+    <Col>
+      <ActionDownload hash={detail.hash} content={(it) => (
+        <Button onClick={it} shape={"circle"} icon={<DownloadOutlined/>}/>
+      )}/>
+    </Col>
+    <Col>
+      <ActionCopy hash={detail.hash} content={(it) => (
+        <Button onClick={it} shape={"circle"} icon={<CopyOutlined/>}/>
+      )}/>
+    </Col>
+    {admin && <Col>
+      <ActionMarkOutDate detail={detail} content={(it) => (
+        <Button onClick={it} shape={"circle"} icon={<DeleteOutlined/>}/>
+      )}/>
+    </Col>}
+  </Row>
+}
 
 export default function DetailModal(props: PropsWithChildren<any>) {
   const {id} = useParams<{ id: string }>()
@@ -21,13 +46,12 @@ export default function DetailModal(props: PropsWithChildren<any>) {
         <Row gutter={32} justify={"center"}>
           <Col md={10} xs={18}>
             <SquaredImage src={detail.preview}/>
+            <DetailActions detail={detail}/>
           </Col>
           <Col md={10} sm={20}>
-            <ActionDownload hash={detail.hash}
-                            content={(it) => (<h4 onClick={it}>地图名: {name} <DownloadOutlined/></h4>)}/>
+            <h4>地图名: {name}</h4>
             <h5>宽高: {width}x{height}</h5>
-            <ActionCopy hash={detail.hash}
-                        content={(it) => (<h5 onClick={it}>识别码: {detail.hash} <CopyOutlined/></h5>)}/>
+            <h5>识别码: {detail.hash}</h5>
             <h5>上传者: <Tooltip title={"点击查看该用户更多地图"}><a
               href={"/maps?" + encodeURI("@user:" + detail.user)}>{detail.user}</a></Tooltip></h5>
             <h5>作者: {author}</h5>

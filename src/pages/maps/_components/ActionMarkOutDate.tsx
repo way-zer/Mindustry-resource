@@ -1,14 +1,13 @@
 import { Modal, Select, Spin, Tooltip } from 'antd';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { MapDetail } from '@/models/types/MapDetail';
-import { fetchMaps, MapInfo } from '@/models/maps';
+import { editMap, fetchMaps, MapInfo } from '@/models/maps';
 import { useDebounce } from '@/utils/common';
 
-function SearchModal({ user }: { user: string }) {
+function SearchModal({ user, value, setValue }: { user: string; value: string; setValue: (value: string) => void }) {
   const [state, setState] = useState({
     data: [] as MapInfo[],
     fetching: false,
-    value: '',
   });
   const fetchList = useDebounce(async (value: string) => {
     const newData = await fetchMaps(0, '@user:' + user + ' ' + value);
@@ -20,16 +19,14 @@ function SearchModal({ user }: { user: string }) {
   return (
     <div>
       <Select
-        value={state.value}
+        value={value}
         notFoundContent={state.fetching ? <Spin size="small" /> : null}
         filterOption={false}
         onSearch={value => {
           setState(prevState => ({ ...prevState, fetching: true }));
           fetchList(value);
         }}
-        onSelect={value => {
-          setState(prevState => ({ ...prevState, value }));
-        }}
+        onSelect={setValue}
         style={{ width: '100%' }}
         autoFocus
         showSearch
@@ -51,14 +48,28 @@ export function ActionMarkOutDate({
   detail: MapDetail;
   content: (onClick: () => void) => ReactElement;
 }) {
+  const [show, setShow] = useState(false);
+  const [value, setValue] = useState('');
   return (
     <Tooltip title={'标记重复'} key={'markOutDate'}>
+      <Modal
+        title={'请选择地图的最新版本'}
+        visible={show}
+        onOk={async () => {
+          if (value) {
+            await editMap(detail.hash, 'markUpdate', value);
+            setShow(false);
+          }
+        }}
+        onCancel={() => {
+          setValue('');
+          setShow(false);
+        }}
+      >
+        <SearchModal user={detail.user} value={value} setValue={setValue} />
+      </Modal>
       {content(() => {
-        Modal.confirm({
-          icon: false,
-          title: '请选择地图的最新版本',
-          content: <SearchModal user={detail.user} />,
-        });
+        setShow(true);
       })}
     </Tooltip>
   );

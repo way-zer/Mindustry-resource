@@ -10,6 +10,13 @@ export interface MapInfo {
   preview: string;
 }
 
+export function editMap(hash: string, action: string, extra: string): Promise<void> {
+  return request(`/api/maps/${hash}/edit`, {
+    method: 'POST',
+    data: { action, extra },
+  });
+}
+
 export function fetchMaps(begin: number, search: string): Promise<MapInfo[]> {
   return request('/api/maps/list', {
     params: { begin, search },

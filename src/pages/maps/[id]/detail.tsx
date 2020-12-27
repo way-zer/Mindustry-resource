@@ -1,7 +1,7 @@
 import React, {PropsWithChildren} from "react";
 import {history, useParams} from "umi";
 import {Button, Col, Modal, Row, Skeleton, Tooltip} from 'antd';
-import {CopyOutlined, DeleteOutlined, DownloadOutlined} from '@ant-design/icons';
+import {CopyOutlined, DeleteOutlined, DownloadOutlined, EditOutlined} from '@ant-design/icons';
 import {fetchDetail} from "@/models/maps";
 import SquaredImage from "@/components/squaredImage";
 import {ActionCopy} from "@/pages/maps/_components/ActionCopy";
@@ -9,10 +9,11 @@ import {ActionDownload} from "@/pages/maps/_components/ActionDownload";
 import {MapDetail} from "@/models/types/MapDetail";
 import {useModel} from "@@/plugin-model/useModel";
 import {ActionMarkOutDate} from "@/pages/maps/_components/ActionMarkOutDate";
+import {ActionChangeMode} from "@/pages/maps/_components/ActionChangeMode";
 
 function DetailActions({detail}: { detail: MapDetail }) {
   const {info} = useModel("user")
-  const admin = (info?.name || "UnLogin") == detail.user || info?.role == "Admin" || info?.role == "SuperAdmin" || true
+  const admin = (info?.name || "UnLogin") == detail.user || info?.role == "Admin" || info?.role == "SuperAdmin"
   return <Row gutter={8} justify={"center"}>
     <Col>
       <ActionDownload hash={detail.hash} content={(it) => (
@@ -27,6 +28,11 @@ function DetailActions({detail}: { detail: MapDetail }) {
     {admin && <Col>
       <ActionMarkOutDate detail={detail} content={(it) => (
         <Button onClick={it} shape={"circle"} icon={<DeleteOutlined/>}/>
+      )}/>
+    </Col>}
+    {admin && <Col>
+      <ActionChangeMode detail={detail} content={(it) => (
+        <Button onClick={it} shape={"circle"} icon={<EditOutlined />}/>
       )}/>
     </Col>}
   </Row>
@@ -50,13 +56,12 @@ export default function DetailModal(props: PropsWithChildren<any>) {
           </Col>
           <Col md={10} sm={20}>
             <h4>地图名: {name}</h4>
-            <h5>宽高: {width}x{height}</h5>
+            <h5>宽高: {width}x{height} 游戏版本: {build} 游戏模式: {detail.mode}</h5>
             <h5>识别码: {detail.hash}</h5>
             <h5>上传者: <Tooltip title={"点击查看该用户更多地图"}><a
               href={"/maps?" + encodeURI("@user:" + detail.user)}>{detail.user}</a></Tooltip></h5>
             <h5>作者: {author}</h5>
             <h5>描述: {description}</h5>
-            <h5>游戏版本: {build}</h5>
             <h5>所需Mod: {mods}</h5>
             <h5>规则:</h5>
             <ul>

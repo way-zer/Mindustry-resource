@@ -4,7 +4,7 @@ export interface MapDetail {
   // timestamp: number;
   // timePlayed: number;
   // map: null;
-  // wave: number;
+  mode: string;
   rules: Rules;
   user: string;
   tags: { [key: string]: string };

@@ -38,6 +38,9 @@ export function ActionChangeMode({
             if (value != detail.mode) {
               await editMap(detail.hash, 'mode', value);
               detail.mode = value;
+              Modal.success({
+                content: '修改成功,网站缓存刷新需要时间,但不影响服务器换图',
+              });
             }
             setShow(false);
           }

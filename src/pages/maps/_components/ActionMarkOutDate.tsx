@@ -58,6 +58,9 @@ export function ActionMarkOutDate({
         onOk={async () => {
           if (value) {
             await editMap(detail.hash, 'markUpdate', value);
+            Modal.success({
+              content: '修改成功,网站缓存刷新需要时间,但不影响服务器换图',
+            });
             setShow(false);
           }
         }}

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { request } from '@@/plugin-request/request';
 import { MapDetail } from '@/models/types/MapDetail';
+import { history } from '@@/core/history';
 
 export interface MapInfo {
   hash: string;
@@ -34,21 +35,27 @@ export function fetchDetail(id: string): MapDetail {
 }
 
 export default function() {
-  const [searchKey, setSearchKey] = useState('');
+  let initSearchKey = decodeURI(history!!.location.search.substring(1));
+  if (history!!.location.pathname != '/maps') initSearchKey = '';
+  const [searchKey, setSearchKey] = useState(initSearchKey);
   const [maps, updateMaps] = useState([] as MapInfo[]);
+  const [noData, setNoData] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const pullMore = useCallback(async () => {
     if (loading) return;
     setLoading(true);
     let newMaps = await fetchMaps(maps.length, searchKey);
+    newMaps = maps.concat(newMaps);
+    setNoData(!newMaps.length);
+    updateMaps(newMaps);
     setLoading(false);
-    updateMaps(maps.concat(newMaps));
   }, [maps, loading, searchKey]);
 
   const uploadFinish = useCallback(
     (response: MapInfo) => {
       updateMaps(maps.concat(response));
+      setNoData(false);
       console.log(maps);
     },
     [maps],
@@ -58,7 +65,10 @@ export default function() {
       setSearchKey(key);
       if (loading) return;
       setLoading(true);
-      updateMaps(await fetchMaps(0, key));
+      history!!.push({ search: key });
+      let newMaps = await fetchMaps(0, key);
+      setNoData(!newMaps.length);
+      updateMaps(newMaps);
       setLoading(false);
     },
     [loading],
@@ -69,6 +79,7 @@ export default function() {
     searchKey,
     pullMore,
     uploadFinish,
+    noData,
     loading,
     onSearch,
   };

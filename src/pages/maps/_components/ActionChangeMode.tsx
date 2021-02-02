@@ -3,14 +3,14 @@ import React, { ReactElement, useState } from 'react';
 import { MapDetail } from '@/models/types/MapDetail';
 import { editMap } from '@/models/maps';
 
-const modes = ['Survive', 'Pvp', 'Attack', 'SandBox'];
+export const modes = ['Survive', 'Pvp', 'Attack', 'Sandbox', 'UnKnown'];
 
 function SetModal({ value, setValue }: { value: string; setValue: (value: string) => void }) {
   return (
     <div>
       <Select value={value} filterOption={false} onSelect={setValue} style={{ width: '100%' }} autoFocus>
         {modes.map(d => (
-          <Select.Option value={d} key={d}>
+          <Select.Option value={d} key={d} disabled={d == 'UnKnown'}>
             {d}
           </Select.Option>
         ))}

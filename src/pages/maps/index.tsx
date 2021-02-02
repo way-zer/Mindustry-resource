@@ -4,21 +4,18 @@ import {
   Button,
   Card,
   Col,
+  Empty,
   Input,
   message,
   PageHeader,
+  Radio,
   Row,
   Spin,
   Tag,
   Tooltip,
   Upload,
 } from 'antd';
-import {
-  BarsOutlined,
-  CopyOutlined,
-  InboxOutlined,
-  DownloadOutlined,
-} from '@ant-design/icons';
+import { BarsOutlined, CloseOutlined, CopyOutlined, DownloadOutlined, InboxOutlined } from '@ant-design/icons';
 import { history, useModel } from 'umi';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
@@ -27,6 +24,7 @@ import SquaredImage from '@/components/squaredImage';
 import { requestToken } from '@/utils/reCaptcha';
 import { ActionCopy } from '@/pages/maps/_components/ActionCopy';
 import { ActionDownload } from '@/pages/maps/_components/ActionDownload';
+import { modes } from '@/pages/maps/_components/ActionChangeMode';
 
 async function uploadUrl() {
   return '/api/maps/upload?token=' + (await requestToken('mapUpload'));
@@ -36,8 +34,7 @@ function onChange(callback: (response: any) => void) {
   return function({ file }: UploadChangeParam<UploadFile>) {
     if (file.status === 'done') {
       message.success('上传成功');
-      if (typeof file.response === 'string')
-        history!!.push('/maps/' + file.response + '/detail');
+      if (typeof file.response === 'string') history!!.push('/maps/' + file.response + '/detail');
       else callback(file.response);
     } else if (file.status === 'error') {
       message.error('上传失败' + file.response);
@@ -46,31 +43,12 @@ function onChange(callback: (response: any) => void) {
 }
 
 export default function MapsIndex(props: { children: React.ReactNode }) {
-  const {
-    maps,
-    searchKey,
-    pullMore,
-    loading,
-    uploadFinish,
-    onSearch,
-  } = useModel('maps');
-  let searchFromLocation = decodeURI(history!!.location.search.substring(1));
+  const { maps, searchKey, pullMore, noData, loading, uploadFinish, onSearch } = useModel('maps');
   useEffect(() => {
-    if (
-      history!!.location.pathname == '/maps' &&
-      searchFromLocation != searchKey
-    ) {
-      if (searchFromLocation) {
-        onSearch(searchFromLocation).then();
-      } else {
-        history!!.replace({ search: searchKey });
-      }
-    }
     //Run once
-    if (maps.length || loading) return;
-    console.log('Effect');
+    if (maps.length || loading || noData) return;
     pullMore().then();
-  }, [searchFromLocation]);
+  }, [loading]);
   return (
     <PageHeader
       title={'地图分享'}
@@ -82,9 +60,8 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
           style={{ width: 'unset' }}
           onSearch={async it => {
             await onSearch(it);
-            history!!.push({ search: it });
           }}
-          defaultValue={searchFromLocation || searchKey}
+          defaultValue={searchKey}
           loading={loading}
         />,
         <Upload
@@ -104,22 +81,38 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
         banner
         closable
       />
+      <div style={{ margin: '8px' }}>
+        <b style={{ marginRight: 8, fontSize: '16px', lineHeight: '32px' }}>按模式筛选:</b>
+        <Radio.Group
+          value={(searchKey.match('@mode:([a-zA-Z]+) ') || [])[1]}
+          onChange={e => {
+            if (e.target.value) onSearch('@mode:' + e.target.value + ' ').then();
+            else onSearch('').then();
+          }}
+        >
+          {modes.map(mode => (
+            <Radio.Button value={mode}>{mode}</Radio.Button>
+          ))}
+          <Radio.Button value={''}>
+            <CloseOutlined />
+          </Radio.Button>
+        </Radio.Group>
+      </div>
       <Row gutter={16}>
+        {noData && (
+          <Col xs={24} sm={12} md={8} lg={6} key={'noData'}>
+            <Card style={{ height: '100%' }}>
+              <Empty />
+            </Card>
+          </Col>
+        )}
         {maps.map(map => (
           <Col xs={24} sm={12} md={8} lg={6} key={map.hash}>
             <Card
               cover={<SquaredImage src={map.preview} />}
               actions={[
-                <ActionCopy
-                  hash={map.hash}
-                  key={'copy'}
-                  content={it => <CopyOutlined onClick={it} />}
-                />,
-                <ActionDownload
-                  hash={map.hash}
-                  key={'download'}
-                  content={it => <DownloadOutlined onClick={it} />}
-                />,
+                <ActionCopy hash={map.hash} key={'copy'} content={it => <CopyOutlined onClick={it} />} />,
+                <ActionDownload hash={map.hash} key={'download'} content={it => <DownloadOutlined onClick={it} />} />,
                 <Tooltip title={'查看详情'} key={'detail'}>
                   <BarsOutlined
                     onClick={() => {
@@ -151,18 +144,13 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
                 <InboxOutlined />
               </p>
               <p className={'ant-upload-text'}>点击或拖动文件到此,进行上传</p>
-              <p className={'ant-upload-hint'}>
-                文件格式.msav游戏地图存档,大小限制100kB
-              </p>
+              <p className={'ant-upload-hint'}>文件格式.msav游戏地图存档,大小限制100kB</p>
             </Upload.Dragger>
           </Card>
         </Col>
       </Row>
       <Spin spinning={loading}>
-        <Button
-          style={{ width: '100%', textAlign: 'center' }}
-          onClick={pullMore}
-        >
+        <Button style={{ width: '100%', textAlign: 'center' }} onClick={pullMore}>
           加载更多
         </Button>
       </Spin>

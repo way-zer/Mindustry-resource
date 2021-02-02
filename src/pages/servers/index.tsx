@@ -3,12 +3,7 @@ import { Button, PageHeader, Switch, Table, Tooltip } from 'antd';
 import { Type as Info } from '@/pages/servers/_type';
 import { request } from 'umi';
 
-import {
-  FrownFilled,
-  MehFilled,
-  PlusOutlined,
-  SmileFilled,
-} from '@ant-design/icons';
+import { FrownFilled, MehFilled, PlusOutlined, SmileFilled } from '@ant-design/icons';
 import { colorize, modeFilters, modeMap } from '@/utils/mindustry';
 import { AddModel } from '@/pages/servers/_addModel';
 
@@ -65,10 +60,7 @@ const renderMap = (_: any, v: Info) => {
   );
 };
 
-export default class ServerList extends React.Component<
-  {},
-  { data: Info[]; modal: boolean; autoUpdate: boolean }
-> {
+export default class ServerList extends React.Component<{}, { data: Info[]; modal: boolean; autoUpdate: boolean }> {
   state = { data: [], modal: false, autoUpdate: false };
 
   render() {
@@ -118,10 +110,16 @@ export default class ServerList extends React.Component<
             dataIndex="address"
             fixed="left"
             render={renderAddress}
-            onFilter={(f, v) => (v.version > 8000 ? 6 : 5) == f}
+            onFilter={(f, v) => {
+              if (f == 5) return v.version <= 104;
+              if (f == 6) return v.version > 104 && v.version < 1000;
+              if (f == 'BE') return v.version > 1000;
+              return true;
+            }}
             filters={[
               { text: '5.0 正式版', value: 5 },
-              { text: '6.0 BE测试版', value: 6 },
+              { text: '6.0 版本', value: 6 },
+              { text: 'BE测试版', value: 'BE' },
             ]}
           />
           <Table.Column title="名字" dataIndex="name" render={renderInfo} />

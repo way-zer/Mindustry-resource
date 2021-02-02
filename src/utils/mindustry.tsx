@@ -61,7 +61,7 @@ export function colorize(text: string) {
 
   let lastColor = 'black';
   const out: JSX.Element[] = [];
-  const list = text.split(/(\[[#0-9a-zA-Z]*])/g).forEach(v => {
+  text.split(/(\[[#0-9a-zA-Z]*])/g).forEach(v => {
     if (v.length == 0) return;
     if (v.startsWith('[') && v.endsWith(']')) {
       const color = colors(v.substring(1, v.length - 1));
@@ -80,11 +80,11 @@ export function colorize(text: string) {
 }
 
 export const modeMap = {
-  survival: '生存',
-  pvp: 'PvP',
-  attack: '进攻',
-  sandbox: '沙盒',
-  editor: '编辑器',
+  Survival: '生存',
+  Pvp: 'PvP',
+  Attack: '进攻',
+  Sandbox: '沙盒',
+  Editor: '编辑器',
 };
 
 export const modeFilters = Object.keys(modeMap).map(k => ({

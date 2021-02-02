@@ -16,11 +16,11 @@ export interface Type {
 }
 
 export enum Mode {
-  Attack = 'attack',
-  Editor = 'editor',
-  Pvp = 'pvp',
-  Sandbox = 'sandbox',
-  Survival = 'survival',
+  Attack = 'Attack',
+  Editor = 'Editor',
+  Pvp = 'Pvp',
+  Sandbox = 'Sandbox',
+  Survival = 'Survival',
 }
 
 export enum TypeEnum {

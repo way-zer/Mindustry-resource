@@ -28,7 +28,12 @@
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "register-service-worker": "^1.7.2",
     "umi": "^3.2.6",
+    "workbox-webpack-plugin": "^6.0.2",
     "yorkie": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/workbox-webpack-plugin": "^5.1.5"
   }
 }

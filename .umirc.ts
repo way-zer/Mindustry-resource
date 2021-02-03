@@ -41,6 +41,14 @@ export default defineConfig({
         swDest: '/sw.js',
         skipWaiting: true,
         clientsClaim: true,
+        navigateFallback: '/index.html',
+        globIgnores: ['robot.txt'],
+        runtimeCaching: [
+          {
+            urlPattern: /(.*\.)?umi\.(.+)\.(js|css)/, //umi文件,带hash
+            handler: 'CacheFirst',
+          },
+        ],
       },
     ]);
     mone.optimization.minimize(process.env.NODE_ENV === 'production');

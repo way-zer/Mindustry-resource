@@ -5,7 +5,7 @@ export default defineConfig({
   title: false,
   links: [
     { rel: 'icon', href: 'icons-192.png' },
-    { rel: 'manifest', href: 'manifest.json' },
+    { rel: 'manifest', href: '/manifest.json' },
   ],
   nodeModulesTransform: {
     type: 'none',
@@ -42,6 +42,7 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
         navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/\/api\/.*/],
         exclude: ['robot.txt'],
         runtimeCaching: [
           {

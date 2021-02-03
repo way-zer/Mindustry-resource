@@ -21,7 +21,8 @@
   ],
   "shortcuts": [
     {
-      "name": "地图",
+      "name": "查看地图",
+      "short_name": "地图",
       "description": "上传下载查看地图",
       "url": "/maps?source=pwa"
     },

@@ -42,7 +42,7 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
         navigateFallback: '/index.html',
-        globIgnores: ['robot.txt'],
+        exclude: ['robot.txt'],
         runtimeCaching: [
           {
             urlPattern: /(.*\.)?umi\.(.+)\.(js|css)/, //umi文件,带hash

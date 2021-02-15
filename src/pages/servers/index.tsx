@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, PageHeader, Switch, Table, Tooltip } from 'antd';
+import { Badge, Button, PageHeader, Switch, Table, Tooltip } from 'antd';
 import { Type as Info } from '@/pages/servers/_type';
 import { request } from 'umi';
 
@@ -7,6 +7,7 @@ import { FrownFilled, MehFilled, PlusOutlined, SmileFilled } from '@ant-design/i
 import { colorize, modeFilters, modeMap } from '@/utils/mindustry';
 import { AddModel } from '@/pages/servers/_addModel';
 
+const isLobby = (v: Info) => v.name.indexOf('大厅') >= 0 || v.mapName == 'Mech_Machinery';
 const renderAddress = (_: any, v: Info) => {
   let tooltip: string;
   let icon: React.ReactElement;
@@ -26,10 +27,9 @@ const renderAddress = (_: any, v: Info) => {
   return (
     <Tooltip title={tooltip}>
       <div>
-        {icon}
         {v.address}
         <br />
-        版本 {v.version}
+        {icon} 版本 {v.version}
       </div>
     </Tooltip>
   );
@@ -47,6 +47,12 @@ const renderPlayers = (_: any, v: Info) => {
   return (
     <>
       <b>{v.players}</b>/{v.limit || '无限制'}
+      {isLobby(v) && (
+        <>
+          <br />
+          <Badge status="warning" text={'本服为大厅服,人数非真实'} />
+        </>
+      )}
     </>
   );
 };
@@ -122,7 +128,23 @@ export default class ServerList extends React.Component<{}, { data: Info[]; moda
               { text: 'BE测试版', value: 'BE' },
             ]}
           />
-          <Table.Column title="名字" dataIndex="name" render={renderInfo} />
+          <Table.Column
+            title="名字"
+            dataIndex="name"
+            render={renderInfo}
+            filterMultiple
+            defaultFilteredValue={['a']}
+            onFilter={(f, v) => {
+              if (isLobby(v)) return f == 'l';
+              if (v.name.search(/[\u4e00-\u9fa5]/) == -1) return f == 'g';
+              return f == 'a';
+            }}
+            filters={[
+              { text: '显示国际服', value: 'g' },
+              { text: '显示大厅服', value: 'l' },
+              { text: '其他服务器', value: 'a' },
+            ]}
+          />
           {/*<Column title="介绍" dataIndex="description"/>*/}
           <Table.Column
             title="人数"

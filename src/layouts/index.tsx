@@ -2,10 +2,7 @@ import { IRouteComponentProps, Link } from 'umi';
 import React from 'react';
 import { Button, Dropdown, Grid, Layout, Menu } from 'antd';
 import { UnorderedListOutlined } from '@ant-design/icons';
-import {
-  MenuUserInfo,
-  NavUserInfo,
-} from '@/pages/users/_components/NavUserInfo';
+import { MenuUserInfo, NavUserInfo } from '@/pages/users/_components/NavUserInfo';
 
 export default function({ children, location }: IRouteComponentProps) {
   const screens = Grid.useBreakpoint();
@@ -19,30 +16,25 @@ export default function({ children, location }: IRouteComponentProps) {
     <Menu.Item key={'game'}>
       <Link to={'/game'}>获取游戏</Link>
     </Menu.Item>,
+    <Menu.Item key={'about'}>
+      <Link to={'/about'}>关于本站</Link>
+    </Menu.Item>,
   ];
   return (
     <Layout>
       <Layout.Header>
-        <span style={{ color: 'goldenrod', fontSize: '22px' }}>
-          Mindustry 资源站{' '}
-        </span>
+        <span style={{ color: 'goldenrod', fontSize: '22px' }}>Mindustry 资源站 </span>
         {screens.xs && (
           <Dropdown
             overlay={
-              <Menu
-                selectedKeys={[location.pathname.split('/')[1]]}
-                mode="vertical"
-              >
+              <Menu selectedKeys={[location.pathname.split('/')[1]]} mode="vertical">
                 <Menu.ItemGroup title={<MenuUserInfo />} children={[]} />
                 <Menu.Divider />
                 <Menu.ItemGroup title={'切换页面'}>{menuList}</Menu.ItemGroup>
               </Menu>
             }
           >
-            <Button
-              ghost
-              style={{ position: 'absolute', top: '16px', right: '24px' }}
-            >
+            <Button ghost style={{ position: 'absolute', top: '16px', right: '24px' }}>
               <UnorderedListOutlined />
             </Button>
           </Dropdown>
@@ -71,9 +63,7 @@ export default function({ children, location }: IRouteComponentProps) {
         )}
       </Layout.Header>
       <Layout.Content>{children}</Layout.Content>
-      <Layout.Footer style={{ textAlign: 'center' }}>
-        WayZer ©2020
-      </Layout.Footer>
+      <Layout.Footer style={{ textAlign: 'center' }}>WayZer ©2021</Layout.Footer>
     </Layout>
   );
 }

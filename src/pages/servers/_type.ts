@@ -5,7 +5,7 @@ export interface Type {
   players: number;
   wave: number;
   version: number;
-  type: TypeEnum;
+  type: string;
   mode: Mode;
   limit: number;
   description: string;
@@ -21,8 +21,4 @@ export enum Mode {
   Pvp = 'Pvp',
   Sandbox = 'Sandbox',
   Survival = 'Survival',
-}
-
-export enum TypeEnum {
-  Official = 'official',
 }

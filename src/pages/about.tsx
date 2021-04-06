@@ -9,12 +9,7 @@ export default function() {
         <summary>
           资源站目前完全公益制作,如果觉得不错,可以考虑<a href={'https://afdian.net/@WayZer'}>赞助</a>
         </summary>
-        <img
-          src={
-            'http://qungz.photo.store.qq.com/qun-qungz/Jh7185rcqu.3JsCxMBGEWw!!/V5bCgAxMDMzMTE2MDc469A3YCLYxSk!/800?w5=583&h5=800&rf=viewer_421'
-          }
-          alt={'微信二维码'}
-        />
+        <img src={'/wechat.png'} alt={'微信二维码'} />
       </details>
       <h2>其他资源</h2>
       <ul>

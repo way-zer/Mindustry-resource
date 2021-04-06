@@ -7,7 +7,12 @@ import { FrownFilled, MehFilled, PlusOutlined, SmileFilled } from '@ant-design/i
 import { colorize, modeFilters, modeMap } from '@/utils/mindustry';
 import { AddModel } from '@/pages/servers/_addModel';
 
-const isLobby = (v: Info) => v.name.indexOf('大厅') >= 0 || v.mapName == 'Mech_Machinery';
+const score = (v: Info) => {
+  if (!v.online) return -1 + v.players / 1000;
+  if (v.type == 'hub') return v.players / 1000;
+  return v.players;
+};
+
 const renderAddress = (_: any, v: Info) => {
   let tooltip: string;
   let icon: React.ReactElement;
@@ -47,7 +52,7 @@ const renderPlayers = (_: any, v: Info) => {
   return (
     <>
       <b>{v.players}</b>/{v.limit || '无限制'}
-      {isLobby(v) && (
+      {v.type == 'hub' && (
         <>
           <br />
           <Badge status="warning" text={'本服为大厅服,人数非真实'} />
@@ -133,16 +138,12 @@ export default class ServerList extends React.Component<{}, { data: Info[]; moda
             dataIndex="name"
             render={renderInfo}
             filterMultiple
-            defaultFilteredValue={['a']}
-            onFilter={(f, v) => {
-              if (isLobby(v)) return f == 'l';
-              if (v.name.search(/[\u4e00-\u9fa5]/) == -1) return f == 'g';
-              return f == 'a';
-            }}
+            defaultFilteredValue={['hub', 'official']}
+            onFilter={(f, v) => v.type === f}
             filters={[
-              { text: '显示国际服', value: 'g' },
-              { text: '显示大厅服', value: 'l' },
-              { text: '其他服务器', value: 'a' },
+              { text: '显示国际服', value: 'foreign' },
+              { text: '显示大厅服', value: 'hub' },
+              { text: '其他服务器', value: 'official' },
             ]}
           />
           {/*<Column title="介绍" dataIndex="description"/>*/}
@@ -150,7 +151,8 @@ export default class ServerList extends React.Component<{}, { data: Info[]; moda
             title="人数"
             dataIndex="players"
             render={renderPlayers}
-            sorter={(a, b) => a.players - b.players}
+            sorter={(a, b) => score(a) - score(b)}
+            defaultSortOrder={'descend'}
           />
           <Table.Column
             title="地图"

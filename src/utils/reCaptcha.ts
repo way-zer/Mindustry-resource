@@ -1,5 +1,5 @@
 declare namespace grecaptcha {
-  function ready(b: () => void): void;
+  function ready(b: (token: string) => void): void;
   function execute(key: string, body: { action: string }): Promise<string>;
 }
 

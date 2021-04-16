@@ -4,15 +4,16 @@ import { MapDetail } from '@/models/types/MapDetail';
 import { history } from '@@/core/history';
 
 export interface MapInfo {
-  hash: string;
+  id: string;
+  latest: string;
   name: string;
   desc: string;
-  tags: string[];
   preview: string;
+  tags: string[];
 }
 
-export function editMap(hash: string, action: string, extra: string): Promise<void> {
-  return request(`/api/maps/${hash}/edit`, {
+export function editMap(thread: string, action: string, extra: string): Promise<void> {
+  return request(`/api/maps/thread/${thread}/edit`, {
     method: 'POST',
     data: { action, extra },
   });
@@ -24,13 +25,13 @@ export function fetchMaps(begin: number, search: string): Promise<MapInfo[]> {
   });
 }
 
-export function fetchDetail(id: string): MapDetail {
+export function fetchDetail(hash: string): MapDetail {
   const [detail, setDetail] = useState({} as MapDetail);
   useEffect(() => {
-    request('/api/maps/' + id + '/detail.json').then((d: MapDetail) => {
+    request('/api/maps/thread/' + hash + '/latest').then((d: MapDetail) => {
       setDetail(d);
     });
-  }, [id]);
+  }, [hash]);
   return detail;
 }
 

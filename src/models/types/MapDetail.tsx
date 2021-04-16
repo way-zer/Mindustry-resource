@@ -1,16 +1,10 @@
 export interface MapDetail {
-  // version: number;
-  build: number;
-  // timestamp: number;
-  // timePlayed: number;
-  // map: null;
-  mode: string;
-  rules: Rules;
-  user: string;
-  tags: { [key: string]: string };
-  // mods: any[];
-  preview: string;
   hash: string;
+  thread: string;
+  mode: string;
+  user?: string;
+  preview: string;
+  tags: { [key: string]: any; rules: Rules };
 }
 
 export interface Rules {

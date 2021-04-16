@@ -21,13 +21,13 @@ import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/es/upload/interface';
 import { colorize } from '@/utils/mindustry';
 import SquaredImage from '@/components/squaredImage';
-import { requestToken } from '@/utils/reCaptcha';
 import { ActionCopy } from '@/pages/maps/_components/ActionCopy';
 import { ActionDownload } from '@/pages/maps/_components/ActionDownload';
 import { modes } from '@/pages/maps/_components/ActionChangeMode';
 
 async function uploadUrl() {
-  return '/api/maps/upload?token=' + (await requestToken('mapUpload'));
+  return message.warn('网站结构性升级，该功能暂时不可用', 30_000);
+  // return '/api/maps/upload?token=' + (await requestToken('mapUpload'));
 }
 
 function onChange(callback: (response: any) => void) {
@@ -107,16 +107,21 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
           </Col>
         )}
         {maps.map(map => (
-          <Col xs={24} sm={12} md={8} lg={6} key={map.hash}>
+          <Col xs={24} sm={12} md={8} lg={6} key={map.id}>
             <Card
               cover={<SquaredImage src={map.preview} />}
               actions={[
-                <ActionCopy hash={map.hash} key={'copy'} content={it => <CopyOutlined onClick={it} />} />,
-                <ActionDownload hash={map.hash} key={'download'} content={it => <DownloadOutlined onClick={it} />} />,
+                <ActionCopy
+                  thread={map.id}
+                  hash={map.latest.replace('-', '')}
+                  key={'copy'}
+                  content={it => <CopyOutlined onClick={it} />}
+                />,
+                <ActionDownload hash={map.latest} key={'download'} content={it => <DownloadOutlined onClick={it} />} />,
                 <Tooltip title={'查看详情'} key={'detail'}>
                   <BarsOutlined
                     onClick={() => {
-                      history!!.push('/maps/' + map.hash + '/detail');
+                      history!!.push('/map/' + map.id + '/latest');
                     }}
                   />
                 </Tooltip>,

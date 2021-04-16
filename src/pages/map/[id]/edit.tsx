@@ -1,5 +1,5 @@
 import React from "react";
-import DetailModal from "@/pages/maps/[id]/detail";
+import DetailModal from "@/pages/map/[id]/latest";
 
 export default function EditModal() {
   return <DetailModal>

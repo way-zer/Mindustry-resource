@@ -32,7 +32,7 @@ function SearchModal({ user, value, setValue }: { user: string; value: string; s
         showSearch
       >
         {state.data.map(d => (
-          <Select.Option value={d.hash} key={d.hash}>
+          <Select.Option value={d.latest} key={d.latest}>
             {d.name}
           </Select.Option>
         ))}
@@ -69,7 +69,8 @@ export function ActionMarkOutDate({
           setShow(false);
         }}
       >
-        <SearchModal user={detail.user} value={value} setValue={setValue} />
+        <p>网站结构性升级，该功能暂时不可用</p>
+        {/*<SearchModal user={detail.user} value={value} setValue={setValue} />*/}
       </Modal>
       {content(() => {
         setShow(true);

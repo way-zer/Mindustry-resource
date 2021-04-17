@@ -113,7 +113,7 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
               actions={[
                 <ActionCopy
                   thread={map.id}
-                  hash={map.latest.replace('-', '')}
+                  hash={map.latest}
                   key={'copy'}
                   content={it => <CopyOutlined onClick={it} />}
                 />,

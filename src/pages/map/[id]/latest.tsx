@@ -21,7 +21,7 @@ function DetailActions({ detail }: { detail: MapDetail }) {
       )} />
     </Col>
     {detail.hash && <Col>
-      <ActionCopy thread={detail.thread} hash={detail.hash.replace('-', '')} content={(it) => (
+      <ActionCopy thread={detail.thread} hash={detail.hash} content={(it) => (
         <Button onClick={it} shape={'circle'} icon={<CopyOutlined />} />
       )} />
     </Col>}

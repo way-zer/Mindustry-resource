@@ -49,7 +49,7 @@ export default defineComponent({
   name: "TheLogin",
   setup() {
     const isLogin = ref(true)
-    const formRef = ref<ElForm>(null)
+    const formRef = ref<typeof ElForm>()
     const form = ref({
       user: '',
       password: '',
@@ -63,7 +63,7 @@ export default defineComponent({
       },
       async submit() {
         try {
-          await formRef.value.validate()
+          await formRef.value!!.validate()
           if (isLogin.value)
             await userModel.login(form.value.user, form.value.password)
           else

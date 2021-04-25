@@ -1,6 +1,6 @@
 <template>
   <el-dialog model-value @close="close" width="100%" :zIndex="100">
-    <el-skeleton :loading="data === {}">
+<!--    <el-skeleton :loading="!data.hash">-->
       <el-row type="flex" justify="center">
         <el-col :md="10" :xs="18">
           <SquaredImage :src="data.preview"/>
@@ -8,7 +8,7 @@
             <ActionCopy :thread="data.thread" :hash="data.hash" circle/>
             <ActionDownload :hash="data.hash" circle/>
             <ActionChangeMode v-if="admin" :thread="data.thread" :now="data.mode"/>
-            <ActionUpload v-if="admin" :thread="data.thread"/>
+            <ActionUpload v-if="admin" :thread="data.thread" circle/>
           </el-row>
         </el-col>
         <el-col :md="10" :xs="18">
@@ -73,11 +73,11 @@
           </ul>
         </el-col>
       </el-row>
-      <p id="footer">
+      <div id="footer">
         <span>可以直接分享该页链接给他人</span><br/>
         <pre>{{ path }}</pre>
-      </p>
-    </el-skeleton>
+      </div>
+<!--    </el-skeleton>-->
   </el-dialog>
 </template>
 
@@ -104,7 +104,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const ret = ref<MapDetail>({})
+    const ret = ref<MapDetail>({} as any)
     watch(() => route.params, async (p) => {
       if (p.thread)
         ret.value = await MapApi.detail(p.thread, p.id || 'latest')

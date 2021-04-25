@@ -15,7 +15,7 @@ export default defineComponent({
   },
   setup(props) {
     return {
-      text: props.text,
+      text: props.text!!,
       colorize
     }
   }

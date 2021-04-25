@@ -1,5 +1,5 @@
 <template>
-  <el-button v-if="!thread" size="medium" type="primary" @click="click">
+  <el-button v-if="!circle" size="medium" type="primary" @click="click">
     上传地图<i class="el-icon-upload el-icon--right"/>
   </el-button>
   <a-tooltip v-else title="更新地图" destroy-tooltip-on-hide>
@@ -18,10 +18,14 @@ export default {
       type: Number,
       require: false
     },
+    circle: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     click() {
-      const {thread} = this.$props
+      const thread = this.thread
       this.$router.push("/map/upload" + (thread ? `?update=${thread}` : ''))
     }
   }

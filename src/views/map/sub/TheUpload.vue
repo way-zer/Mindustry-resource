@@ -21,17 +21,18 @@ import {useRoute, useRouter} from "vue-router";
 import userModel from "@/store/user/model";
 import {ElMessage} from "element-plus";
 import {MapApi} from "@/store/maps/api";
+import {ElUploadRequestOptions} from "element-plus/es/el-upload/src/upload.type";
 
 export default defineComponent({
   name: "TheUpload",
   setup() {
     const router = useRouter()
-    const update = useRoute().query.update
+    const update = useRoute().query.update?.toString()
     const uploadUrl = ref<string>("404")
     return {
       uploadUrl,
       update,
-      upload: async (info) => {
+      upload: async (info: ElUploadRequestOptions) => {
         if (!userModel.logged) {
           userModel.setDialog(true)
           ElMessage.error("请先登录后再进行上传")
@@ -57,8 +58,10 @@ export default defineComponent({
 <style lang="stylus" scoped>
 #upload
   margin 0 auto
+
 #alert span
   font-size 16px
+
 .important
   color orangered
   font-size 24px

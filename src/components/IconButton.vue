@@ -14,7 +14,7 @@ export default defineComponent({
   },
   emits: ["click"],
   methods: {
-    click(e){
+    click(e: any){
       this.$emit("click",e)
     }
   }

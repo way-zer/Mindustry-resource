@@ -46,7 +46,7 @@ export default defineComponent({
     return {
       modes: gameModes,
       searchKey: tmpSearch,
-      onSearch: (v) => {
+      onSearch: (v:string) => {
         tmpSearch.value = v
         maps.dispatch('search', v)
       },

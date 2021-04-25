@@ -9,7 +9,7 @@
     </template>
   </el-dialog>
   <a-tooltip title="设置游戏模式" destroy-tooltip-on-hide>
-    <icon-button icon="el-icon-edit" circle @click="mode = $props.now;show = true"/>
+    <icon-button icon="el-icon-edit" circle @click="mode = $props.now.toString();show = true"/>
   </a-tooltip>
 </template>
 

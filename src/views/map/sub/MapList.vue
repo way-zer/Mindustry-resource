@@ -1,6 +1,6 @@
 <template>
   <el-row type="flex" :gutter=16>
-    <el-col :xs=24 :sm=12 :lg=6 v-for="map in maps" :key="map.hash">
+    <el-col :xs=24 :sm=12 :lg=6 v-for="map in maps" :key="map.latest">
       <el-card class="mapCard">
         <SquaredImage :src="map.preview" alt="preview"/>
         <div>

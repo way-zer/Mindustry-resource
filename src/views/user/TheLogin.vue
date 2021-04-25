@@ -27,6 +27,7 @@
             { required: true, message: '请输入邀请码', trigger: 'blur'},
             { pattern: /[0-9]{6}/, message: '请输入正确邀请码', trigger: 'change'},
       ]">
+        <span class="tip">邀请码为6位数字,请找微泽机器人(QQ1849301538)私聊"邀请码"获取,如不回复，可加好友后再试</span>
         <el-input v-model="form.code" type="number"/>
       </el-form-item>
       <el-form-item>
@@ -58,13 +59,12 @@ export default defineComponent({
     return {
       userModel, isLogin, formRef, form,
       passwordConfirmValidator(_, v) {
-        console.log(v, form.value.password)
         return v === form.value.password
       },
       async submit() {
         try {
           await formRef.value.validate()
-          if (isLogin)
+          if (isLogin.value)
             await userModel.login(form.value.user, form.value.password)
           else
             await userModel.register(form.value.user, form.value.password, form.value.code)
@@ -80,6 +80,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style lang="stylus">
+.tip
+  display inline-block
+  line-height normal
 </style>

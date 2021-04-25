@@ -20,8 +20,12 @@ export default defineConfig({
                 navigateFallback: 'index.html',
                 runtimeCaching: [
                     {
-                        urlPattern: /icons-.+\.png/,
-                        handler: 'StaleWhileRevalidate'
+                        urlPattern: /icons-\d+\.\d+\.png/,
+                        handler: 'CacheFirst'
+                    },
+                    {
+                        urlPattern: /manifest\.\d+\.json/,
+                        handler: 'CacheFirst'
                     },
                     {
                         urlPattern: /api\/.*/,

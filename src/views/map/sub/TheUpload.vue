@@ -1,9 +1,9 @@
 <template>
   <el-dialog model-value :zIndex="100" center
              @close="close" :title="update?'更新地图':'上传地图'">
-    <el-alert v-if="!update" type="warning" :closable="false" show-icon center>
-      更新地图请在地图详情页进行上传,禁止重复上传<br/>
-      地图上传完成后,请在详情页设置正确的游戏模式
+    <el-alert v-if="!update" type="warning" :closable="false" show-icon center id="alert">
+      <span class="important">更新地图请在地图详情页进行上传</span><br/>
+      <span>地图上传完成后,请在详情页设置正确的游戏模式</span>
     </el-alert>
     <el-row align="center">
       <el-upload id="upload" action="ohno" drag :multiple="false" :http-request="upload">
@@ -57,4 +57,9 @@ export default defineComponent({
 <style lang="stylus" scoped>
 #upload
   margin 0 auto
+#alert span
+  font-size 16px
+.important
+  color orangered
+  font-size 24px
 </style>

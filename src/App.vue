@@ -11,6 +11,7 @@
     </el-header>
     <el-main>
       <router-view/>
+      <the-login/>
     </el-main>
     <el-footer id="footer">WayZer ©2021</el-footer>
   </el-container>
@@ -19,9 +20,10 @@
 <script type="ts">
 import {routes} from "@/plugins/router";
 import NavUserInfo from "@/views/user/components/NavUserInfo.vue";
+import TheLogin from "@/views/user/TheLogin.vue";
 
 export default {
-  components: {NavUserInfo},
+  components: {TheLogin, NavUserInfo},
   data: () => ({
     routes: routes.filter(it => it.name)
   }),

@@ -7,6 +7,8 @@
           <el-row :gutter="24" justify="center" type="flex">
             <ActionCopy :thread="data.thread" :hash="data.hash" circle/>
             <ActionDownload :hash="data.hash" circle/>
+            <ActionChangeMode v-if="admin" :thread="data.thread" :now="data.mode"/>
+            <ActionUpload v-if="admin" :thread="data.thread"/>
           </el-row>
         </el-col>
         <el-col :md="10" :xs="18">
@@ -68,7 +70,7 @@
       </el-row>
       <p id="footer">
         <span>可以直接分享该页链接给他人</span><br/>
-        <pre>{{path}}</pre>
+        <pre>{{ path }}</pre>
       </p>
     </el-skeleton>
   </el-dialog>
@@ -82,10 +84,14 @@ import {MapDetail} from "@/store/maps/type";
 import {useRoute, useRouter} from "vue-router";
 import ActionCopy from "@/views/map/components/ActionCopy.vue";
 import ActionDownload from "@/views/map/components/ActionDownload.vue";
+import ActionUpload from "@/views/map/components/ActionUpload.vue";
+import ActionChangeMode from "@/views/map/components/ActionChangeMode.vue";
 
 export default defineComponent({
   name: "Detail",
   components: {
+    ActionChangeMode,
+    ActionUpload,
     ActionDownload,
     ActionCopy,
     SquaredImage
@@ -95,7 +101,8 @@ export default defineComponent({
     const router = useRouter()
     const ret = ref<MapDetail>({})
     watch(() => route.params, async (p) => {
-      ret.value = await MapApi.detail(p.thread, p.id || 'latest')
+      if (p.thread)
+        ret.value = await MapApi.detail(p.thread, p.id || 'latest')
     }, {immediate: true})
     return {
       data: ret,

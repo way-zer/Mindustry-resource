@@ -1,27 +1,50 @@
 <template>
-  <el-dialog model-value @close="close" :zIndex="100">
-    <el-alert type="warning" :closable="false">更新地图请在地图详情页进行上传</el-alert>
-    <el-upload :action="uploadUrl" drag :multiple="false" @before-upload="beforeUpload">
-      <i class="el-icon-upload"></i>
-      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-      <span>只能上传.msav文件,且不超过100KB</span>
-    </el-upload>
+  <el-dialog model-value :zIndex="100" center
+             @close="close" :title="update?'更新地图':'上传地图'">
+    <el-alert v-if="!update" type="warning" :closable="false" show-icon center>
+      更新地图请在地图详情页进行上传,禁止重复上传<br/>
+      地图上传完成后,请在详情页设置正确的游戏模式
+    </el-alert>
+    <el-row align="center">
+      <el-upload id="upload" action="ohno" drag :multiple="false" :http-request="upload">
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <span>只能上传.msav文件,且不超过100KB</span>
+      </el-upload>
+    </el-row>
   </el-dialog>
 </template>
 
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
+import userModel from "@/store/user/model";
+import {ElMessage} from "element-plus";
+import {MapApi} from "@/store/maps/api";
 
 export default defineComponent({
   name: "TheUpload",
   setup() {
     const router = useRouter()
+    const update = useRoute().query.update
     const uploadUrl = ref<string>("404")
     return {
       uploadUrl,
-      beforeUpload: () => {
-
+      update,
+      upload: async (info) => {
+        if (!userModel.logged) {
+          userModel.setDialog(true)
+          ElMessage.error("请先登录后再进行上传")
+          return Promise.reject()
+        }
+        const hash = await MapApi.upload(info.file)
+        if (update) {
+          await MapApi.updateThread(update, hash)
+          router.back()
+        } else {
+          const thread = await MapApi.newThread(hash)
+          await router.replace({path: `/map/${thread}/latest`})
+        }
       },
       close: () => {
         router.push({path: "/map"})
@@ -31,6 +54,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-
+<style lang="stylus" scoped>
+#upload
+  margin 0 auto
 </style>

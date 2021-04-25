@@ -4,9 +4,7 @@
       地图分享
       <div class="floatRight">
         <el-input v-model="searchKey" placeholder="查找地图" clearable @change="onSearch"/>
-        <el-button size="medium" type="primary" @click="toUpload">
-          上传地图<i class="el-icon-upload el-icon--right"/>
-        </el-button>
+        <ActionUpload/>
       </div>
     </template>
     <el-alert type="info" closable show-icon
@@ -36,9 +34,10 @@ import {useStore} from "@/store";
 import MapList from "@/views/map/sub/MapList.vue";
 import {useRouter} from "vue-router";
 import {gameModes} from "@/store/maps/type";
+import ActionUpload from "@/views/map/components/ActionUpload.vue";
 
 export default defineComponent({
-  components: {MapList},
+  components: {ActionUpload, MapList},
   setup() {
     const router = useRouter()
     const maps = useStore("maps")
@@ -51,9 +50,6 @@ export default defineComponent({
         tmpSearch.value = v
         maps.dispatch('search', v)
       },
-      toUpload: () => {
-        router.push("/map/upload")
-      }
     }
   }
 })

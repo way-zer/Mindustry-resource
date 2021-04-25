@@ -14,8 +14,16 @@ export const MapApi = {
     async edit(thread: string, action: string, extra: string): Promise<void> {
         return axios.post(`/api/maps/thread/${thread}/edit`, {action, extra})
     },
-    async getUploadUrl(): Promise<string> {
-        return "/api/maps/upload?token" + (await requestToken('mapUpload'))
+    async updateThread(thread: string,hash: string){
+        return axios.post(`/api/maps/thread/${thread}/update?map=`+hash)
+    },
+    async newThread(hash: string): Promise<number>{
+        return +await axios.post(`/api/maps/thread/new?map=`+hash)
+    },
+    async upload(file: File): Promise<string> {
+        const form = new FormData()
+        form.append('file', file)
+        return axios.post("/api/maps/upload?token=" + (await requestToken('mapUpload')), form)
     },
     async download(hash: string) {
         const token = await requestToken("mapDownload")

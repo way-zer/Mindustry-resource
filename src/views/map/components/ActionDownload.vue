@@ -8,7 +8,7 @@
 import IconButton from "@/components/IconButton.vue";
 import {ElMessage} from "element-plus";
 import {MapApi} from "@/store/maps/api";
-import userModel from "@/store/userModel";
+import userModel from "@/store/user/model";
 
 export default {
   name: "ActionDownload",
@@ -22,9 +22,11 @@ export default {
   },
   methods: {
     async download() {
-      if (!userModel.logged)
+      if (!userModel.logged){
+        userModel.setDialog(true)
         return ElMessage.error("请先登录后再下载")
-      await MapApi.download(props.hash)
+      }
+      await MapApi.download(this.$props.hash)
     }
   }
 }

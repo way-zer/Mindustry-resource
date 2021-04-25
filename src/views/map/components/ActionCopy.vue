@@ -1,7 +1,7 @@
 <template>
   <a-tooltip title="拷贝换图指令" destroy-tooltip-on-hide>
     <a-popover trigger="click">
-      <icon-button icon="el-icon-document-copy" :circle="$props.circle"/>
+      <icon-button icon="el-icon-document-copy" :circle="$props.circle" @click="copy"/>
       <template #content>
         粘贴指令到支持网络换图的服务器使用
         <pre ref="command">/vote map {{ $props.thread }}</pre>

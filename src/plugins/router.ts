@@ -2,6 +2,8 @@ import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import MapsList from '../views/map/List.vue'
 import Detail from '@/views/map/sub/Detail.vue'
 import TheUpload from '@/views/map/sub/TheUpload.vue'
+import TheList from '@/views/server/TheList.vue'
+import About from '@/views/About.vue'
 
 export const routes: Array<RouteRecordRaw> = [
     {
@@ -16,15 +18,14 @@ export const routes: Array<RouteRecordRaw> = [
     {
         path: '/server',
         name: '服务器列表',
-        component: () => import(/* webpackChunkName: "server" */ '@/views/server/TheList.vue'),
+        component: TheList,//too Small to split
+        // component: () => import(/* webpackChunkName: "server" */ '@/views/server/TheList.vue'),
     },
     {
         path: '/about',
         name: '关于本站',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        component: About,//too Small to split
+        // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
     },
     {
         path: '/',

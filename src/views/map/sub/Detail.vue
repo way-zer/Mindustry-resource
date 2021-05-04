@@ -115,7 +115,7 @@ export default defineComponent({
     }, {immediate: true})
     return {
       detail: ret,
-      tags: computed((ctx) => ((ctx.detail.tags || {}) as Tags)),
+      tags: computed(() => ((ret.value.tags || {}) as Tags)),
       rules: computed(() => ((ret.value.tags?.rules || {}) as Rules)),
       rulesOld: computed(() => ((ret.value.tags?.rules || {}) as RulesV5)),
       version: computed(() => {

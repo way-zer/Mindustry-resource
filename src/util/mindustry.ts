@@ -4,7 +4,7 @@ interface ColorData {
     text: string
 }
 
-const colors = {
+const colorMap = {
     '': 'black',
 
     white: 'black',
@@ -53,32 +53,32 @@ const colors = {
 
     // special
     accent: '#bf972a',
-};
+}
 
 export function colorize(text: string): ColorData[] {
     function colors(str: string): string {
-        if (str.match(/#[0-9a-f]{3,8}/i)) return str;
+        if (str.match(/#[0-9a-f]{3,8}/i)) return str
         else {
-            // eslint-disable-next-line
             // @ts-ignore
-            return colors[str.toLowerCase()];
+            return colorMap[str.toLowerCase()]
         }
     }
 
-    let lastColor = 'black';
-    const out: ColorData[] = [];
+    if (!text) return []
+    let lastColor = 'black'
+    const out: ColorData[] = []
     text.split(/(\[[#0-9a-zA-Z]*])/g).forEach(v => {
-        if (v.length == 0) return;
+        if (v.length == 0) return
         if (v.startsWith('[') && v.endsWith(']')) {
-            const color = colors(v.substring(1, v.length - 1));
+            const color = colors(v.substring(1, v.length - 1))
             if (color) {
-                lastColor = color;
-                return;
+                lastColor = color
+                return
             }
         }
         out.push({color: lastColor, key: out.length, text: v})
     })
-    return out;
+    return out
 }
 
 export const modeMap = {
@@ -87,11 +87,11 @@ export const modeMap = {
     Attack: '进攻',
     Sandbox: '沙盒',
     Editor: '编辑器',
-};
+}
 
 export const modeFilters = Object.keys(modeMap).map(k => ({
     // eslint-disable-next-line
     // @ts-ignore
     text: modeMap[k],
     value: k,
-}));
+}))

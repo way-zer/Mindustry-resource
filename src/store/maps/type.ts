@@ -13,14 +13,31 @@ export interface MapDetail {
     mode: string;
     user?: string;
     preview: string;
-    tags: {
-        rules: Rules
-    } & any;
+    tags: Tags
+}
+
+export interface Tags {
+    mods:           any[];
+    name:           string;
+    wave:           number;
+    build:          number;
+    rules:          RulesV5|Rules;
+    saved:          number;
+    stats:          any;
+    width:          number;
+    author:         string;
+    height:         number;
+    viewpos:        string;
+    playtime:       number;
+    wavetime:       number;
+    description:    string;
+    saveVersion:    number;
+    controlledType: string;
 }
 
 export const gameModes = ['Survive', 'Pvp', 'Attack', 'Sandbox', 'Editor', 'UnKnown']
 
-interface Rules {
+export interface RulesV5 {
     waves: boolean;
     unitHealthMultiplier: number;
     playerHealthMultiplier: number;
@@ -34,6 +51,32 @@ interface Rules {
     spawns: Spawn[];
     attackMode: boolean;
     loadout: Loadout[];
+    bannedBlocks: BannedBlocks;
+    solarPowerMultiplier: number;
+}
+
+export interface Rules {
+    teams:                       { [key: string]: Team };
+    waves:                       boolean;
+    spawns:                      Spawn[];
+    loadout:                     Loadout[];
+    unitAmmo:                    boolean;
+    waveSpacing:                 number;
+    dropZoneRadius:              number;
+    damageExplosions:            boolean;
+    reactorExplosions:           boolean;
+    buildCostMultiplier:         number;
+    buildSpeedMultiplier:        number;
+    enemyCoreBuildRadius:        number;
+    unitDamageMultiplier:        number;
+    blockDamageMultiplier:       number;
+    blockHealthMultiplier:       number;
+    unitBuildSpeedMultiplier:    number;
+    deconstructRefundMultiplier: number;
+    attackMode: boolean;
+    fire: boolean;
+    unitCap?: number;
+    unitCapVariable?: number;
     bannedBlocks: BannedBlocks;
     solarPowerMultiplier: number;
 }
@@ -54,5 +97,11 @@ interface Spawn {
     spacing?: number;
     scaling: number;
     begin?: number;
-    effect?: number;
+    effect?: number|string;
+    shieldScaling?: number;
+    shields?:       number;
+}
+
+interface Team {
+    infiniteAmmo?: boolean;
 }

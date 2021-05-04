@@ -35,30 +35,28 @@
 </template>
 
 <script type="tsx">
-import SquaredImage from "@/components/SquaredImage.vue";
-import ColorizeSpan from "@/components/ColorizeSpan.vue";
-import {computed, defineComponent} from "vue";
-import {useStore} from "@/store";
-import ActionDownload from "@/views/map/components/ActionDownload.vue";
-import ActionCopy from "@/views/map/components/ActionCopy.vue";
-import ActionDetail from "@/views/map/components/ActionDetail.vue";
-import infiniteScroll from "@/util/infiniteScroll";
+import SquaredImage from '@/components/SquaredImage.vue'
+import ColorizeSpan from '@/components/ColorizeSpan.vue'
+import {computed, defineComponent} from 'vue'
+import ActionDownload from '@/views/map/components/ActionDownload.vue'
+import ActionCopy from '@/views/map/components/ActionCopy.vue'
+import ActionDetail from '@/views/map/components/ActionDetail.vue'
+import infiniteScroll from '@/util/infiniteScroll'
+import store from '@/store/maps/store'
 
 export default defineComponent({
   components: {ActionDetail, ActionCopy, ActionDownload, ColorizeSpan, SquaredImage},
   setup() {
-    const maps = useStore("maps")
-
-    infiniteScroll(200, 10, () => (maps.state.loading || maps.state.noMore), () => {
-      maps.dispatch('pullMore')
+    infiniteScroll(200, 10, () => (store.state.loading || store.state.noMore), () => {
+      store.dispatch('pullMore')
     })
 
     return {
-      maps: computed(() => maps.state.data),
-      loading: computed(() => maps.state.loading),
-      noMore: computed(() => maps.state.noMore),
+      maps: computed(() => store.state.data),
+      loading: computed(() => store.state.loading),
+      noMore: computed(() => store.state.noMore),
     }
-  }
+  },
 })
 </script>
 

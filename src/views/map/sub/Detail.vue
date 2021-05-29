@@ -94,7 +94,7 @@ import ActionCopy from '@/views/map/components/ActionCopy.vue'
 import ActionDownload from '@/views/map/components/ActionDownload.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
 import ActionChangeMode from '@/views/map/components/ActionChangeMode.vue'
-import userModel from '@/store/user/model'
+import {userStore} from '@/store/user'
 
 export default defineComponent({
   name: 'Detail',
@@ -125,7 +125,7 @@ export default defineComponent({
         return 0
       }),
       admin: computed(() => {
-        const info = userModel.info
+        const info = userStore.info
         if (!info) return false
         return info.name == ret.value.user || info.role == 'Admin' || info.role == 'SuperAdmin'
       }),

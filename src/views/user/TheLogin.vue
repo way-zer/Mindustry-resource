@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :model-value="userModel.showDialog" :before-close="close" :title="isLogin?'登录':'注册'" center>
+  <el-dialog :model-value="showDialog" :before-close="close" :title="isLogin?'登录':'注册'" center>
     <el-form ref="formRef" :model="form" @submit="submit">
       <el-form-item label="用户名" prop="user" :rules="[
             { required: true, message: '请输入用户名', trigger: 'blur'},
@@ -40,13 +40,12 @@
 </template>
 
 <script lang="tsx">
-import {ref} from "vue";
-import {default as defineComponent} from "@/store/mobxObserver";
-import userModel from "@/store/user/model";
-import {ElForm} from "element-plus";
+import {computed, defineComponent, ref} from 'vue'
+import {ElForm} from 'element-plus'
+import {userStore} from '@/store/user'
 
 export default defineComponent({
-  name: "TheLogin",
+  name: 'TheLogin',
   setup() {
     const isLogin = ref(true)
     const formRef = ref<typeof ElForm>()
@@ -57,26 +56,27 @@ export default defineComponent({
       code: '',
     })
     return {
-      userModel, isLogin, formRef, form,
+      isLogin, formRef, form,
       passwordConfirmValidator(_, v) {
         return v === form.value.password
       },
+      showDialog: computed(() => userStore.showDialog),
       async submit() {
         try {
           await formRef.value!!.validate()
           if (isLogin.value)
-            await userModel.login(form.value.user, form.value.password)
+            await userStore.login(form.value)
           else
-            await userModel.register(form.value.user, form.value.password, form.value.code)
+            await userStore.register(form.value)
         } catch (e) {
         }
       },
       close(done) {
-        userModel.setDialog(false)
+        userStore.showDialog = false
         done()
-      }
+      },
     }
-  }
+  },
 })
 </script>
 

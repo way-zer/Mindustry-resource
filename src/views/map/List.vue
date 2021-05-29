@@ -33,19 +33,19 @@ import {defineComponent, ref} from 'vue'
 import MapList from '@/views/map/sub/MapList.vue'
 import {gameModes} from '@/store/maps/type'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
-import store from '@/store/maps/store'
+import {mapsStore} from '@/store/maps'
 
 export default defineComponent({
   components: {ActionUpload, MapList},
   setup() {
-    const tmpSearch = ref(store.state.searchKey)
+    const tmpSearch = ref(mapsStore.searchKey)
 
     return {
       modes: gameModes,
       searchKey: tmpSearch,
       onSearch: (v: string) => {
         tmpSearch.value = v
-        store.dispatch('search', v)
+        mapsStore.search(v).then()
       },
     }
   },

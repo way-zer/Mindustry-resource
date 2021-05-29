@@ -16,26 +16,26 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import userModel from "@/store/user/model";
-import {ElMessage} from "element-plus";
-import {MapApi} from "@/store/maps/api";
-import {ElUploadRequestOptions} from "element-plus/es/el-upload/src/upload.type";
+import {defineComponent, ref} from 'vue'
+import {useRoute, useRouter} from 'vue-router'
+import {ElMessage} from 'element-plus'
+import {MapApi} from '@/store/maps/api'
+import {ElUploadRequestOptions} from 'element-plus/es/el-upload/src/upload.type'
+import {userStore} from '@/store/user'
 
 export default defineComponent({
-  name: "TheUpload",
+  name: 'TheUpload',
   setup() {
     const router = useRouter()
     const update = useRoute().query.update?.toString()
-    const uploadUrl = ref<string>("404")
+    const uploadUrl = ref<string>('404')
     return {
       uploadUrl,
       update,
       upload: async (info: ElUploadRequestOptions) => {
-        if (!userModel.logged) {
-          userModel.setDialog(true)
-          ElMessage.error("请先登录后再进行上传")
+        if (!userStore.logged) {
+          userStore.showDialog = true
+          ElMessage.error('请先登录后再进行上传')
           return Promise.reject()
         }
         const hash = await MapApi.upload(info.file)
@@ -48,10 +48,10 @@ export default defineComponent({
         }
       },
       close: () => {
-        router.push({path: "/map"})
-      }
+        router.push({path: '/map'})
+      },
     }
-  }
+  },
 })
 </script>
 

@@ -68,10 +68,10 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue'
-import store from '@/store/server/store'
 import {ServerInfo} from '@/store/server/type'
 import ColorizeSpan from '@/components/ColorizeSpan.vue'
 import {modeFilters, modeMap} from '@/util/mindustry'
+import {serverStore} from '@/store/server'
 
 export default defineComponent({
   components: {ColorizeSpan},
@@ -94,15 +94,15 @@ export default defineComponent({
     i: (scope) => (scope.row as ServerInfo),
   }),
   computed: {
-    loading: () => (store.state.loading),
-    data: () => (store.state.data),
+    loading: () => (serverStore.loading),
+    data: () => (serverStore.data),
   },
   methods: {
     async check() {
       if (this.adding) return
       this.adding = true
       try {
-        await store.dispatch('add', this.address)
+        await serverStore.add(this.address)
         //success
         this.address = ''
         this.showModal = false
@@ -118,7 +118,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    store.dispatch('refresh')
+    serverStore.refresh().then()
   },
 })
 </script>

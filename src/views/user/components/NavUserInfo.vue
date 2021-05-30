@@ -16,7 +16,7 @@ export default defineComponent({
     return {
       userStore,
       login() {
-        userStore.setDialog(true)
+        userStore.showDialog = true
       },
     }
   },

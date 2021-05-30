@@ -8,13 +8,14 @@ export default function (checkTime: number, offset: number, disable: () => boole
             callback()
     }
 
-    let debounce: NodeJS.Timeout;
-    document.onscroll = () => {
+    let debounce: NodeJS.Timeout
+    const handler = () => {
         clearTimeout(debounce)
         debounce = setTimeout(check, checkTime)
     }
+    document.addEventListener('scroll', handler, {passive: true})
     onBeforeUnmount(() => {
-        document.onscroll = null
+        document.removeEventListener('scroll', handler)
         clearTimeout(debounce)
     })
     callback()//once

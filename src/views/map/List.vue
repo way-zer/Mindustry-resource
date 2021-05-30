@@ -1,15 +1,17 @@
 <template>
   <el-card>
     <template #header>
-      地图分享
-      <div class="floatRight">
-        <el-input v-model="searchKey" placeholder="查找地图" clearable @change="onSearch"/>
-        <ActionUpload/>
-      </div>
+      <el-row type="flex" justify="space-between" align="center">
+        <b style="font-size: large">地图分享</b>
+        <el-space>
+          <el-input v-model="searchKey" placeholder="查找地图" clearable @change="onSearch"/>
+          <ActionUpload/>
+        </el-space>
+      </el-row>
     </template>
-    <el-alert type="info" closable show-icon
-              title='使用指令换图时,若模式不对,可在指令后面附加模式参数,例如"/vote map xxxx A"代表进攻模式 S生存,A进攻,P为PVP,C为沙盒'
-    />
+    <!--    <el-alert type="info" closable show-icon-->
+    <!--              title='使用指令换图时,若模式不对,可在指令后面附加模式参数,例如"/vote map xxxx A"代表进攻模式 S生存,A进攻,P为PVP,C为沙盒'-->
+    <!--    />-->
     <div id="filter">
       <b>按模式筛选: </b>
       <el-radio-group size="small"

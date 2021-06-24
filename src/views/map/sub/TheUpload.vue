@@ -1,7 +1,9 @@
 <template>
   <el-dialog model-value :zIndex="100" center
-             @close="close" :title="update?'更新地图':'上传地图'">
+             @close="close" :title="update?'更新地图':'上传地图'" :fullscreen="isMobile">
     <el-alert v-if="!update" type="warning" :closable="false" show-icon center id="alert">
+      <span class="important">更新地图请在地图详情页进行上传</span><br/>
+      <span class="important">更新地图请在地图详情页进行上传</span><br/>
       <span class="important">更新地图请在地图详情页进行上传</span><br/>
       <span>地图上传完成后,请在详情页设置正确的游戏模式</span>
     </el-alert>
@@ -16,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import {isMobile} from '@/util/uiHelper'
 import {defineComponent, ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
@@ -25,6 +28,9 @@ import {userStore} from '@/store/user'
 
 export default defineComponent({
   name: 'TheUpload',
+  data: () => ({
+    isMobile,
+  }),
   setup() {
     const router = useRouter()
     const update = useRoute().query.update?.toString()

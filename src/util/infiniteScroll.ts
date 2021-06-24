@@ -1,4 +1,4 @@
-import {onBeforeUnmount} from 'vue'
+import {onBeforeUnmount, onMounted} from 'vue'
 
 //Must call in setup
 export default function (checkTime: number, offset: number, disable: () => boolean, callback: () => void): void {
@@ -13,10 +13,12 @@ export default function (checkTime: number, offset: number, disable: () => boole
         clearTimeout(debounce)
         debounce = setTimeout(check, checkTime)
     }
-    document.addEventListener('scroll', handler, {passive: true})
     onBeforeUnmount(() => {
         document.removeEventListener('scroll', handler)
         clearTimeout(debounce)
     })
-    callback()//once
+    onMounted(() => {
+        document.addEventListener('scroll', handler, {passive: true})
+        check()//once
+    })
 }

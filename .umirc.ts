@@ -42,7 +42,7 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/\/api\/.*/, /\/mapAdmin\/.*/],
+        navigateFallbackDenylist: [/\/api\/.*/, /\/mapAdmin\/.*/, /\/v2\/.*/],
         exclude: ['robot.txt'],
         runtimeCaching: [
           {

@@ -74,13 +74,7 @@ export default function MapsIndex(props: { children: React.ReactNode }) {
         </Upload>,
       ]}
     >
-      <Alert
-        message={
-          '使用指令换图时,若模式不对,可在指令后面附加模式参数,例如"/vote map xxxx A-TD"代表进攻塔防模式,S-TD为生存塔防,S生存,A进攻,P为PVP,C为沙盒'
-        }
-        banner
-        closable
-      />
+      <Alert message={'/vote map 12345 为新版换图指令,部分服务器暂不支持,可以手动拷贝旧版本换图指令'} banner closable />
       <div style={{ margin: '8px' }}>
         <b style={{ marginRight: 8, fontSize: '16px', lineHeight: '32px' }}>按模式筛选:</b>
         <Radio.Group

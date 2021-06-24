@@ -1,5 +1,5 @@
 <template>
-  <el-dialog model-value @close="close" width="100%" :zIndex="100">
+  <el-dialog model-value @close="close" width="100%">
     <!--    <el-skeleton :loading="!detail.hash">-->
     <el-row type="flex" justify="center">
       <el-col :md="10" :xs="18">
@@ -17,7 +17,10 @@
         </h4>
         <h4><b>地图编号:</b> {{ detail.thread }} <b>游戏模式:</b> {{ detail.mode }} <b>上传者:</b>
           <el-tooltip content="点击查看该用户更多地图">
-            <a :href="'/maps?' + encodeURI('@user:' + detail.user)">{{ detail.user }}</a>
+            <router-link to="/map" @click="mapsStore.search('@user:' + detail.user).then()">{{
+                detail.user
+              }}
+            </router-link>
           </el-tooltip>
         </h4>
         <h4><b>描述:</b> {{ tags.description }}</h4>
@@ -95,6 +98,7 @@ import ActionDownload from '@/views/map/components/ActionDownload.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
 import ActionChangeMode from '@/views/map/components/ActionChangeMode.vue'
 import {userStore} from '@/store/user'
+import {mapsStore} from '@/store/maps'
 
 export default defineComponent({
   name: 'Detail',
@@ -114,6 +118,7 @@ export default defineComponent({
         ret.value = await MapApi.detail(p.thread, p.id || 'latest')
     }, {immediate: true})
     return {
+      mapsStore,
       detail: ret,
       tags: computed(() => ((ret.value.tags || {}) as Tags)),
       rules: computed(() => ((ret.value.tags?.rules || {}) as Rules)),

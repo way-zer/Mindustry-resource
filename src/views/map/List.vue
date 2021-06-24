@@ -31,7 +31,7 @@
 </template>
 
 <script lang="tsx">
-import {defineComponent, ref} from 'vue'
+import {defineComponent, onBeforeUnmount, ref} from 'vue'
 import MapList from '@/views/map/sub/MapList.vue'
 import {gameModes} from '@/store/maps/type'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
@@ -41,7 +41,10 @@ export default defineComponent({
   components: {ActionUpload, MapList},
   setup() {
     const tmpSearch = ref(mapsStore.searchKey)
-
+    const unwatch = mapsStore.$watch((it) => it.searchKey, (it) => {
+      tmpSearch.value = it
+    }) as () => any
+    onBeforeUnmount(unwatch)
     return {
       modes: gameModes,
       searchKey: tmpSearch,

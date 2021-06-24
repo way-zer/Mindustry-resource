@@ -1,6 +1,6 @@
 <template>
-  <el-dialog model-value :zIndex="100" center
-             @close="close" :title="update?'更新地图':'上传地图'" :fullscreen="isMobile">
+  <el-dialog model-value :zIndex="100" center custom-class="upload-dialog"
+             @close="close" :title="update?'更新地图':'上传地图'">
     <el-alert v-if="!update" type="warning" :closable="false" show-icon center id="alert">
       <span class="important">更新地图请在地图详情页进行上传</span><br/>
       <span class="important">更新地图请在地图详情页进行上传</span><br/>
@@ -60,6 +60,13 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="stylus">
+.upload-dialog
+  width 80% !important
+  max-width fit-content
+  margin 0 auto
+</style>
 
 <style lang="stylus" scoped>
 #upload

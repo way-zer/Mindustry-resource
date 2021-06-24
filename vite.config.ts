@@ -1,9 +1,8 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { VitePWA } from 'vite-plugin-pwa'
-// @ts-ignore
-import { visualizer } from 'rollup-plugin-visualizer';
+import {VitePWA} from 'vite-plugin-pwa'
+import {visualizer} from 'rollup-plugin-visualizer'
 import {resolve} from 'path'
 
 // https://vitejs.dev/config/

@@ -4,6 +4,7 @@ import Detail from '@/views/map/sub/Detail.vue'
 import TheUpload from '@/views/map/sub/TheUpload.vue'
 import TheList from '@/views/server/TheList.vue'
 import About from '@/views/About.vue'
+import GameDownload from '@/views/game/index.vue'
 
 export const routes: Array<RouteRecordRaw> = [
     {
@@ -20,6 +21,11 @@ export const routes: Array<RouteRecordRaw> = [
         name: '服务器列表',
         component: TheList,//too Small to split
         // component: () => import(/* webpackChunkName: "server" */ '@/views/server/TheList.vue'),
+    },
+    {
+        path: '/game',
+        name: '游戏下载',
+        component: GameDownload,
     },
     {
         path: '/about',

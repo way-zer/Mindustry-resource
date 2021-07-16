@@ -23,16 +23,17 @@ export interface Tags {
     build:          number;
     rules:          RulesV5|Rules;
     saved:          number;
-    stats:          any;
-    width:          number;
-    author:         string;
-    height:         number;
-    viewpos:        string;
-    playtime:       number;
-    wavetime:       number;
-    description:    string;
-    saveVersion:    number;
+    stats: any;
+    width: number;
+    author: string;
+    height: number;
+    viewpos: string;
+    playtime: number;
+    wavetime: number;
+    description: string;
+    saveVersion: number;
     controlledType: string;
+    genfilters: any[];
 }
 
 export const gameModes = ['Survive', 'Pvp', 'Attack', 'Sandbox', 'Editor', 'UnKnown']
@@ -97,9 +98,9 @@ interface Spawn {
     spacing?: number;
     scaling: number;
     begin?: number;
-    effect?: number|string;
+    effect?: number | string;
     shieldScaling?: number;
-    shields?:       number;
+    shields?: number;
 }
 
 interface Team {

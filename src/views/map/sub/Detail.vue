@@ -29,13 +29,13 @@
         <h4><b>规则:</b></h4>
         <ul>
           <li>刷怪: {{ rules.waves ? '开' : '关' }} 进攻模式: {{ rules.attackMode ? '开' : '关' }}</li>
-          <li v-if="version===6">爆炸伤害: {{ rules.damageExplosions ? '开' : '关' }} 火焰: {{ rules.fire ? '开' : '关' }} 弹药:
+          <li v-if="version>=6">爆炸伤害: {{ rules.damageExplosions ? '开' : '关' }} 火焰: {{ rules.fire ? '开' : '关' }} 弹药:
             {{ rules.unitAmmo ? '开' : '关' }}
           </li>
           <li v-if="version===5">单位血量: {{ rulesOld.unitHealthMultiplier || '1' }}倍</li>
           <li>单位伤害: {{ rules.unitDamageMultiplier || '1' }}倍</li>
-          <li v-if="version===6">单位生产速度: {{ rules.unitBuildSpeedMultiplier || '1' }}倍</li>
-          <li v-if="version===6">单位上限: {{ rules.unitCap || 0 }}{{ rules.unitCapVariable ? '+核心加成' : '(固定)' }}</li>
+          <li v-if="version>=6">单位生产速度: {{ rules.unitBuildSpeedMultiplier || '1' }}倍</li>
+          <li v-if="version>=6">单位上限: {{ rules.unitCap || 0 }}{{ rules.unitCapVariable ? '+核心加成' : '(固定)' }}</li>
           <li v-if="version===5">玩家血量: {{ rulesOld.playerHealthMultiplier || '1' }}倍</li>
           <li v-if="version===5">玩家伤害: {{ rulesOld.playerDamageMultiplier || '1' }}倍</li>
           <li>建筑资源消耗: {{ rules.buildCostMultiplier || '1' }}倍</li>
@@ -73,6 +73,14 @@
                   生成{{ d.amount || 1 }}{{ d.scaling ? `+${d.scaling}T` : '' }}只
                 </li>
               </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>地形筛选器</summary>
+              <ol>
+                <li v-for="(d,i) in tags.genfilters" :key="i">{{ JSON.stringify(d) }}</li>
+              </ol>
             </details>
           </li>
           <li>太阳能发电: {{ rules.solarPowerMultiplier || '1' }}倍</li>

@@ -9,25 +9,26 @@
     </template>
   </el-dialog>
   <a-tooltip title="设置游戏模式" destroy-tooltip-on-hide>
-    <icon-button icon="el-icon-edit" circle @click="mode = $props.now.toString();show = true"/>
+    <icon-button icon="el-icon-edit" circle @click="mode = now.toString();show = true"/>
   </a-tooltip>
 </template>
 
 <script lang="tsx">
-import IconButton from "@/components/IconButton.vue";
-import {gameModes} from "@/store/maps/type";
-import {defineComponent} from "vue";
-import {MapApi} from "@/store/maps/api";
+import IconButton from '@/components/IconButton.vue'
+import {gameModes} from '@/store/maps/type'
+import {defineComponent} from 'vue'
+import {MapApi} from '@/store/maps/api'
 
 export default defineComponent({
-  name: "ActionChangeMode",
+  name: 'ActionChangeMode',
   components: {IconButton},
   props: {
     thread: Number,
     now: {
       type: String,
-      enums: gameModes
-    }
+      enums: gameModes,
+      default: 'UnKnown',
+    },
   },
   data: () => ({
     show: false,

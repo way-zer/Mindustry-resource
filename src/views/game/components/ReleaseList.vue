@@ -29,8 +29,14 @@ export default defineComponent({
     v: '1',
   }),
   props: {
-    list: Array as PropType<Release[]>,
-    getDownloadUrl: Function as PropType<(url: string) => string>,
+    list: {
+      type: Array as PropType<Release[]>,
+      default: [],
+    },
+    getDownloadUrl: {
+      type: Function as PropType<(url: string) => string>,
+      default: (it) => it,
+    },
   },
 })
 </script>

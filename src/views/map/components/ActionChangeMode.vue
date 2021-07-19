@@ -9,7 +9,7 @@
     </template>
   </el-dialog>
   <a-tooltip title="设置游戏模式" destroy-tooltip-on-hide>
-    <icon-button icon="el-icon-edit" circle @click="mode = now.toString();show = true"/>
+    <icon-button icon="el-icon-edit" circle @click="mode = now;show = true"/>
   </a-tooltip>
 </template>
 

@@ -85,18 +85,21 @@
           </li>
           <li>太阳能发电: {{ rules.solarPowerMultiplier || '1' }}倍</li>
         </ul>
+        <!--        <object-inspector :data="data" name="元数据"/>-->
+        <b>原始数据:</b>
+        <json-viewer :value="tags" :expandDepth="0" style="padding: 0"/>
       </el-col>
     </el-row>
     <div id="footer">
       <span>可以直接分享该页链接给他人</span><br/>
       <pre>{{ path }}</pre>
     </div>
-    <!--    </el-skeleton>-->
   </el-dialog>
 </template>
 
 <script lang="tsx">
 import {computed, defineComponent, ref, watch} from 'vue'
+import {JsonViewer} from 'vue3-json-viewer'
 import SquaredImage from '@/components/SquaredImage.vue'
 import {MapApi} from '@/store/maps/api'
 import {MapDetail, Rules, RulesV5, Tags} from '@/store/maps/type'
@@ -116,6 +119,7 @@ export default defineComponent({
     ActionDownload,
     ActionCopy,
     SquaredImage,
+    JsonViewer,
   },
   setup() {
     const route = useRoute()

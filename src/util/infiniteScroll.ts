@@ -1,4 +1,5 @@
 import {onBeforeUnmount, onMounted} from 'vue'
+import {throttle} from 'lodash'
 
 //Must call in setup
 export default function (checkTime: number, offset: number, disable: () => boolean, callback: () => void): void {
@@ -8,17 +9,12 @@ export default function (checkTime: number, offset: number, disable: () => boole
             callback()
     }
 
-    let debounce: NodeJS.Timeout
-    const handler = () => {
-        clearTimeout(debounce)
-        debounce = setTimeout(check, checkTime)
-    }
+    const handler = throttle(check, checkTime)
     onBeforeUnmount(() => {
         document.removeEventListener('scroll', handler)
-        clearTimeout(debounce)
     })
     onMounted(() => {
         document.addEventListener('scroll', handler, {passive: true})
-        check()//once
+        handler()//once
     })
 }

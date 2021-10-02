@@ -69,13 +69,12 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import {ServerInfo} from '@/store/server/type'
-import ColorizeSpan from '@/components/ColorizeSpan.vue'
 import {modeFilters, modeMap} from '@/util/mindustry'
 import {serverStore} from '@/store/server'
 
 export default defineComponent({
-  components: {ColorizeSpan},
   data: () => ({
+    intervalId: -1,
     modeMap, modeFilters,
     autoUpdate: true,
     showModal: false,
@@ -119,6 +118,12 @@ export default defineComponent({
   },
   mounted() {
     serverStore.refresh().then()
+    this.intervalId = setInterval(() => {
+      serverStore.refresh().then()
+    }, 60000)
+  },
+  unmounted() {
+    clearInterval(this.intervalId)
   },
 })
 </script>

@@ -3,8 +3,9 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import {VitePWA} from 'vite-plugin-pwa'
 import {visualizer} from 'rollup-plugin-visualizer'
-import styleImport from 'vite-plugin-style-import'
+import Components from 'unplugin-vue-components/vite'
 import {resolve} from 'path'
+import {AntDesignVueResolver, ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,28 +13,10 @@ export default defineConfig({
     plugins: [
         vue(),
         vueJsx(),
-        styleImport({
-            libs: [
-                {
-                    libraryName: 'element-plus',
-                    esModule: true,
-                    ensureStyleFile: true,
-                    base: 'element-plus/lib/theme-chalk/base.css',
-                    resolveStyle: (name) => {
-                        return `element-plus/lib/theme-chalk/${name}.css`
-                    },
-                    resolveComponent: (name) => {
-                        return `element-plus/lib/${name}`
-                    },
-                },
-                {
-                    libraryName: 'ant-design-vue',
-                    esModule: true,
-                    base: 'ant-design-vue/lib/style/index.css',
-                    resolveStyle: (name) => {
-                        return `ant-design-vue/lib/${name}/style/index.css`
-                    },
-                },
+        Components({
+            resolvers: [
+                ElementPlusResolver({importStyle: 'css'}),
+                AntDesignVueResolver({importStyle: 'css'}),
             ],
         }),
         VitePWA({

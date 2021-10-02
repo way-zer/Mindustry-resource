@@ -1,19 +1,20 @@
 import {createApp} from 'vue'
 import {router} from './plugins/router'
 import {initAxios} from './plugins/axios'
-import {installElementPlus} from './plugins/element'
-import {installAntDesign} from '@/plugins/antDesign'
-import {installGlobalComponent} from '@/components'
 import App from './App.vue'
 import {store} from '@/store'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
+import Loading from 'element-plus/es/el-loading'
 
+import('element-plus/packages/theme-chalk/lib/display.css')
 import('@/plugins/serviceWorker')
 initAxios()
 
 createApp(App)
-    .use(installElementPlus)
-    .use(installAntDesign)
-    .use(installGlobalComponent)
+    .use((app) => {
+        app.config.globalProperties.$ELEMENT = {locale, zIndex: 100}
+        app.directive('Loading', Loading.directive)
+    })
     .use(router)
     .use(store)
     .mount('#app')

@@ -1,3 +1,8 @@
+<route lang="yaml">
+meta:
+  navName: 服务器列表
+  navIndex: 5
+</route>
 <template>
   <el-card>
     <template #header>
@@ -16,7 +21,7 @@
       <el-table-column label="地址" prop="address" fixed="left"
                        :filters="versionFilters" :filter-method="versionFilter">
         <template #default="scope">
-          <a-tooltip>
+          <a-tooltip destroy-tooltip-on-hide>
             <template #title>
               <span v-if="i(scope).online">延迟{{ i(scope).timeMs }}ms</span>
               <span v-else>最后在线{{ ((Date.now() - i(scope).lastOnline) / 60000).toFixed(2) }}分钟前</span>
@@ -128,7 +133,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus" scoped>
 
 #table
   white-space nowrap

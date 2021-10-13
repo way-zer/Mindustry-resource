@@ -12,18 +12,12 @@
 </template>
 
 <script lang="ts">
-import {routes} from '@/plugins/router'
 import TheLogin from '@/views/user/TheLogin.vue'
 import {defineComponent} from 'vue'
 import TheHeader from '@/views/layout/TheHeader.vue'
 
 export default defineComponent({
   components: {TheHeader, TheLogin},
-  setup() {
-    return {
-      routes: routes.filter(it => it.name),
-    }
-  },
 })
 </script>
 

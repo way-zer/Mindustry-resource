@@ -23,7 +23,7 @@ import {defineComponent, ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
 import {MapApi} from '@/store/maps/api'
-import {ElUploadRequestOptions} from 'element-plus/es/el-upload/src/upload.type'
+import {ElUploadRequestOptions} from 'element-plus/es/components/upload/src/upload.type'
 import {userStore} from '@/store/user'
 
 export default defineComponent({
@@ -61,14 +61,12 @@ export default defineComponent({
 })
 </script>
 
-<style lang="stylus">
-.upload-dialog
+<style lang="stylus" scoped>
+:global(.upload-dialog)
   width 80% !important
   max-width fit-content
   margin 0 auto
-</style>
 
-<style lang="stylus" scoped>
 #upload
   margin 0 auto
 

@@ -2,7 +2,10 @@ import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import {VitePWA} from 'vite-plugin-pwa'
+import OptimizationPersist from 'vite-plugin-optimize-persist'
+import PkgConfig from 'vite-plugin-package-config'
 import {visualizer} from 'rollup-plugin-visualizer'
+import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
 import {resolve} from 'path'
 import {AntDesignVueResolver, ElementPlusResolver} from 'unplugin-vue-components/resolvers'
@@ -11,8 +14,16 @@ import {AntDesignVueResolver, ElementPlusResolver} from 'unplugin-vue-components
 export default defineConfig({
     base: '/v2/',
     plugins: [
+        PkgConfig(),
+        OptimizationPersist(),
         vue(),
         vueJsx(),
+        Pages({
+            exclude: ['**/components/**', '**/_*'],
+            pagesDir: [
+                {dir: 'src/views', baseRoute: ''},
+            ],
+        }),
         Components({
             resolvers: [
                 ElementPlusResolver({importStyle: 'css'}),

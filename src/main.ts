@@ -3,17 +3,17 @@ import {router} from './plugins/router'
 import {initAxios} from './plugins/axios'
 import App from './App.vue'
 import {store} from '@/store'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
-import Loading from 'element-plus/es/el-loading'
+import locale from 'element-plus/es/locale/lang/zh-cn'
+import {ElLoading} from 'element-plus/es/components/loading'
 
-import('element-plus/packages/theme-chalk/lib/display.css')
+import('element-plus/theme-chalk/display.css')
 import('@/plugins/serviceWorker')
 initAxios()
 
 createApp(App)
     .use((app) => {
         app.config.globalProperties.$ELEMENT = {locale, zIndex: 100}
-        app.directive('Loading', Loading.directive)
+        app.use(ElLoading)
     })
     .use(router)
     .use(store)

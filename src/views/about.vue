@@ -1,3 +1,7 @@
+<route lang="yaml">
+meta:
+  navName: 关于本站
+</route>
 <template>
   <div style="padding: 0 10%">
     <h2>本资源站由WayZer搭建并运营</h2>

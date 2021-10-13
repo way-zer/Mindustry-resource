@@ -1,3 +1,7 @@
+<route lang="yaml">
+meta:
+  navName: 游戏下载
+</route>
 <template>
   <PageHeader title="游戏下载与安装">
     <template #actions>
@@ -27,7 +31,7 @@
 
 <script lang="ts">
 import PageHeader from '@/components/PageHeader.vue'
-import ReleaseList from './components/ReleaseList.vue'
+import ReleaseList from './game/_ReleaseList.vue'
 import {gameStore} from '@/store/game'
 import {ref} from 'vue'
 

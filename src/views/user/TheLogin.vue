@@ -80,7 +80,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .tip
   display inline-block
   line-height normal

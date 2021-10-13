@@ -23,7 +23,7 @@ export default {
   methods: {
     async download() {
       if (!userStore.logged) {
-        userStore.showDialog = false
+        userStore.showDialog = true
         return ElMessage.error('请先登录后再下载')
       }
       await MapApi.download(this.$props.hash)

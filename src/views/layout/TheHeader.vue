@@ -1,15 +1,15 @@
 <template>
-  <el-menu router mode="horizontal" :default-active="$route.name">
-    <li class="el-menu-item navItem" id="logo">
+  <el-menu router mode="horizontal" :default-active="$route.path">
+    <el-menu-item disabled id="logo">
       <img src="/src/assets/icons-64.png" alt="logo" height="42">
       <span class="hidden-xs-only">Mindustry 资源站</span>
-    </li>
-    <el-menu-item class="navItem" v-for="route in routes" :key="route.name" :index="route.name" :route="route">
-      {{ route.name }}
     </el-menu-item>
-    <li class="el-menu-item" id="userInfo">
+    <el-menu-item class="navItem" v-for="route in routes" :key="route.path" :index="route.path" :route="route">
+      {{ route.meta["navName"] }}
+    </el-menu-item>
+    <el-menu-item disabled id="userInfo">
       <NavUserInfo/>
-    </li>
+    </el-menu-item>
   </el-menu>
 </template>
 
@@ -23,16 +23,17 @@ export default defineComponent({
   components: {NavUserInfo},
   setup() {
     return {
-      routes,
+      routes: routes.filter(it => it.meta?.navName)
+          .sort((a, b) => (a.meta.navIndex - b.meta.navIndex)),
     }
   },
 })
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus" scoped>
 #logo
-  vertical-align center
   cursor default
+  opacity unset
 
   span
     color dodgerblue
@@ -40,11 +41,12 @@ export default defineComponent({
     font-weight bold
 
 .navItem
-  @media (max-width 756px)
+  @media only screen and (max-width 768px)
     font-size 12px
     padding 0 6px
 
 #userInfo
-  float right
+  margin-left auto
   cursor default
+  opacity unset
 </style>

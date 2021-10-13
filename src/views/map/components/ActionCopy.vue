@@ -1,6 +1,6 @@
 <template>
   <a-tooltip title="拷贝换图指令" destroy-tooltip-on-hide>
-    <a-popover trigger="click">
+    <a-popover trigger="click" destroy-tooltip-on-hide>
       <icon-button icon="el-icon-document-copy" :circle="$props.circle" @click="copy"/>
       <template #content>
         粘贴指令到支持网络换图的服务器使用
@@ -13,18 +13,18 @@
 </template>
 
 <script lang="ts">
-import {copyContent} from "@/util/copyContent";
-import IconButton from "@/components/IconButton.vue";
+import {copyContent} from '@/util/copyContent'
+import IconButton from '@/components/IconButton.vue'
 
 export default {
-  name: "ActionCopy",
+  name: 'ActionCopy',
   components: {IconButton},
   props: {
     thread: Number,
     hash: String,
     circle: {
       type: Boolean,
-      default: false
+      default: false,
     }
   },
   methods: {

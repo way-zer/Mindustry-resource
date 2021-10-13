@@ -1,6 +1,7 @@
 <route lang="yaml">
 meta:
   navName: 游戏下载
+  navIndex: 10
 </route>
 <template>
   <PageHeader title="游戏下载与安装">

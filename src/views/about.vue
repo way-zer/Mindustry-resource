@@ -1,6 +1,7 @@
 <route lang="yaml">
 meta:
   navName: 关于本站
+  navIndex: 20
 </route>
 <template>
   <div style="padding: 0 10%">

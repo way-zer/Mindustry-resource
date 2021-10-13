@@ -5,7 +5,7 @@
       <span class="hidden-xs-only">Mindustry 资源站</span>
     </el-menu-item>
     <el-menu-item class="navItem" v-for="route in routes" :key="route.path" :index="route.path" :route="route">
-      {{ route.meta["navName"] }}
+      {{ route.meta?.navName }}
     </el-menu-item>
     <el-menu-item disabled id="userInfo">
       <NavUserInfo/>
@@ -24,7 +24,7 @@ export default defineComponent({
   setup() {
     return {
       routes: routes.filter(it => it.meta?.navName)
-          .sort((a, b) => (a.meta.navIndex - b.meta.navIndex)),
+          .sort((a, b) => (a.meta?.navIndex || 0) - (b.meta?.navIndex || 0)),
     }
   },
 })

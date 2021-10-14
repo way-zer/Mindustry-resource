@@ -19,7 +19,7 @@ export default defineConfig({
         vue(),
         vueJsx(),
         Pages({
-            exclude: ['**/components/**', '**/_*'],
+            exclude: ['**/components/**', '**/_**'],
             importMode: 'sync',
             pagesDir: [
                 {dir: 'src/views', baseRoute: ''},

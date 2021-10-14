@@ -5,6 +5,7 @@
       <span class="hidden-xs-only">Mindustry 资源站</span>
     </el-menu-item>
     <el-menu-item class="navItem" v-for="route in routes" :key="route.path" :index="route.path" :route="route">
+      <router-link :to="route"/>
       {{ route.meta?.navName }}
     </el-menu-item>
     <el-menu-item disabled id="userInfo">
@@ -13,21 +14,12 @@
   </el-menu>
 </template>
 
-<script lang="ts">
-import {routes} from '@/plugins/router'
+<script lang="ts" setup>
+import {routes as routes0} from '@/plugins/router'
 import NavUserInfo from '@/views/user/components/NavUserInfo.vue'
 
-import {defineComponent} from 'vue'
-
-export default defineComponent({
-  components: {NavUserInfo},
-  setup() {
-    return {
-      routes: routes.filter(it => it.meta?.navName)
-          .sort((a, b) => (a.meta?.navIndex || 0) - (b.meta?.navIndex || 0)),
-    }
-  },
-})
+const routes = routes0.filter(it => it.meta?.navName)
+    .sort((a, b) => (a.meta?.navIndex || 0) - (b.meta?.navIndex || 0))
 </script>
 
 <style lang="stylus" scoped>

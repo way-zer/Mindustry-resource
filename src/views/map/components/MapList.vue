@@ -43,15 +43,11 @@ import ActionCopy from '@/views/map/components/ActionCopy.vue'
 import ActionDetail from '@/views/map/components/ActionDetail.vue'
 import infiniteScroll from '@/util/infiniteScroll'
 import {mapsStore} from '@/store/maps'
-import {ElMessage} from 'element-plus'
 
 export default defineComponent({
   components: {ActionDetail, ActionCopy, ActionDownload, ColorizeSpan, SquaredImage},
   setup() {
     infiniteScroll(200, 10, () => (mapsStore.loading || mapsStore.noMore), mapsStore.pullMore)
-    setTimeout(() => {
-      ElMessage.success('拷贝到剪切板成功')
-    }, 1000)
     return {
       maps: computed(() => mapsStore.data),
       loading: computed(() => mapsStore.loading),

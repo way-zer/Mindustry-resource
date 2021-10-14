@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import TheLogin from '@/views/user/TheLogin.vue'
+import TheLogin from '@/views/user/_TheLogin.vue'
 import {defineComponent} from 'vue'
-import TheHeader from '@/views/layout/TheHeader.vue'
+import TheHeader from '@/views/layout/_TheHeader.vue'
 
 export default defineComponent({
   components: {TheHeader, TheLogin},

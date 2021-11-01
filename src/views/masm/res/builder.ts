@@ -61,7 +61,7 @@ class Builder {
         return out;
     }
 
-    toString() {
+    toString(): string {
         if (this.lines[this.lines.length - 1] !== "end") this.lines.push("end");
         return this.lines.join("\n");
     }
@@ -71,4 +71,4 @@ const builder = new Builder();
 
 declare function error(err: string)
 
-declare function output(out: string)
+declare function output(out: string | Builder)

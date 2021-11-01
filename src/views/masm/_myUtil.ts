@@ -1,6 +1,7 @@
 import BuilderTS from "./res/builder.ts?raw"
 import AsmOpTS from "./res/asmOp.ts?raw"
 import AdvanceOpTS from "./res/advanceOp.ts?raw"
+import ConstTS from "./res/const.ts?raw"
 import "ses"
 import loader, {Monaco} from "@monaco-editor/loader";
 
@@ -8,9 +9,10 @@ export const libs = [
     {filePath: "inmemory:/builder.ts", content: BuilderTS},
     {filePath: "inmemory:/asmOp.ts", content: AsmOpTS},
     {filePath: "inmemory:/advanceOp.ts", content: AdvanceOpTS},
+    {filePath: "inmemory:/const.ts", content: ConstTS},
 ]
 
-let monaco: Promise<Monaco> = undefined
+let monaco: Promise<Monaco> | undefined = undefined
 
 export function loadMonaco(): Promise<Monaco> {
     return monaco || (monaco = (async () => {

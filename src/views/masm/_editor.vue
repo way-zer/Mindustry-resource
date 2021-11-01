@@ -5,7 +5,7 @@
 <script lang="ts" setup>
 import {onBeforeUnmount, ref, watch} from "vue";
 import {loadMonaco} from "@/views/masm/_myUtil";
-import {Monaco} from "@monaco-editor/loader";
+import * as Monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 const props = defineProps({
   modelValue: {
@@ -32,12 +32,13 @@ const props = defineProps({
   }
 })
 const emit = defineEmits<{
-  (event: 'editorWillMount', monaco: Monaco): void,
-  (event: 'update:modelValue', value: string, rawEvent: Editor.IModelContentChangedEvent): void,
-  (event: 'editorDidMount', editor: Editor.IEditor): void,
+  (event: 'editorWillMount', monaco: typeof Monaco): void,
+  (event: 'update:modelValue', value: string, rawEvent: Monaco.editor.IModelContentChangedEvent): void,
+  (event: 'editorDidMount', editor: Monaco.editor.IEditor): void,
 }>()
 watch(() => props.modelValue, (v) => {
-  editor?.setValue(v)
+  if (editor?.getValue() !== v)
+    editor?.setValue(v)
 })
 
 const container = ref<HTMLDivElement>()
@@ -45,7 +46,7 @@ let editor: Monaco.editor.ICodeEditor | null = null
 loadMonaco().then((monaco) => {
   emit("editorWillMount", monaco)
   const model = monaco.editor.createModel(props.modelValue, props.language, monaco.Uri.parse(props.file))
-  const ed = editor = monaco.editor.create(container.value, Object.assign({model}), props.options)
+  const ed = editor = monaco.editor.create(container.value!!, Object.assign({model}), props.options)
   ed.onDidChangeModelContent((event) => {
     const newValue = ed.getValue()
     if (props.modelValue !== newValue) {

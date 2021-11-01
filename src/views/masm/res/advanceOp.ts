@@ -48,6 +48,12 @@ function ifThen(op: BoolExpr, whenTrue: CodeBody) {
 
 const variable = builder.var.bind(builder);
 
+function withDefault(v: Var, value: Var) {
+    ifNot([v, "notEqual", null], () => {
+        set(v, value)
+    })
+}
+
 function expr(body: (it: Var) => string): Var {
     const v = variable();
     builder.line(body(v));

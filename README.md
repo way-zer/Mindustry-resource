@@ -1,27 +1,26 @@
-# Vue 3 + Typescript + Vite
+# Mindustry 资源站前端
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+The source of the Mindustry resource site.  
+技术栈: Vue3 Vite Typescript  
+UI: element-plus (some ant-design-vue)
 
-## Recommended IDE Setup
+## 开发手册
 
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+IDE建议: IDEA(or Webstorm) 或 VSCode(with Volar)
 
-### If Using `<script setup>`
+```sh
+npm install
+npm run dev
+```
 
-[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
+### 附注
 
-## Type Support For `.vue` Imports in TS
+* ant-design 为旧项目残留,应尽量使用element-plus,确保UI风格统一
+* vue的建议风格是 sfc+setup+hooks
+* API接口,定义在store文件夹下,如需要存储状态,请建立store
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
+> 所有后端Api接口禁止它用,如愿参与协作,请与WayZer联系
 
-### If Using Volar
+## 版权
 
-Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
-
-### If Using Vetur
-
-1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
-2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
-3. Open `src/main.ts` in VSCode
-4. Open the VSCode command palette
-5. Search and run "Select TypeScript version" -> "Use workspace version"
+本仓库所有公开代码为资源站专有,未经额外注明,不允许他用.

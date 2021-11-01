@@ -15,7 +15,6 @@
     "clipboard": "^2.0.8",
     "core-js": "^3.19.0",
     "element-plus": "^1.1.0-beta.20",
-    "monaco-editor": "^0.29.1",
     "patch-package": "^6.4.7",
     "ses": "^0.14.4",
     "unplugin-vue-components": "^0.17.0",

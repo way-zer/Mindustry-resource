@@ -1,6 +1,6 @@
 /*ASM逻辑高级编译器
-* 增加语法jumpX IfNot IfThen sensor内联
-* 类型安全@xxx常量 Sensor.xxx Vars.xxx Units.xxx Items.xxx
+* 增加语法:  jumpX IfNot IfThen sensor内联 withDefault
+* 类型安全@xxx常量:  Sensor.xxx Vars.xxx Units.xxx Items.xxx
 */
 
 /**@param type 单位类型
@@ -58,4 +58,4 @@ ifThen([sensor(factory, item), "lessThanEq", 8], () => {
         set(item, Items.silicon)
     })
 })
-output(builder)//如果需要同时生成多个逻辑，可多次reset output
+builder.output()//如果需要同时生成多个逻辑，可多次reset output

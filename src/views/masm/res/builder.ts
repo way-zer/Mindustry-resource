@@ -29,6 +29,10 @@ class Builder {
         this.tempVarId = 0;
     }
 
+    output() {
+        output(this.toString())
+    }
+
     anchor(): Int {
         return this.lines.length;
     }
@@ -71,4 +75,4 @@ const builder = new Builder();
 
 declare function error(err: string)
 
-declare function output(out: string | Builder)
+declare function output(out: string)

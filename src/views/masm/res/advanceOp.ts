@@ -46,7 +46,7 @@ function ifThen(op: BoolExpr, whenTrue: CodeBody) {
     };
 }
 
-const variable = builder.var.bind(builder);
+const variable = builder.var.bind(builder) as (name?: string) => Var;
 
 function withDefault(v: Var, value: Var) {
     ifNot([v, "notEqual", null], () => {

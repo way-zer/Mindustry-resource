@@ -1,3 +1,4 @@
+//Checked in v134
 //内存块 Read Write
 //绘图 [ ]Draw [ ]DrawFlush
 //文字 Print PrintFlush
@@ -5,14 +6,15 @@
 //变量 Set Operation Lookup
 //扩展 End Jump Wait
 //单位 uBind uControl uRadar uLocate
+// noinspection JSUnusedGlobalSymbols
 
 //======Flow======
 function end() {
     builder.line("end");
 }
 
-function jump(op: Var, line: IntVar) {
-    builder.line(`jump ${Var.warp(line)} ${Var.warp(op)}`)
+function jump(op: JumpOp, line: IntVar) {
+    builder.line(`jump ${Var.warp(line)} ${op}`)
 }
 
 function wait(second: IntVar) {
@@ -25,13 +27,21 @@ function set(v: Var, value: AnyVar) {
     builder.line(`set ${v} ${Var.warp(value)}`);
 }
 
-type OpType = string //TODO
-function op(out: Var, a: Var, op: OpType, b?: Var) {
+type OpType = "add" | "sub" | "mul" | "div" | "idiv" | "mod" | "pow" | "equal" | "notEqual"
+    | "land" | "lessThan" | "lessThanEq" | "greaterThan" | "greaterThanEq" | "strictEqual"
+    | "shl" | "shr" | "or" | "and" | "xor" | "not" | "max" | "min" | "angle" | "len" | "noise" | "abs"
+    | "log" | "log10" | "floor" | "ceil" | "sqrt" | "rand" | "sin" | "cos" | "tan" | "asin" | "acos" | "atan"
+
+function op(out: Var, a: Var, op: OpType, b?: AnyVar) {
     builder.line(`op ${op} ${out} ${a} ${b || null}`);
 }
 
-function lookup(out: Var, type: 'block' | 'unit' | 'item' | 'liquid', i: IntVar) {
-    builder.line(`lookup ${type} ${out} ${i}`)
+function opX(a: Var, op0: OpType, b?: AnyVar): Var {
+    return expr(it => op(it, a, op0, b))
+}
+
+function lookup(type: 'block' | 'unit' | 'item' | 'liquid', i: IntVar): Var {
+    return expr(out => `lookup ${type} ${out} ${i}`)
 }
 
 
@@ -71,7 +81,7 @@ function control<T extends keyof ControlOP>(block: Var, type: T, ...arg: Paramet
 }
 
 interface ControlOP {
-    enable(v: BoolVar): void;
+    enabled(v: BoolVar): void;
 
     shoot(x: IntVar, y: IntVar, v: BoolVar): void;
 
@@ -91,7 +101,6 @@ function uBind(type: Var) {
 type RadarCondition = 'player' | 'ally' | 'enemy' | 'attacker' | 'fly' | 'boss' | 'ground' | 'any'
 type RadarSort = 'distance' | 'health' | 'shield' | 'armor' | 'maxHealth'
 
-//check in v134
 function uRadar(condition: RadarCondition[], sort: RadarSort, desc: boolean = true): Var {
     if (condition.length > 3)
         throw "condition can't be more than 3."
@@ -102,7 +111,6 @@ function uRadar(condition: RadarCondition[], sort: RadarSort, desc: boolean = tr
     return result
 }
 
-//check in v134
 function uLocate<T extends keyof ULocateOP>(
     type: T,
     ...arg: Parameters<ULocateOP[T]>
@@ -127,7 +135,6 @@ interface ULocateOP {
     damaged(): void;
 }
 
-//TODO full in v134
 function uControl<T extends keyof UControlOP>(
     type: T,
     ...arg: Parameters<UControlOP[T]>

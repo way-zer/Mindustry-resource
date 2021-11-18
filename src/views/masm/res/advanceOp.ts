@@ -1,5 +1,5 @@
 type CodeBody = () => void;
-type boolExpOP =
+type BoolExpOP =
     | "notEqual"
     | "equal"
     | "greaterThan"
@@ -9,12 +9,11 @@ type boolExpOP =
     | "strictEqual";
 type BoolExpr =
     | ["always", BoolVar]
-    | [Var, boolExpOP, AnyVar];
+    | [Var, BoolExpOP, AnyVar];
+type JumpOp = string
 
-function _wrapBoolExpr(arg: BoolExpr): Var {
-    return new Var(
-        arg[0] === "always" ? `always ${arg[1]} 0` : `${arg[1]} ${arg[0]} ${arg[2]}`
-    );
+function _wrapBoolExpr(arg: BoolExpr): JumpOp {
+    return arg[0] === "always" ? `always ${arg[1]} 0` : `${arg[1]} ${arg[0]} ${arg[2]}`
 }
 
 function jumpX(op: BoolExpr, line: IntVar) {
@@ -54,8 +53,25 @@ function withDefault(v: Var, value: Var) {
     })
 }
 
-function expr(body: (it: Var) => string): Var {
+function expr(body: (it: Var) => string | void): Var {
     const v = variable();
-    builder.line(body(v));
+    const result = body(v)
+    if (typeof result === 'string')
+        builder.line(result);
     return v;
+}
+
+/**
+ * @example loop(i=>lookup('unit',i),type=>{})
+ */
+function loop(update: (i: IntVar) => Var, body: (v: Var) => void) {
+    let i = variable()
+    set(i, 0)
+    let loop = builder.anchor()
+    let out = update(i)
+    ifNot([out, "equal", null], () => {
+        body(out)
+        op(i, i, "add", 1)
+        jumpX(["always", true], loop)
+    })
 }

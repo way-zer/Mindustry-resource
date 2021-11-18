@@ -21,7 +21,7 @@ export default defineConfig(({mode}) => {
         base: '/v2/',
         plugins: [
             PkgConfig(),
-            mode === "prod" && OptimizationPersist(),
+            mode === "production" ? null : OptimizationPersist(),
             vue(),
             vueJsx(),
             Pages({

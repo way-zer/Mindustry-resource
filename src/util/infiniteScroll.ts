@@ -1,5 +1,5 @@
 import {onBeforeUnmount, onMounted} from 'vue'
-import {throttle} from 'lodash'
+import throttle from 'lodash-es/throttle'
 
 //Must call in setup
 export default function (checkTime: number, offset: number, disable: () => boolean, callback: () => void): void {

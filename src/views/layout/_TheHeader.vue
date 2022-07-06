@@ -8,7 +8,7 @@
       <router-link :to="route"/>
       {{ route.meta?.navName }}
     </el-menu-item>
-    <el-menu-item disabled id="userInfo">
+    <el-menu-item class="navItem" disabled id="userInfo">
       <NavUserInfo/>
     </el-menu-item>
   </el-menu>

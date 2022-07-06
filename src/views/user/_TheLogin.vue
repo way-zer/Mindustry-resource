@@ -39,45 +39,40 @@
   </el-dialog>
 </template>
 
-<script lang="tsx">
-import {computed, defineComponent, ref} from 'vue'
+<script lang="tsx" setup>
+import {computed, ref} from 'vue'
 import {ElForm} from 'element-plus'
 import {userStore} from '@/store/user'
 
-export default defineComponent({
-  name: 'TheLogin',
-  setup() {
-    const isLogin = ref(true)
-    const formRef = ref<typeof ElForm>()
-    const form = ref({
-      user: '',
-      password: '',
-      password2: '',
-      code: '',
-    })
-    return {
-      isLogin, formRef, form,
-      passwordConfirmValidator(_, v) {
-        return v === form.value.password
-      },
-      showDialog: computed(() => userStore.showDialog),
-      async submit() {
-        try {
-          await formRef.value!!.validate()
-          if (isLogin.value)
-            await userStore.login(form.value)
-          else
-            await userStore.register(form.value)
-        } catch (e) {
-        }
-      },
-      close(done) {
-        userStore.showDialog = false
-        done()
-      },
-    }
-  },
+const isLogin = ref(true)
+const formRef = ref<typeof ElForm>()
+const form = ref({
+  user: '',
+  password: '',
+  password2: '',
+  code: '',
 })
+const showDialog = computed(() => userStore.showDialog)
+
+function passwordConfirmValidator(_, v) {
+  return v === form.value.password
+}
+
+async function submit() {
+  try {
+    await formRef.value!!.validate()
+    if (isLogin.value)
+      await userStore.login(form.value)
+    else
+      await userStore.register(form.value)
+  } catch (e) {
+  }
+}
+
+function close(done) {
+  userStore.showDialog = false
+  done()
+}
 </script>
 
 <style lang="stylus" scoped>

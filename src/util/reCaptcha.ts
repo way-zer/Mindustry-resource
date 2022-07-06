@@ -6,14 +6,17 @@ declare namespace grecaptcha {
 
 const key = '6LfGReEZAAAAAE5Uwrag1tf4HhVMtZtit3-hQwEC';
 
+let loadGRecaptcha: Promise<any>
+
 export async function requestToken(action: string): Promise<string> {
-  // @ts-ignore
-  if (!window['grecaptcha']) {
+  if (!loadGRecaptcha) {
     const script = document.createElement('script');
     script.src = 'https://www.recaptcha.net/recaptcha/api.js?render=' + key;
     document.body.append(script);
-    await new Promise(resolve => (script.onload = resolve));
+    loadGRecaptcha = new Promise(resolve => (script.onload = ()=>{
+      grecaptcha.ready(resolve)
+    }));
   }
-  await new Promise(resolve => grecaptcha.ready(resolve));
-  return grecaptcha.execute(key, { action });
+  await loadGRecaptcha
+  return grecaptcha.execute(key, {action});
 }

@@ -4,7 +4,7 @@ import {initAxios} from './plugins/axios'
 import App from './App.vue'
 import {store} from '@/store'
 import locale from 'element-plus/es/locale/lang/zh-cn'
-import {ElLoading} from 'element-plus/es/components/loading'
+import {ElLoading} from 'element-plus'
 
 import 'element-plus/theme-chalk/display.css'
 import 'element-plus/es/components/message/style/css'

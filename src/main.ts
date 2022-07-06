@@ -9,6 +9,7 @@ import {ElLoading} from 'element-plus'
 import 'element-plus/theme-chalk/display.css'
 import 'element-plus/es/components/message/style/css'
 import 'element-plus/es/components/message-box/style/css'
+import 'element-plus/es/components/alert/style/css'
 import '@/plugins/serviceWorker'
 
 initAxios()

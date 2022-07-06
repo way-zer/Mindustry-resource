@@ -23,12 +23,18 @@
         <el-input v-model="form.password2" type="password"/>
       </el-form-item>
 
-      <el-form-item v-if="!isLogin" label="邀请码" prop="code" :rules="[
-            { required: true, message: '请输入邀请码', trigger: 'blur'},
-            { pattern: /[0-9]{6}/, message: '请输入正确邀请码', trigger: 'change'},
-      ]">
-        <span class="tip">邀请码为6位数字,请找微泽机器人(QQ1849301538)私聊"邀请码"获取,如不回复，可加好友后再试</span>
-        <el-input v-model="form.code" type="number"/>
+      <el-form-item v-if="!isLogin" label="QQ号验证" prop="code">
+        <el-input v-model="form.code" disabled>
+          <template #append>
+            <el-button v-if="genCodeCoolDown<=0" @click="genCode">点击获取验证码</el-button>
+            <el-button v-else disabled>重新获取验证码({{ genCodeCoolDown }})</el-button>
+          </template>
+        </el-input>
+        <el-alert v-if="form.code" type="warning" :closable="false">
+          请在资源站交流群(722163668)发送消息"资源站验证 {{ form.code }}"进行验证。<br/>
+          也可私聊机器人(QQ1849301538)发送消息，因为技术限制，私聊不会回复确认。<br/>
+          <b>资源站会记录你的QQ号备用,继续注册即同意该条款</b>
+        </el-alert>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">提交</el-button>
@@ -43,6 +49,7 @@
 import {computed, ref} from 'vue'
 import {ElForm} from 'element-plus'
 import {userStore} from '@/store/user'
+import {UserApi} from "@/store/user/api";
 
 const isLogin = ref(true)
 const formRef = ref<typeof ElForm>()
@@ -56,6 +63,17 @@ const showDialog = computed(() => userStore.showDialog)
 
 function passwordConfirmValidator(_, v) {
   return v === form.value.password
+}
+
+const genCodeCoolDown = ref(0)
+
+async function genCode() {
+  genCodeCoolDown.value = 60
+  const interval = setInterval(() => {
+    genCodeCoolDown.value--
+    if (genCodeCoolDown.value <= 0) clearInterval(interval)
+  }, 1000)
+  form.value.code = await UserApi.genCode()
 }
 
 async function submit() {

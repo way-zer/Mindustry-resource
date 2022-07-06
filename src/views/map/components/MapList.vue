@@ -47,6 +47,8 @@ import {mapsStore} from '@/store/maps'
 export default defineComponent({
   components: {ActionDetail, ActionCopy, ActionDownload, ColorizeSpan, SquaredImage},
   setup() {
+    if (!mapsStore.loading && !mapsStore.noMore && mapsStore.data.length == 0)
+      mapsStore.pullMore()
     infiniteScroll(200, 10, () => (mapsStore.loading || mapsStore.noMore), mapsStore.pullMore)
     return {
       maps: computed(() => mapsStore.data),

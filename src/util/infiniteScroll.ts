@@ -15,6 +15,5 @@ export default function (checkTime: number, offset: number, disable: () => boole
     })
     onMounted(() => {
         document.addEventListener('scroll', handler, {passive: true})
-        handler()//once
     })
 }

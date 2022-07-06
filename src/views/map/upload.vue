@@ -7,9 +7,11 @@
       <span class="important">更新地图请在地图详情页进行上传</span><br/>
       <span>地图上传完成后,请在详情页设置正确的游戏模式</span>
     </el-alert>
-    <el-row align="center">
+    <el-row align="middle">
       <el-upload id="upload" action="ohno" drag :multiple="false" :http-request="upload">
-        <i class="el-icon-upload"></i>
+        <el-icon class="el-icon--upload">
+          <el-icon-upload-filled/>
+        </el-icon>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <span>只能上传.msav文件,且不超过100KB</span>
       </el-upload>
@@ -23,7 +25,6 @@ import {defineComponent, ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
 import {MapApi} from '@/store/maps/api'
-import {ElUploadRequestOptions} from 'element-plus/es/components/upload/src/upload.type'
 import {userStore} from '@/store/user'
 
 export default defineComponent({
@@ -38,7 +39,7 @@ export default defineComponent({
     return {
       uploadUrl,
       update,
-      upload: async (info: ElUploadRequestOptions) => {
+      upload: async (info: { file: File }) => {
         if (!userStore.logged) {
           userStore.showDialog = true
           ElMessage.error('请先登录后再进行上传')

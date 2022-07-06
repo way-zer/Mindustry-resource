@@ -10,8 +10,10 @@ meta:
         <b style="font-size: large">公共服务器列表</b>
         <el-space>
           <el-switch active-text="自动刷新" inactive-value="手动刷新" v-model="autoUpdate"/>
-          <el-button icon="el-icon-plus" size="small" round type="primary"
-                     @click="showModal = true">添加服务器
+          <el-button size="small" round type="primary"
+                     @click="showModal = true">
+            <el-icon-plus/>
+            添加服务器
           </el-button>
         </el-space>
       </el-row>
@@ -21,19 +23,19 @@ meta:
       <el-table-column label="地址" prop="address" fixed="left"
                        :filters="versionFilters" :filter-method="versionFilter">
         <template #default="scope">
-          <a-tooltip destroy-tooltip-on-hide>
-            <template #title>
+          <el-tooltip>
+            <template #content>
               <span v-if="i(scope).online">延迟{{ i(scope).timeMs }}ms</span>
               <span v-else>最后在线{{ ((Date.now() - i(scope).lastOnline) / 60000).toFixed(2) }}分钟前</span>
             </template>
             <div>
               {{ i(scope).address }}
               <br/>
-              <i v-if="i(scope).online" class="el-icon-orange" style="color: forestgreen"/>
-              <i v-else class="el-icon-orange" style="color: orangered"/>
+              <el-icon-orange v-if="i(scope).online" style="color: forestgreen"/>
+              <el-icon-orange v-else style="color: orangered"/>
               版本 {{ i(scope).version }}
             </div>
-          </a-tooltip>
+          </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column label="名字" prop="name">
@@ -48,7 +50,7 @@ meta:
           <b>{{ i(scope).players }}</b>/{{ i(scope).limit || '无限制' }}
           <template v-if="i(scope).type === 'hub'">
             <br/>
-            <i class="el-icon-warning" style="color: orangered"/>
+            <el-icon-warning style="color: orangered"/>
             本服为大厅服,人数非真实
           </template>
         </template>

@@ -7,7 +7,7 @@ meta:
 <template>
   <el-card>
     <template #header>
-      <el-row type="flex" justify="space-between" align="center">
+      <el-row type="flex" justify="space-between" align="middle">
         <b style="font-size: large">地图分享</b>
         <el-space>
           <el-input v-model="searchKey" placeholder="查找地图" clearable @change="onSearch"/>

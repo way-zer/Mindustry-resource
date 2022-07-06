@@ -3,10 +3,10 @@
     <el-header>
       <the-header/>
     </el-header>
-    <main class="el-main">
+    <el-main>
       <router-view/>
       <the-login/>
-    </main>
+    </el-main>
     <el-footer id="footer">WayZer ©2021</el-footer>
   </el-container>
 </template>

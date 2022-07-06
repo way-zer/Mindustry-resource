@@ -5,7 +5,7 @@
         <SquaredImage :src="map.preview" alt="preview"/>
         <div>
           <div>
-            <el-space size="mini">
+            <el-space size="small">
               <el-tag
                   v-for="tag in map.tags" :key="tag"
                   size="small" effect="plain" :color="tag.split('§')[1] || 'default'"

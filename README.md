@@ -2,7 +2,7 @@
 
 The source of the Mindustry resource site.  
 技术栈: Vue3 Vite Typescript  
-UI: element-plus (some ant-design-vue)
+UI: element-plus
 
 ## 开发手册
 
@@ -15,7 +15,6 @@ npm run dev
 
 ### 附注
 
-* ant-design 为旧项目残留,应尽量使用element-plus,确保UI风格统一
 * vue的建议风格是 sfc+setup+hooks
 * API接口,定义在store文件夹下,如需要存储状态,请建立store
 

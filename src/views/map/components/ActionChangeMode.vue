@@ -8,20 +8,19 @@
       <el-button type="primary" @click="submit">确定</el-button>
     </template>
   </el-dialog>
-  <a-tooltip title="设置游戏模式" destroy-tooltip-on-hide>
-    <icon-button icon="el-icon-edit" circle @click="mode = now;show = true"/>
-  </a-tooltip>
+  <el-tooltip content="设置游戏模式">
+    <el-button circle @click="mode = now;show = true">
+      <el-icon-edit/>
+    </el-button>
+  </el-tooltip>
 </template>
 
 <script lang="tsx">
-import IconButton from '@/components/IconButton.vue'
 import {gameModes} from '@/store/maps/type'
-import {defineComponent} from 'vue'
 import {MapApi} from '@/store/maps/api'
 
 export default defineComponent({
   name: 'ActionChangeMode',
-  components: {IconButton},
   props: {
     thread: Number,
     now: {
@@ -37,7 +36,7 @@ export default defineComponent({
   }),
   methods: {
     async submit() {
-      await MapApi.edit(this.$props.thread,'mode',this.mode);
+      await MapApi.edit(this.$props.thread, 'mode', this.mode);
       this.$router.go(0)
     }
   }

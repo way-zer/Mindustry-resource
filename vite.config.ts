@@ -2,26 +2,25 @@ import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import {VitePWA} from 'vite-plugin-pwa'
-import OptimizationPersist from 'vite-plugin-optimize-persist'
-import PkgConfig from 'vite-plugin-package-config'
 import {visualizer} from 'rollup-plugin-visualizer'
 import Pages from 'vite-plugin-pages'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {resolve} from 'path'
-import {AntDesignVueResolver, ElementPlusResolver} from 'unplugin-vue-components/resolvers'
+import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig(({mode}) => {
     const cdnAlias: Record<string, string> = {}
     if (mode === "production") {
         // cdnAlias["element-plus"] = 'https://esm.sh/element-plus@1.2.0-beta.1'
-        cdnAlias["monaco-editor"] = 'https://esm.sh/monaco-editor@0.29.1'
+        cdnAlias["monaco-editor"] = 'https://esm.sh/monaco-editor@0.33.0'
     }
     return {
         base: '/v2/',
         plugins: [
-            PkgConfig(),
-            mode === "production" ? null : OptimizationPersist(),
             vue(),
             vueJsx(),
             Pages({
@@ -35,11 +34,23 @@ export default defineConfig(({mode}) => {
                     {dir: 'src/views', baseRoute: ''},
                 ],
             }),
+            AutoImport({
+                dts: "src/auto-imports.d.ts",
+                imports: ['vue'],
+            }),
             Components({
+                dts: "src/components.d.ts",
                 resolvers: [
-                    ElementPlusResolver({importStyle: 'css'}),
-                    AntDesignVueResolver({importStyle: 'css'}),
+                    IconsResolver({
+                        prefix: false,
+                        enabledCollections: 'ep',
+                        alias: {'el-icon': 'ep'}
+                    }),
+                    ElementPlusResolver({}),
                 ],
+            }),
+            Icons({
+                autoInstall: true,
             }),
             VitePWA({
                 registerType: 'autoUpdate',
@@ -65,8 +76,7 @@ export default defineConfig(({mode}) => {
             }),
             visualizer({
                 brotliSize: true,
-                sourcemap: true,
-            }),
+            }) as any,
         ],
         resolve: {
             alias: {

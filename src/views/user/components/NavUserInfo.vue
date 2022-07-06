@@ -3,24 +3,15 @@
     Hi {{ userStore.info?.name }}
     <a @click="userStore.logout">登出</a>
   </div>
-  <el-button v-else type="text" @click="login">登录</el-button>
+  <el-link v-else :underline="false" @click="login">登录</el-link>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import {userStore} from '@/store/user'
-import {defineComponent} from 'vue'
 
-export default defineComponent({
-  name: '_NavUserInfo',
-  setup() {
-    return {
-      userStore,
-      login() {
-        userStore.showDialog = true
-      },
-    }
-  },
-})
+function login() {
+  userStore.showDialog = true
+}
 </script>
 
 <style scoped>

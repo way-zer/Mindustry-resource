@@ -1,36 +1,30 @@
 <template>
-  <a-tooltip title="地图详情" destroy-tooltip-on-hide>
-    <router-link :to="`/map/${$props.thread}/${$props.hash}`"/>
-    <icon-button icon="el-icon-more-outline" :circle="$props.circle" @click="click"/>
-  </a-tooltip>
+  <el-tooltip content="地图详情">
+    <!--    <router-link :to="`/map/${$props.thread}/${$props.hash}`"/>-->
+    <el-button @click="click" :link="!$props.circle" :circle="$props.circle">
+      <el-icon-more/>
+    </el-button>
+  </el-tooltip>
 </template>
 
-<script lang="ts">
-import IconButton from '@/components/IconButton.vue'
-import {defineComponent} from 'vue'
+<script lang="ts" setup>
 import {useRouter} from 'vue-router'
 
-export default defineComponent({
-  name: 'ActionDetail',
-  components: {IconButton},
-  props: {
-    thread: Number,
-    hash: {
-      type: String,
-      default: 'latest',
-    },
-    circle: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  thread: Number,
+  hash: {
+    type: String,
+    default: 'latest',
   },
-  setup(props) {
-    const router = useRouter()
-    return {
-      click: async () => {
-        await router.push({path: `/map/${props.thread}/${props.hash}`})
-      },
-    }
+  circle: {
+    type: Boolean,
+    default: false,
   },
 })
+
+const router = useRouter()
+
+async function click() {
+  await router.push({path: `/map/${props.thread}/${props.hash}`})
+}
 </script>

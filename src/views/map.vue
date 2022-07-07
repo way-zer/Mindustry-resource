@@ -26,6 +26,19 @@ meta:
       </el-radio-group>
     </div>
     <div class="filter">
+      <b>按游戏版本筛选: </b>
+      <el-radio-group size="small"
+                      :model-value="getTag('version')"
+                      @change="(v)=>{replaceTag('version',v)}"
+      >
+        <el-radio-button label="3">v5(104)</el-radio-button>
+        <el-radio-button label="4">v6(126)</el-radio-button>
+        <el-radio-button label="5">v7(135)</el-radio-button>
+        <el-radio-button label="7">v7.5(136/be)</el-radio-button>
+        <el-radio-button label="X"/>
+      </el-radio-group>
+    </div>
+    <div class="filter">
       <b>排序方式: </b>
       <el-radio-group size="small"
                       :model-value="getTag('sort')||'X'"

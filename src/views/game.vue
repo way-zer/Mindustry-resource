@@ -6,7 +6,7 @@ meta:
 <template>
   <PageHeader title="游戏下载与安装">
     <template #actions>
-      <el-switch active-text="使用gh.api.99988866.xyz镜像加速" inactive-text="不使用镜像加速" v-model="useMirror"/>
+      <el-switch active-text="使用镜像加速" inactive-text="不使用镜像加速" v-model="useMirror"/>
     </template>
     <el-card header="正式版">
       <ReleaseList :list="store.releases" :get-download-url="getDownloadUrl"/>
@@ -48,7 +48,7 @@ export default {
       useMirror,
       getDownloadUrl(url: string) {
         if (!useMirror.value) return url
-        return 'https://gh.api.99988866.xyz/' + url
+        return 'https://gh.tinylake.tk/' + url
       },
     }
   },

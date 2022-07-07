@@ -1,14 +1,13 @@
 <template>
-  <el-popover trigger="click" :persistent="false" width="unset">
-    <template #reference>
-      <el-tooltip content="拷贝换图指令">
-        <el-button @click="copy" :link="!$props.circle" :circle="$props.circle">
-          <el-icon-document-copy/>
-        </el-button>
-      </el-tooltip>
-    </template>
+  <el-tooltip content="拷贝换图指令">
+    <el-button ref="buttonRef" @click="copy" :link="!$props.circle" :circle="$props.circle">
+      <el-icon-document-copy/>
+    </el-button>
+  </el-tooltip>
+
+  <el-popover trigger="click" :persistent="false" width="unset" virtual-triggering :virtual-ref="buttonRef">
     粘贴指令到支持网络换图的服务器使用
-    <pre ref="command">/vote map {{ $props.thread }}</pre>
+    <pre ref="commandRef">/vote map {{ $props.thread }}</pre>
     如果服务器仍在使用旧版本插件,请使用下面指令换图
     <pre>/vote map {{ $props.hash?.replaceAll('-', '') }}</pre>
   </el-popover>
@@ -26,9 +25,10 @@ defineProps({
   }
 })
 
-const command = ref<Node>()
+const buttonRef = ref<Node>()
+const commandRef = ref<Node>()
 
 function copy() {
-  copyContent(() => (command.value!!))
+  copyContent(() => (commandRef.value!!))
 }
 </script>

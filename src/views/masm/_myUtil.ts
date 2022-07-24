@@ -16,6 +16,11 @@ let monaco: Promise<Monaco> | undefined = undefined
 
 export function loadMonaco(): Promise<Monaco> {
     return monaco || (monaco = (async () => {
+        loader.config({
+            paths: {
+                vs: "https://cdn.bootcdn.net/ajax/libs/monaco-editor/0.33.0/min/vs"
+            }
+        })
         const monaco = await loader.init()
         configTS(monaco)
         return monaco

@@ -5,6 +5,7 @@ import App from './App.vue'
 import {store} from '@/store'
 import locale from 'element-plus/es/locale/lang/zh-cn'
 import '@/plugins/serviceWorker'
+import 'element-plus/es/components/message/style/css'
 
 initAxios()
 

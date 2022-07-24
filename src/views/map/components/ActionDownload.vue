@@ -11,16 +11,17 @@ import {MapApi} from '@/store/maps/api'
 import {userStore} from '@/store/user'
 import {ElMessage} from 'element-plus'
 
-const {hash, circle = false} = defineProps<{
-  hash: string,
+const props = withDefaults(defineProps<{
+  hash?: string,
   circle?: boolean
-}>()
+}>(), {circle: false})
 
 async function download() {
+  if (!props.hash) return
   if (!userStore.logged) {
     userStore.showDialog = true
     return ElMessage.error('请先登录后再下载')
   }
-  await MapApi.download(hash)
+  await MapApi.download(props.hash)
 }
 </script>

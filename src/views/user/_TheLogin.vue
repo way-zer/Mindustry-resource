@@ -38,8 +38,8 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">提交</el-button>
-        <span v-if="isLogin">还没账号,点击<el-button type="text" @click="isLogin=false">注册</el-button></span>
-        <span v-else>已有账号,点击<el-button type="text" @click="isLogin=true">登录</el-button></span>
+        <span v-if="isLogin">还没账号,点击<el-button link type="primary" @click="isLogin=false">注册</el-button></span>
+        <span v-else>已有账号,点击<el-button link type="primary" @click="isLogin=true">登录</el-button></span>
       </el-form-item>
     </el-form>
   </el-dialog>

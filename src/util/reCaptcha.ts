@@ -1,7 +1,10 @@
 /* eslint-disable */
+import {ElMessage} from "element-plus";
+
 declare namespace grecaptcha {
-  function ready(b: (token: string) => void): void;
-  function execute(key: string, body: { action: string }): Promise<string>;
+    function ready(b: (token: string) => void): void;
+
+    function execute(key: string, body: { action: string }): Promise<string>;
 }
 
 const key = '6LfGReEZAAAAAE5Uwrag1tf4HhVMtZtit3-hQwEC';
@@ -9,14 +12,23 @@ const key = '6LfGReEZAAAAAE5Uwrag1tf4HhVMtZtit3-hQwEC';
 let loadGRecaptcha: Promise<any>
 
 export async function requestToken(action: string): Promise<string> {
-  if (!loadGRecaptcha) {
-    const script = document.createElement('script');
-    script.src = 'https://www.recaptcha.net/recaptcha/api.js?render=' + key;
-    document.body.append(script);
-    loadGRecaptcha = new Promise(resolve => (script.onload = ()=>{
-      grecaptcha.ready(resolve)
-    }));
-  }
-  await loadGRecaptcha
-  return grecaptcha.execute(key, {action});
+    if (!loadGRecaptcha) {
+        const script = document.createElement('script');
+        script.src = 'https://www.recaptcha.net/recaptcha/api.js?render=' + key;
+        document.body.append(script);
+        loadGRecaptcha = new Promise((resolve, reject) => {
+            script.onerror = reject
+            script.onload = () => {
+                grecaptcha.ready(resolve)
+            };
+        });
+    }
+    const msg = ElMessage.info({message: "正在加载reCaptcha组件", duration: 0})
+    try {
+        await loadGRecaptcha
+        msg.close()
+    } catch (e) {
+        ElMessage.error({message: "加载reCaptcha组件失败,可能网络不佳\n" + e, duration: 30_000, showClose: true})
+    }
+    return grecaptcha.execute(key, {action});
 }

@@ -20,7 +20,7 @@ async function download() {
   if (!props.hash) return
   if (!userStore.logged) {
     userStore.showDialog = true
-    return ElMessage.error('请先登录后再下载')
+    return ElMessage.error({message: '请先登录后再下载', duration: 10_000})
   }
   await MapApi.download(props.hash)
 }

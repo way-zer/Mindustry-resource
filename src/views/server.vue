@@ -6,7 +6,7 @@ meta:
 <template>
   <el-card>
     <template #header>
-      <el-row id="header" type="flex" justify="space-between" align="center">
+      <el-row id="header" type="flex" justify="space-between" align="middle">
         <b style="font-size: large">公共服务器列表</b>
         <el-space>
           <el-switch active-text="自动刷新" inactive-value="手动刷新" v-model="autoUpdate"/>

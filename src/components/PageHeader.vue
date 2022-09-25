@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <template #header>
-      <el-row id="header" type="flex" justify="space-between" align="center">
+      <el-row id="header" type="flex" justify="space-between" align="middle">
         <b style="font-size: large">{{ title }}</b>
         <el-space>
           <slot name="actions"/>

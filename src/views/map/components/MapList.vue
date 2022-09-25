@@ -34,7 +34,7 @@
   <el-backtop/>
 </template>
 
-<script type="tsx">
+<script lang="tsx">
 import SquaredImage from '@/components/SquaredImage.vue'
 import ColorizeSpan from '@/components/ColorizeSpan.vue'
 import {computed, defineComponent} from 'vue'

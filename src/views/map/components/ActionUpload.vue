@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import {useRouter} from "vue-router";
 
-const {thread, circle} = defineProps({
+const props = defineProps({
   thread: {//如果用于更新地图，不为空
     type: Number,
     require: false
@@ -26,6 +26,6 @@ const {thread, circle} = defineProps({
 const router = useRouter()
 
 function click() {
-  router.push("/map/upload" + (thread ? `?update=${thread}` : ''))
+  router.push("/map/upload" + (props.thread ? `?update=${props.thread}` : ''))
 }
 </script>

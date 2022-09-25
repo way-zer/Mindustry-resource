@@ -18,7 +18,7 @@
           <el-icon-upload-filled/>
         </el-icon>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <span>只能上传.msav文件,且不超过100KB</span>
+        <span>只能上传.msav文件,且不超过200KB</span>
       </el-upload>
     </el-row>
   </el-dialog>

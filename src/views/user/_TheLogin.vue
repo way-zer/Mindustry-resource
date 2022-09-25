@@ -6,6 +6,7 @@
             { pattern: /[-_a-zA-Z0-9]{6,16}/, message: '用户名需要6-16位字母数字下划线构成', trigger: 'change'},
       ]">
         <el-input v-model.trim="form.user" autocomplete="username"/>
+        <span class="tip" v-if="isLogin">忘记账号?可以翻看已上传的地图，或者使用"qq+号码"代替，例"qq123456"</span>
       </el-form-item>
 
       <el-form-item label="密码" prop="password" :rules="[
@@ -14,6 +15,7 @@
       ]">
         <el-input v-model="form.password" type="password"
                   :autocomplete="isLogin ? 'current-password' : 'new-password'"/>
+        <span class="tip" v-if="isLogin">忘记密码?可以使用相同用户名和qq重新注册，更新密码</span>
       </el-form-item>
 
       <el-form-item v-if="!isLogin" label="重复密码" prop="password2" :rules="[
@@ -97,4 +99,5 @@ function close(done) {
 .tip
   display inline-block
   line-height normal
+  color gray
 </style>

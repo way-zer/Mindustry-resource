@@ -7,7 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-import {userStore} from '@/store/user'
+import {useStore} from "@/store";
+
+const userStore = useStore("user")
 
 function login() {
   userStore.showDialog = true

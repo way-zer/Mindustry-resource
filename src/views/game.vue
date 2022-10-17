@@ -33,16 +33,17 @@ meta:
 <script lang="ts">
 import PageHeader from '@/components/PageHeader.vue'
 import ReleaseList from './game/_ReleaseList.vue'
-import {gameStore} from '@/store/game'
 import {ref} from 'vue'
+import {useStore} from "@/store";
 
 export default {
   name: 'index',
   components: {ReleaseList, PageHeader},
   setup() {
-    const store = gameStore
+    const store = useStore("game")
     const useMirror = ref(true)
-    gameStore.tryLoad().then()
+    onServerPrefetch(() => store.tryLoad())
+    onBeforeUnmount(() => store.tryLoad())
     return {
       store,
       useMirror,

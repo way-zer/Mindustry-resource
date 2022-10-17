@@ -2,19 +2,19 @@
   "name": "Mindustry中文资源站",
   "short_name": "Mindustry资源站",
   "description": "Mindustry中文资源站",
-  "scope": "/v2/",
-  "start_url": "/v2/?source=pwa",
+  "scope": "/",
+  "start_url": "/?source=pwa",
   "display": "standalone",
   "theme_color": "#001529",
   "background_color": "#f0f2f5",
   "icons": [
     {
-      "src": "/v2/icons-192.20210425.png",
+      "src": "/icons-192.20210425.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/v2/icons-512.20210425.png",
+      "src": "/icons-512.20210425.png",
       "type": "image/png",
       "sizes": "512x512"
     }
@@ -24,19 +24,19 @@
       "name": "查看地图",
       "short_name": "地图",
       "description": "上传下载查看地图",
-      "url": "/v2/maps?source=pwa"
+      "url": "/maps?source=pwa"
     },
     {
       "name": "服务器列表",
       "short_name": "服务器",
       "description": "实时公共服务器列表",
-      "url": "/v2/servers?source=pwa"
+      "url": "/servers?source=pwa"
     },
     {
       "name": "下载游戏客户端",
       "short_name": "客户端",
       "description": "下载游戏客户端",
-      "url": "/v2/game?source=pwa"
+      "url": "/game?source=pwa"
     }
   ]
 }

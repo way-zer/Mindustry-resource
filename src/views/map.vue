@@ -58,11 +58,12 @@ meta:
 </template>
 
 <script lang="tsx">
-import {defineComponent, onBeforeUnmount, ref} from 'vue'
+import {defineComponent, ref} from 'vue'
 import {gameModes} from '@/store/maps/type'
 import MapList from '@/views/map/components/MapList.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
-import {mapsStore} from '@/store/maps'
+import {useStore} from "@/store";
+import {useWatch} from "@/util/hooks";
 
 function regexForTag(tag: string) {
   return new RegExp('@' + tag + ':(\\w+)')
@@ -71,14 +72,14 @@ function regexForTag(tag: string) {
 export default defineComponent({
   components: {ActionUpload, MapList},
   setup() {
+    const mapsStore = useStore("maps")
     const tmpSearch = ref(mapsStore.searchKey)
-    const unwatch = mapsStore.$watch((it) => it.searchKey, (it) => {
+    useWatch(() => mapsStore.searchKey, (it) => {
       tmpSearch.value = it
-    }) as () => any
-    onBeforeUnmount(unwatch)
+    })
     const onSearch = (v: string) => {
       tmpSearch.value = v.replace('  ', ' ')//reduce space
-      mapsStore.search(v).then()
+      return mapsStore.search(v)
     }
     return {
       modes: gameModes,

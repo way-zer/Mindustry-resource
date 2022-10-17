@@ -1,10 +1,9 @@
 import {MapInfo} from '@/store/maps/type'
 import {MapApi} from '@/store/maps/api'
 import {Action, Module, Mutation, VuexModule} from 'vuex-class-modules'
-import {store} from '@/store'
 
 @Module
-class MapsModule extends VuexModule {
+export class MapsModule extends VuexModule {
     loading = false
     noMore = false
     searchKey = ''
@@ -46,5 +45,3 @@ class MapsModule extends VuexModule {
             await this.search(initSearchKey)
     }
 }
-
-export const mapsStore = new MapsModule({store, name: 'maps'})

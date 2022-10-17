@@ -74,64 +74,65 @@ meta:
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, onMounted} from 'vue'
 import {ServerInfo} from '@/store/server/type'
 import {modeFilters, modeMap} from '@/util/mindustry'
-import {serverStore} from '@/store/server'
+import {useStore} from "@/store";
 
 export default defineComponent({
-  data: () => ({
-    intervalId: -1,
-    modeMap, modeFilters,
-    autoUpdate: true,
-    showModal: false,
-    adding: false,
-    address: '',
-    versionFilters: [
-      {text: '5.0 正式版', value: 5},
-      {text: '6.0 版本', value: 6},
-      {text: 'BE测试版', value: 'BE'},
-    ],
-    versionFilter: (f, v: ServerInfo) => {
-      if (f == 5) return v.version <= 104
-      if (f == 6) return v.version > 104 && v.version <= 1000
-      if (f == 'BE') return v.version > 1000
-    },
-    i: (scope) => (scope.row as ServerInfo),
-  }),
-  computed: {
-    loading: () => (serverStore.loading),
-    data: () => (serverStore.data),
-  },
-  methods: {
-    async check() {
-      if (this.adding) return
-      this.adding = true
-      try {
-        await serverStore.add(this.address)
-        //success
-        this.address = ''
-        this.showModal = false
-      } catch (e) {
-      } finally {
-        this.adding = false
-      }
-    },
-    score(v: ServerInfo) {
-      if (!v.online) return -1 + v.players / 1000
-      if (v.type == 'hub') return v.players / 1000
-      return v.players
-    },
-  },
-  mounted() {
-    serverStore.refresh().then()
-    this.intervalId = setInterval(() => {
-      serverStore.refresh().then()
-    }, 60000)
-  },
-  unmounted() {
-    clearInterval(this.intervalId)
-  },
+  setup() {
+    const serverStore = useStore("server")
+    let intervalId
+    onServerPrefetch(() => serverStore.refresh())
+    onMounted(() => {
+      if (serverStore.data.length === 0)
+        serverStore.refresh().then()
+      intervalId = setInterval(() => {
+        serverStore.refresh().then()
+      }, 60000)
+    })
+    onBeforeUnmount(() => {
+      clearInterval(intervalId)
+    })
+    return {
+      loading: computed(() => (serverStore.loading)),
+      data: computed(() => (serverStore.data)),
+      modeMap, modeFilters,
+      autoUpdate: true,
+      showModal: false,
+      adding: false,
+      address: '',
+      versionFilters: [
+        {text: '5.0 正式版', value: 5},
+        {text: '6.0 版本', value: 6},
+        {text: 'BE测试版', value: 'BE'},
+      ],
+      versionFilter: (f, v: ServerInfo) => {
+        if (f == 5) return v.version <= 104
+        if (f == 6) return v.version > 104 && v.version <= 1000
+        if (f == 'BE') return v.version > 1000
+      },
+      i: (scope) => (scope.row as ServerInfo),
+      async check() {
+        if (this.adding) return
+        this.adding = true
+        try {
+          await serverStore.add(this.address)
+          //success
+          this.address = ''
+          this.showModal = false
+        } catch (e) {
+        } finally {
+          this.adding = false
+        }
+      },
+      score(v: ServerInfo) {
+        if (!v.online) return -1 + v.players / 1000
+        if (v.type == 'hub') return v.players / 1000
+        return v.players
+      },
+    }
+  }
 })
 </script>
 

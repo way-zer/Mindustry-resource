@@ -109,8 +109,7 @@ import ActionCopy from '@/views/map/components/ActionCopy.vue'
 import ActionDownload from '@/views/map/components/ActionDownload.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
 import ActionChangeMode from '@/views/map/components/ActionChangeMode.vue'
-import {userStore} from '@/store/user'
-import {mapsStore} from '@/store/maps'
+import {useStore} from "@/store";
 
 export default defineComponent({
   name: 'Detail',
@@ -123,6 +122,8 @@ export default defineComponent({
     JsonViewer,
   },
   setup() {
+    const userStore = useStore("user")
+    const mapsStore = useStore("maps")
     const route = useRoute()
     const router = useRouter()
     const ret = ref<MapDetail>({} as any)

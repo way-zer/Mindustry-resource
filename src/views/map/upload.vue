@@ -25,19 +25,17 @@
 </template>
 
 <script lang="ts">
-import {isMobile} from '@/util/uiHelper'
 import {defineComponent, ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
 import {MapApi} from '@/store/maps/api'
-import {userStore} from '@/store/user'
+import {useStore} from "@/store";
+
 
 export default defineComponent({
   name: 'TheUpload',
-  data: () => ({
-    isMobile,
-  }),
   setup() {
+    const userStore = useStore("user")
     const router = useRouter()
     const update = useRoute().query.update?.toString()
     const uploadUrl = ref<string>('404')

@@ -20,7 +20,8 @@
     "types": [
       "vite/client",
       "vite-plugin-pwa/client",
-      "vite-plugin-pages/client"
+      "vite-plugin-pages/client",
+      "element-plus/global"
     ],
     "baseUrl": ".",
     "paths": {
@@ -30,6 +31,7 @@
     }
   },
   "include": [
+    "renderer/**/*.ts",
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",

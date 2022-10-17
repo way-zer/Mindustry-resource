@@ -15,11 +15,11 @@ import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 export default defineConfig(({mode}) => {
     const cdnAlias: Record<string, string> = {}
     if (mode === "production") {
-        // cdnAlias["element-plus"] = 'https://esm.sh/element-plus@1.2.0-beta.1'
+        // cdnAlias["element-plus"] = 'https://esm.sh/element-plus@2.2.18'
         cdnAlias["monaco-editor"] = 'https://esm.sh/monaco-editor@0.33.0'
     }
     return {
-        base: '/v2/',
+        // base: '/v2/',
         plugins: [
             vue(),
             vueJsx(),
@@ -46,7 +46,10 @@ export default defineConfig(({mode}) => {
                         enabledCollections: 'ep',
                         alias: {'el-icon': 'ep'}
                     }),
-                    ElementPlusResolver({}),
+                    ElementPlusResolver({
+                        importStyle: false
+                        // ssr:true
+                    }),
                 ],
             }),
             Icons({

@@ -1,12 +1,17 @@
-import {Action, Module, VuexModule} from 'vuex-class-modules'
+import {Action, Module, RegisterOptions, VuexModule} from 'vuex-class-modules'
 import {User} from '@/store/user/type'
 import {UserApi} from '@/store/user/api'
-import {store} from '@/store'
 
 @Module({generateMutationSetters: true})
-class UserModule extends VuexModule {
+export class UserModule extends VuexModule {
     info: User | null = null
     showDialog = false
+
+    constructor(options: RegisterOptions) {
+        super(options);
+        if (!import.meta.env.SSR)
+            setTimeout(this.refresh, 1000)
+    }
 
     get logged() {
         return this.info != null
@@ -40,6 +45,3 @@ class UserModule extends VuexModule {
         this.info = null
     }
 }
-
-export const userStore = new UserModule({store, name: 'user'})
-setTimeout(userStore.refresh, 1000)

@@ -50,9 +50,10 @@
 <script lang="tsx" setup>
 import {computed, ref} from 'vue'
 import {ElForm} from 'element-plus'
-import {userStore} from '@/store/user'
 import {UserApi} from "@/store/user/api";
+import {useStore} from "@/store";
 
+const userStore = useStore("user")
 const isLogin = ref(true)
 const formRef = ref<typeof ElForm>()
 const form = ref({

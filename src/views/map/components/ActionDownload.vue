@@ -8,8 +8,10 @@
 
 <script lang="ts" setup>
 import {MapApi} from '@/store/maps/api'
-import {userStore} from '@/store/user'
 import {ElMessage} from 'element-plus'
+import {useStore} from "@/store";
+
+const userStore = useStore("user")
 
 const props = withDefaults(defineProps<{
   hash?: string,

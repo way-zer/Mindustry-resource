@@ -1,9 +1,8 @@
 import {Action, Module, VuexModule} from 'vuex-class-modules'
 import {GameApi, Release} from '@/store/game/api'
-import {store} from '@/store'
 
 @Module({generateMutationSetters: true})
-class GameModule extends VuexModule {
+export class GameModule extends VuexModule {
     loading = false
     releases = [] as Release[]
     beReleases = [] as Release[]
@@ -27,5 +26,3 @@ class GameModule extends VuexModule {
         this.loading = false
     }
 }
-
-export const gameStore = new GameModule({store, name: 'game'})

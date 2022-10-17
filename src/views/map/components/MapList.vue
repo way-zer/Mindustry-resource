@@ -42,13 +42,17 @@ import ActionDownload from '@/views/map/components/ActionDownload.vue'
 import ActionCopy from '@/views/map/components/ActionCopy.vue'
 import ActionDetail from '@/views/map/components/ActionDetail.vue'
 import infiniteScroll from '@/util/infiniteScroll'
-import {mapsStore} from '@/store/maps'
+import {useStore} from "@/store";
 
 export default defineComponent({
   components: {ActionDetail, ActionCopy, ActionDownload, ColorizeSpan, SquaredImage},
   setup() {
-    if (!mapsStore.loading && !mapsStore.noMore && mapsStore.data.length == 0)
-      mapsStore.pullMore()
+    const mapsStore = useStore("maps")
+    onServerPrefetch(() => mapsStore.pullMore())
+    onBeforeMount(() => {
+      if (!mapsStore.loading && !mapsStore.noMore && mapsStore.data.length == 0)
+        mapsStore.pullMore()
+    })
     infiniteScroll(200, 10, () => (mapsStore.loading || mapsStore.noMore), mapsStore.pullMore)
     return {
       maps: computed(() => mapsStore.data),

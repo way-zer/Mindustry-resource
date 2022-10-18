@@ -78,10 +78,11 @@ import {defineComponent, onMounted} from 'vue'
 import {ServerInfo} from '@/store/server/type'
 import {modeFilters, modeMap} from '@/util/mindustry'
 import {useStore} from "@/store";
+import {ServerStore} from "@/store/server";
 
 export default defineComponent({
   setup() {
-    const serverStore = useStore("server")
+    const serverStore = useStore(ServerStore)
     let intervalId
     onServerPrefetch(() => serverStore.refresh())
     onMounted(() => {

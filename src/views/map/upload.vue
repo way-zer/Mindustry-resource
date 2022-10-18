@@ -30,12 +30,13 @@ import {useRoute, useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
 import {MapApi} from '@/store/maps/api'
 import {useStore} from "@/store";
+import {UserStore} from "@/store/user";
 
 
 export default defineComponent({
   name: 'TheUpload',
   setup() {
-    const userStore = useStore("user")
+    const userStore = useStore(UserStore)
     const router = useRouter()
     const update = useRoute().query.update?.toString()
     const uploadUrl = ref<string>('404')

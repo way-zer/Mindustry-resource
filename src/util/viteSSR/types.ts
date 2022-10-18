@@ -8,6 +8,7 @@ export interface SharedContext {
 
 export interface Options {
     router: Router
+    afterRender?: () => void | Promise<void>
 }
 
 export interface SSRState {

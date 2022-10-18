@@ -1,39 +1,34 @@
-import {createStore as create} from 'vuex'
-import {UserModule} from "@/store/user";
-import {ServerModule} from "@/store/server";
-import {MapsModule} from "@/store/maps";
-import {GameModule} from "@/store/game";
-import {App, inject} from "vue";
+import {defineStore, getActivePinia, Store} from "pinia";
 
-const modules = {
-    user: UserModule,
-    server: ServerModule,
-    maps: MapsModule,
-    game: GameModule,
-}
-const modulesKey = "Vuex_store_module"
+/**
+ * @param Module 类名
+ * @param id Store的id,可选，默认使用类名
+ */
+export function useStore<T extends (new (...args) => any)>(Module: T, id?: string): InstanceType<T> & Store<string, T, T, T> {
+    id = id || Module.name
+    if (getActivePinia()?.state[id]) return getActivePinia()?.state[id] as InstanceType<T>
+    const instance = new Module()
 
-export function registerStore(app: App, initState) {
-    const store = create({
-        plugins: [],
-        strict: import.meta.env.DEV,
-        devtools: !import.meta.env.SSR && import.meta.env.DEV
-    })
-    if (initState)
-        store.replaceState(initState)
-
-    const modulesInst = {} as any
-    for (let name in modules) {
-        modulesInst[name] = new modules[name]({store, name})
+    const initialState = {}
+    for (const key of Object.keys(instance)) {
+        if (instance.hasOwnProperty(key))
+            initialState[key] = instance[key]
     }
-    app.provide(modulesKey, modulesInst)
-
-    app.use(store)
-    return [store, modulesInst]
-}
-
-type Modules = typeof modules
-
-export function useStore<S extends keyof Modules>(name: S): InstanceType<Modules[S]> {
-    return (inject(modulesKey) as any)[name]
+    const getters = {}
+    const actions = {}
+    for (const key of Object.getOwnPropertyNames(Module.prototype)) {
+        const descriptor = Object.getOwnPropertyDescriptor(Module.prototype, key)!!
+        if (descriptor.get) {
+            getters[key] = (state) => descriptor.get!!.call(state)
+        }
+        if (descriptor.value) {
+            actions[key] = Module.prototype[key]
+        }
+    }
+    const store = defineStore(id, {
+        state: () => initialState,
+        getters, actions
+    })() as InstanceType<T>
+    Object.setPrototypeOf(store, Module)
+    return store
 }

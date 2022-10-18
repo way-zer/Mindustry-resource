@@ -7,7 +7,7 @@
       <router-view/>
       <the-login/>
     </el-main>
-    <el-footer id="footer">WayZer ©2021</el-footer>
+    <el-footer id="footer" class="test">WayZer ©2021</el-footer>
   </el-container>
 </template>
 

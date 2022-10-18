@@ -8,8 +8,10 @@
 
 <script lang="ts" setup>
 import {useStore} from "@/store";
+import {UserStore} from "@/store/user";
 
-const userStore = useStore("user")
+const userStore = useStore(UserStore)
+onMounted(() => userStore.refresh())
 
 function login() {
   userStore.showDialog = true

@@ -52,8 +52,9 @@ import {computed, ref} from 'vue'
 import {ElForm} from 'element-plus'
 import {UserApi} from "@/store/user/api";
 import {useStore} from "@/store";
+import {UserStore} from "@/store/user";
 
-const userStore = useStore("user")
+const userStore = useStore(UserStore)
 const isLogin = ref(true)
 const formRef = ref<typeof ElForm>()
 const form = ref({

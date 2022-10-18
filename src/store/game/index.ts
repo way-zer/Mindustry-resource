@@ -1,13 +1,10 @@
-import {Action, Module, VuexModule} from 'vuex-class-modules'
 import {GameApi, Release} from '@/store/game/api'
 
-@Module({generateMutationSetters: true})
-export class GameModule extends VuexModule {
+export class GameStore {
     loading = false
     releases = [] as Release[]
     beReleases = [] as Release[]
 
-    @Action
     async tryLoad() {
         if (this.loading) return
         this.loading = true

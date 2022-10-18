@@ -1,28 +1,9 @@
-import {createServer, ViteDevServer} from "vite";
-import chalk from "chalk";
-import {performance} from "perf_hooks";
+import {ViteDevServer} from "vite";
 import {NextHandleFunction} from "connect";
 import {Renderer, ServerContext} from "./types";
 import {htmlEscape, injectTemplate} from "./util";
 import {resolve} from "path";
 import {readFileSync} from "fs";
-
-globalThis.__ssr_start_time = performance.now()
-const viteServer = await createServer({
-    plugins: [
-        {
-            name: 'viteSSR', enforce: 'pre',
-            async configureServer(server) {
-                const handler = createSSRHandler(server)
-                return () => {
-                    server.middlewares.use(handler)
-                }
-            }
-        }
-    ]
-})
-await viteServer.listen()
-printServerInfo(viteServer)
 
 function createSSRHandler(server: ViteDevServer): NextHandleFunction {
     return async (request, response, next) => {
@@ -66,31 +47,18 @@ function createSSRHandler(server: ViteDevServer): NextHandleFunction {
     }
 }
 
-function printServerInfo(server: ViteDevServer) {
-    const info = server.config.logger.info
-
-    let ssrReadyMessage = '\n -- SSR mode'
-
-    if (Object.prototype.hasOwnProperty.call(server, 'printUrls')) {
-        info(
-            chalk.cyan(`\n  vite v${require('vite/package.json').version}`) +
-            chalk.green(` dev server running at:\n`),
-            {clear: !server.config.logger.hasWarned}
-        )
-
-        // @ts-ignore
-        server.printUrls()
-
-        // @ts-ignore
-        if (globalThis.__ssr_start_time) {
-            ssrReadyMessage += chalk.cyan(
-                ` ready in ${Math.round(
-                    // @ts-ignore
-                    performance.now() - globalThis.__ssr_start_time
-                )}ms.`
-            )
+export default function viteSSR({} = {}) {
+    return [
+        {
+            name: 'viteSSR', enforce: 'pre',
+            async configureServer(server) {
+                if (!server.config.ssr) return
+                console.log("USE SSR MODE")
+                const handler = createSSRHandler(server)
+                return () => {
+                    server.middlewares.use(handler)
+                }
+            }
         }
-    }
-
-    info(ssrReadyMessage + '\n')
+    ]
 }

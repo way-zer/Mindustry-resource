@@ -43,11 +43,12 @@ import ActionCopy from '@/views/map/components/ActionCopy.vue'
 import ActionDetail from '@/views/map/components/ActionDetail.vue'
 import infiniteScroll from '@/util/infiniteScroll'
 import {useStore} from "@/store";
+import {MapsStore} from '@/store/maps'
 
 export default defineComponent({
   components: {ActionDetail, ActionCopy, ActionDownload, ColorizeSpan, SquaredImage},
   setup() {
-    const mapsStore = useStore("maps")
+    const mapsStore = useStore(MapsStore)
     onServerPrefetch(() => mapsStore.pullMore())
     onBeforeMount(() => {
       if (!mapsStore.loading && !mapsStore.noMore && mapsStore.data.length == 0)

@@ -10,8 +10,9 @@
 import {MapApi} from '@/store/maps/api'
 import {ElMessage} from 'element-plus'
 import {useStore} from "@/store";
+import {UserStore} from "@/store/user";
 
-const userStore = useStore("user")
+const userStore = useStore(UserStore)
 
 const props = withDefaults(defineProps<{
   hash?: string,

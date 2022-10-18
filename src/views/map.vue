@@ -64,6 +64,7 @@ import MapList from '@/views/map/components/MapList.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
 import {useStore} from "@/store";
 import {useWatch} from "@/util/hooks";
+import {MapsStore} from "@/store/maps";
 
 function regexForTag(tag: string) {
   return new RegExp('@' + tag + ':(\\w+)')
@@ -72,7 +73,7 @@ function regexForTag(tag: string) {
 export default defineComponent({
   components: {ActionUpload, MapList},
   setup() {
-    const mapsStore = useStore("maps")
+    const mapsStore = useStore(MapsStore)
     const tmpSearch = ref(mapsStore.searchKey)
     useWatch(() => mapsStore.searchKey, (it) => {
       tmpSearch.value = it

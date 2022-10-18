@@ -10,6 +10,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {resolve} from 'path'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
+import viteSSR from "./src/util/viteSSR/plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig(({mode}) => {
@@ -21,6 +22,7 @@ export default defineConfig(({mode}) => {
     return {
         // base: '/v2/',
         plugins: [
+            viteSSR(),
             vue(),
             vueJsx(),
             Pages({
@@ -88,6 +90,7 @@ export default defineConfig(({mode}) => {
             },
         },
         build: {
+            target: ['chrome89', 'esnext'],
             sourcemap: true,
             chunkSizeWarningLimit: 1000,
             rollupOptions: {
@@ -113,5 +116,8 @@ export default defineConfig(({mode}) => {
                 },
             },
         },
+        ssr: {
+            format: 'esm'
+        }
     }
 })

@@ -19,6 +19,10 @@ export interface SSRState {
 export interface ServerContext extends SharedContext {
     kind: 'server'
     state: SSRState
+
+    ssrManifest?: Record<string, string[]>
+    modules?: string[]
+    teleports?: Record<string, string>
 }
 
 export interface ClientContext extends SharedContext {

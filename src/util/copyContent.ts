@@ -2,6 +2,7 @@ import {ElMessage} from 'element-plus'
 import select from 'select'
 
 export function copyContent(getNode: () => Node, time = 3) {
+    if (import.meta.env.SSR) return
     if (document.getSelection()) {
         const node = getNode()
         if (node) {

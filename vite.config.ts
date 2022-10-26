@@ -13,7 +13,7 @@ import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import viteSSR from "./src/util/viteSSR/plugin";
 
 // https://vitejs.dev/config/
-export default defineConfig(({mode}) => {
+export default defineConfig(({mode, ssrBuild}) => {
     const cdnAlias: Record<string, string> = {}
     if (mode === "production") {
         // cdnAlias["element-plus"] = 'https://esm.sh/element-plus@2.2.18'
@@ -83,6 +83,7 @@ export default defineConfig(({mode}) => {
                 brotliSize: true,
             }) as any,
         ],
+        publicDir: "src/assets/" + (ssrBuild ? "server" : "client"),
         resolve: {
             alias: {
                 '@': resolve(__dirname, 'src'),
@@ -117,7 +118,11 @@ export default defineConfig(({mode}) => {
             },
         },
         ssr: {
-            format: 'esm'
+            noExternal: true,
+            external: [
+                "vue", "element-plus", 'connect', 'axios', 'node:http', 'node:fs', 'node:path',
+                'select', 'clipboard', 'pinia', 'vue-router'
+            ]
         }
     }
 })

@@ -1,7 +1,7 @@
 import {ViteDevServer} from "vite";
 import {NextHandleFunction} from "connect";
 import {Renderer, ServerContext} from "./types";
-import {htmlEscape, injectTemplate} from "./util";
+import {injectTemplate} from "./util";
 import {resolve} from "path";
 import {readFileSync} from "fs";
 
@@ -30,8 +30,6 @@ function createSSRHandler(server: ViteDevServer): NextHandleFunction {
                 state: {},
             } as ServerContext
             const htmlParts = await render(request.originalUrl!!, ctx)
-            htmlParts["Init-State"] = `<script>window.__INITIAL_STATE__=${htmlEscape(JSON.stringify(ctx.state))}</script>`
-
             response.setHeader('Content-Type', 'text/html')
             response.end(injectTemplate(template, htmlParts))
         } catch (error) {
@@ -52,8 +50,6 @@ export default function viteSSR({} = {}) {
         {
             name: 'viteSSR', enforce: 'pre',
             async configureServer(server) {
-                if (!server.config.ssr) return
-                console.log("USE SSR MODE")
                 const handler = createSSRHandler(server)
                 return () => {
                     server.middlewares.use(handler)

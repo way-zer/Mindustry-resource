@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import {useStore} from "@/store";
+import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
 
 const userStore = useStore(UserStore)

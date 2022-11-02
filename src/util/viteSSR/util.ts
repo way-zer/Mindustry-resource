@@ -77,3 +77,13 @@ function renderPreloadLink(file) {
         return `<!-- Not Support preload for ${file} -->`
     }
 }
+
+export function renderTeleports(teleports?: Record<string, string>): string {
+    if (!teleports) return ""
+    return Object.entries(teleports).map(([id, value]) => {
+        if (id == "body") return value
+        else if (id.startsWith("#"))
+            return `<div id="${id.substring(1)}">${value}</div>`
+        else return `<!--Not Handle Teleport ${id}-->`
+    }).join("\n")
+}

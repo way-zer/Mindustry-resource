@@ -42,6 +42,7 @@ export default defineConfig(({mode, ssrBuild}) => {
             }),
             Components({
                 dts: "src/components.d.ts",
+                extensions: ['vue', 'tsx'],
                 resolvers: [
                     IconsResolver({
                         prefix: false,
@@ -83,7 +84,7 @@ export default defineConfig(({mode, ssrBuild}) => {
                 brotliSize: true,
             }) as any,
         ],
-        publicDir: "src/assets/" + (ssrBuild ? "server" : "client"),
+        publicDir: "src/assets/client",
         resolve: {
             alias: {
                 '@': resolve(__dirname, 'src'),
@@ -118,11 +119,7 @@ export default defineConfig(({mode, ssrBuild}) => {
             },
         },
         ssr: {
-            noExternal: true,
-            external: [
-                "vue", "element-plus", 'connect', 'axios', 'node:http', 'node:fs', 'node:path',
-                'select', 'clipboard', 'pinia', 'vue-router'
-            ]
+            // noExternal: [/.*node-module.*/]
         }
     }
 })

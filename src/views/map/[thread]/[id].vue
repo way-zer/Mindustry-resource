@@ -109,7 +109,7 @@ import ActionCopy from '@/views/map/components/ActionCopy.vue'
 import ActionDownload from '@/views/map/components/ActionDownload.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
 import ActionChangeMode from '@/views/map/components/ActionChangeMode.vue'
-import {useStore} from "@/store";
+import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
 import {MapsStore} from "@/store/maps";
 

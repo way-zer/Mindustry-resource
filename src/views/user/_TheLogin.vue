@@ -51,7 +51,7 @@
 import {computed, ref} from 'vue'
 import {ElForm} from 'element-plus'
 import {UserApi} from "@/store/user/api";
-import {useStore} from "@/store";
+import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
 
 const userStore = useStore(UserStore)

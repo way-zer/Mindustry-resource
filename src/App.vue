@@ -5,7 +5,9 @@
     </el-header>
     <el-main>
       <router-view/>
-      <the-login/>
+      <client-only>
+        <the-login/>
+      </client-only>
     </el-main>
     <el-footer id="footer" class="test">WayZer ©2021</el-footer>
   </el-container>
@@ -15,9 +17,10 @@
 import TheLogin from '@/views/user/_TheLogin.vue'
 import {defineComponent} from 'vue'
 import TheHeader from '@/views/layout/_TheHeader.vue'
+import ClientOnly from "@/components/ClientOnly";
 
 export default defineComponent({
-  components: {TheHeader, TheLogin},
+  components: {TheHeader, TheLogin, ClientOnly},
 })
 </script>
 

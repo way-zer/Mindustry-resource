@@ -64,12 +64,14 @@ meta:
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="请输入服务器地址" v-model="showModal">
-      <el-input type="text" v-model="address" @submit="check"/>
-      <el-row type="flex" justify="end">
-        <el-button type="primary" :loading="adding" @click="check">提交</el-button>
-      </el-row>
-    </el-dialog>
+    <client-only>
+      <el-dialog title="请输入服务器地址" v-model="showModal">
+        <el-input type="text" v-model="address" @submit="check"/>
+        <el-row type="flex" justify="end">
+          <el-button type="primary" :loading="adding" @click="check">提交</el-button>
+        </el-row>
+      </el-dialog>
+    </client-only>
   </el-card>
 </template>
 
@@ -77,7 +79,7 @@ meta:
 import {defineComponent, onMounted} from 'vue'
 import {ServerInfo} from '@/store/server/type'
 import {modeFilters, modeMap} from '@/util/mindustry'
-import {useStore} from "@/store";
+import {useStore} from "pinia-class-store";
 import {ServerStore} from "@/store/server";
 
 export default defineComponent({

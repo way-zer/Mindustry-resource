@@ -29,7 +29,7 @@ import {defineComponent, ref} from 'vue'
 import {useRoute, useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
 import {MapApi} from '@/store/maps/api'
-import {useStore} from "@/store";
+import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
 
 

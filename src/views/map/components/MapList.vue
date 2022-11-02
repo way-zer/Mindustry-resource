@@ -42,7 +42,7 @@ import ActionDownload from '@/views/map/components/ActionDownload.vue'
 import ActionCopy from '@/views/map/components/ActionCopy.vue'
 import ActionDetail from '@/views/map/components/ActionDetail.vue'
 import infiniteScroll from '@/util/infiniteScroll'
-import {useStore} from "@/store";
+import {useStore} from "pinia-class-store";
 import {MapsStore} from '@/store/maps'
 
 export default defineComponent({

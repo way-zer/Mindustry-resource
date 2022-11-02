@@ -1,4 +1,4 @@
-import {ViteDevServer} from "vite";
+import {Plugin, ViteDevServer} from "vite";
 import {NextHandleFunction} from "connect";
 import {Renderer, ServerContext} from "./types";
 import {injectTemplate} from "./util";
@@ -19,7 +19,7 @@ function createSSRHandler(server: ViteDevServer): NextHandleFunction {
 
         try {
             //TODO
-            const entryPoint = 'src/main.ts'
+            const entryPoint = '/src/main.ts'
 
             let resolvedEntryPoint = await server.ssrLoadModule(entryPoint, {fixStacktrace: true})
             resolvedEntryPoint = resolvedEntryPoint.default || resolvedEntryPoint
@@ -54,7 +54,11 @@ export default function viteSSR({} = {}) {
                 return () => {
                     server.middlewares.use(handler)
                 }
+            },
+            resolveId(id, _, {ssr}) {
+                if (id.endsWith("viteSSR"))
+                    return ssr ? (id + "/entry-server.ts") : (id + "/entry-client.ts")
             }
-        }
+        } as Plugin
     ]
 }

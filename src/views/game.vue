@@ -34,7 +34,7 @@ meta:
 import PageHeader from '@/components/PageHeader.vue'
 import ReleaseList from './game/_ReleaseList.vue'
 import {ref} from 'vue'
-import {useStore} from "@/store";
+import {useStore} from "pinia-class-store";
 import {GameStore} from "@/store/game";
 
 export default {

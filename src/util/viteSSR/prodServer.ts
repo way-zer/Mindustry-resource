@@ -1,12 +1,13 @@
 // @ts-check
-import fs from 'node:fs'
 import * as http from "node:http";
 import connect from 'connect'
 import type {Renderer, ServerContext} from "@/util/viteSSR/types";
 import {injectTemplate} from "@/util/viteSSR/util";
+import indexProd from '@/../dist/client/index.html?raw'
+import manifest from '@/../dist/client/ssr-manifest.json'
 
-const indexProd = fs.readFileSync('index.html', 'utf-8')
-const manifest = JSON.parse(fs.readFileSync('ssr-manifest.json', 'utf-8'))
+const port = +(process.env["PORT"] || 6173)
+
 ;(async () => {
     const render = (await import("@/main")).default as Renderer //split package
     const app = connect()
@@ -15,7 +16,7 @@ const manifest = JSON.parse(fs.readFileSync('ssr-manifest.json', 'utf-8'))
             const ctx = {
                 kind: 'server',
                 state: {},
-                ssrManifest: manifest
+                ssrManifest: manifest as unknown
             } as ServerContext
             const htmlParts = await render(req.originalUrl!!, ctx)
             const html = injectTemplate(indexProd, htmlParts)
@@ -26,6 +27,6 @@ const manifest = JSON.parse(fs.readFileSync('ssr-manifest.json', 'utf-8'))
             res.end(e.stack)
         }
     })
-    http.createServer(app).listen(6173)
-    console.log('http://localhost:6173')
+    http.createServer(app).listen(port)
+    console.log('http://localhost:' + port)
 })()

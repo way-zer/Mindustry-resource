@@ -62,7 +62,7 @@ import {defineComponent, ref} from 'vue'
 import {gameModes} from '@/store/maps/type'
 import MapList from '@/views/map/components/MapList.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
-import {useStore} from "@/store";
+import {useStore} from "pinia-class-store";
 import {useWatch} from "@/util/hooks";
 import {MapsStore} from "@/store/maps";
 

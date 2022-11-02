@@ -37,7 +37,10 @@ export interface NoSSRContext extends SharedContext {
 
 export type UniContext = ClientContext | NoSSRContext | ServerContext
 export type Hook<Context extends SharedContext> = (ctx: Context) => Promise<Options>
-export type Renderer = (url: string | URL, context: ServerContext) => Promise<Record<string, string>>
+export type Renderer = (url: string | URL, context: ServerContext) => Promise<{
+    status: number,
+    htmlParts: Record<string, string>,
+}>
 
 export type ClientSSRHandler = (App: Component, hook: Hook<ClientContext | NoSSRContext>) => void
 export type ServerSSRHandler = (App: Component, hook: Hook<ServerContext>) => Renderer

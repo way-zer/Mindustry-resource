@@ -29,7 +29,8 @@ function createSSRHandler(server: ViteDevServer): NextHandleFunction {
                 kind: 'server',
                 state: {},
             } as ServerContext
-            const htmlParts = await render(request.originalUrl!!, ctx)
+            const {status, htmlParts} = await render(request.originalUrl!!, ctx)
+            response.statusCode = status
             response.setHeader('Content-Type', 'text/html')
             response.end(injectTemplate(template, htmlParts))
         } catch (error) {

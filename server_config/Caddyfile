@@ -10,19 +10,20 @@ tinylake.ga {
 www.mindustry.top {
     encode zstd gzip
 	root * "/srv/resource-site"
-	@file {
-	    path_regexp .*\.(ico|js|png|css|json)
-	}
+	file_server
 	@ssr {
-	    not path_regexp .*\.(ico|js|png|css|json)
+	    not path_regexp .*\.(index|ico|js|png|css|json)
 	}
 	handle /api/* {
 	    reverse_proxy https://mdt.wayzer.top {
 	        header_up Host {upstream_hostport}
 	    }
 	}
-	file_server @file {
-		hide index.html
-	}
-	reverse_proxy @ssr 127.0.0.1:6173
+	reverse_proxy @ssr 127.0.0.1:6173 {
+	    @error status 500 503
+	    handle_response @error {
+    		rewrite * /index.html
+    		file_server
+    	}
+    }
 }

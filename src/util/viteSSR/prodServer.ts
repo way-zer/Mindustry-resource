@@ -18,8 +18,9 @@ const port = +(process.env["PORT"] || 6173)
                 state: {},
                 ssrManifest: manifest as unknown
             } as ServerContext
-            const htmlParts = await render(req.originalUrl!!, ctx)
+            const {status, htmlParts} = await render(req.originalUrl!!, ctx)
             const html = injectTemplate(indexProd, htmlParts)
+            res.statusCode = status
             res.setHeader('Content-Type', 'text/html').end(html)
         } catch (e: any) {
             console.log(e.stack)

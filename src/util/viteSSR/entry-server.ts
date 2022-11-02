@@ -14,10 +14,13 @@ const viteSSR: ServerSSRHandler = function (App, hook) {
         const body = await renderToString(app, context)
         afterRender && await afterRender()
         return {
-            "SSR-Body": body,
-            "Init-State": `<script>window.__INITIAL_STATE__=${htmlEscape(JSON.stringify(context.state))}</script>`,
-            "SSR-Preload": renderPreloadLinks(context.modules, context.ssrManifest),
-            "Teleport": renderTeleports(context.teleports),
+            status: router.currentRoute.value.name == '404' ? 404 : 200,
+            htmlParts: {
+                "SSR-Body": body,
+                "Init-State": `<script>window.__INITIAL_STATE__=${htmlEscape(JSON.stringify(context.state))}</script>`,
+                "SSR-Preload": renderPreloadLinks(context.modules, context.ssrManifest),
+                "Teleport": renderTeleports(context.teleports),
+            },
         }
     }
 }

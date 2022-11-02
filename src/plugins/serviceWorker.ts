@@ -8,7 +8,6 @@ if (!import.meta.env.SSR)
             console.log("need to refresh")
         },
         onOfflineReady() {
-            ElMessage.warning("网络连接失败，当前处于离线模式")
-            console.log('No internet connection found. App is running in offline mode.')
+            ElMessage.info('资源加载完毕，选择"添加到主屏幕"可离线使用哦')
         }
     })

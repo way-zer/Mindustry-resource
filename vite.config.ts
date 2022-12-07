@@ -57,6 +57,7 @@ export default defineConfig(({mode, ssrBuild}) => {
             }),
             Icons({
                 autoInstall: true,
+
             }),
             VitePWA({
                 registerType: 'autoUpdate',
@@ -85,7 +86,7 @@ export default defineConfig(({mode, ssrBuild}) => {
                 brotliSize: true,
             }) as any,
         ],
-        publicDir: "src/assets/client",
+        publicDir: "src/assets/public",
         resolve: {
             alias: {
                 '@': resolve(__dirname, 'src'),
@@ -93,6 +94,7 @@ export default defineConfig(({mode, ssrBuild}) => {
             },
         },
         build: {
+            outDir: "dist/client",
             target: ['chrome89', 'esnext'],
             sourcemap: true,
             chunkSizeWarningLimit: 1000,

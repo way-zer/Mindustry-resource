@@ -2,6 +2,7 @@ import {User} from '@/store/user/type'
 import {UserApi} from '@/store/user/api'
 
 export class UserStore {
+    first: boolean = true
     info: User | null = null
     showDialog = false
 
@@ -10,11 +11,13 @@ export class UserStore {
     }
 
     async refresh() {
+        this.first = false
         this.info = await UserApi.info().catch(() => null)
     }
 
     async login({user, password}: { user: string, password: string }) {
         if (this.logged) return
+        this.first = false
         this.info = await UserApi.login(user, password)
         if (this.logged)
             this.showDialog = false
@@ -22,6 +25,7 @@ export class UserStore {
 
     async register({user, password, code}: { user: string, password: string, code: string }) {
         if (this.logged) return
+        this.first = false
         this.info = await UserApi.register(user, password, code)
         if (this.logged)
             this.showDialog = false
@@ -29,6 +33,7 @@ export class UserStore {
 
     async logout() {
         if (!this.logged) return
+        this.first = false
         await UserApi.logout()
         this.info = null
     }

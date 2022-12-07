@@ -59,7 +59,6 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SquaredImage: typeof import('./components/SquaredImage.vue')['default']
     Tooltip: typeof import('./components/Tooltip.tsx')['default']
-    ToolTip: typeof import('./components/ToolTip.tsx')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

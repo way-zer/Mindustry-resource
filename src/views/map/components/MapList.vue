@@ -15,7 +15,7 @@
             </el-space>
           </div>
           <b>{{ map.name }}</b>
-          <p>{{ map.desc }}</p>
+          <p class="desc">{{ map.desc }}</p>
           <el-divider/>
           <el-row justify="space-around" type="flex">
             <ActionCopy :thread="map.id" :hash="map.latest"/>
@@ -68,4 +68,11 @@ export default defineComponent({
 .center
   width 100%
   text-align center
+
+.desc
+  height 4em
+  -webkit-line-clamp 3
+  display -webkit-box
+  -webkit-box-orient vertical
+  overflow hidden
 </style>

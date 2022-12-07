@@ -11,7 +11,10 @@ import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
 
 const userStore = useStore(UserStore)
-onMounted(() => userStore.refresh())
+onMounted(() => {
+  if (userStore.first)
+    userStore.refresh()
+})
 
 function login() {
   userStore.showDialog = true

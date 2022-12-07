@@ -10,7 +10,7 @@
     "serve": "vite preview",
     "run:prod": "vite-node src/util/viteSSR/prodServer.ts",
     "build": "pnpm build:client && pnpm build:server",
-    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:client": "vite build --ssrManifest",
     "build:server": "vite build --outDir dist/server --ssr src/util/viteSSR/prodServer.ts"
   },
   "dependencies": {

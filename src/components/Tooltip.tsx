@@ -4,11 +4,10 @@ export default defineComponent({
     name: "Tooltip",
     props: ElTooltip.props,
     inheritAttrs: false,
-    setup(props) {
-        const slots = useSlots()
+    setup(props, {slots}) {
         const ssr = ref(true)
         onMounted(() => ssr.value = false)
-        return () => ssr ? slots.default!!()
+        return () => ssr.value ? slots.default!!()
             : h(ElTooltip, props, slots)
     }
 })

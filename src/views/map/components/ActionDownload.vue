@@ -1,9 +1,9 @@
 <template>
-  <el-tooltip content="下载地图">
+  <tooltip content="下载地图">
     <el-button @click="download" :link="!circle" :circle="circle">
       <el-icon-download/>
     </el-button>
-  </el-tooltip>
+  </tooltip>
 </template>
 
 <script lang="ts" setup>

@@ -10,7 +10,7 @@ meta:
       <el-row type="flex" justify="space-between" align="middle">
         <b style="font-size: large">地图分享</b>
         <el-space>
-          <el-input v-model="searchKey" placeholder="查找地图" clearable @change="onSearch"/>
+          <el-input v-model="tmpSearch" placeholder="查找地图" clearable @change="onSearch"/>
           <ActionUpload/>
         </el-space>
       </el-row>
@@ -21,7 +21,7 @@ meta:
                       :model-value="getTag('mode')"
                       @change="(v)=>{replaceTag('mode',v)}"
       >
-        <el-radio-button v-for="mode in modes" :key="mode" :label="mode"/>
+        <el-radio-button v-for="mode in gameModes" :key="mode" :label="mode"/>
         <el-radio-button label="X"/>
       </el-radio-group>
     </div>
@@ -57,8 +57,8 @@ meta:
   </el-card>
 </template>
 
-<script lang="tsx">
-import {defineComponent, ref} from 'vue'
+<script lang="tsx" setup>
+import {ref} from 'vue'
 import {gameModes} from '@/store/maps/type'
 import MapList from '@/views/map/components/MapList.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
@@ -66,42 +66,35 @@ import {useStore} from "pinia-class-store";
 import {useWatch} from "@/util/hooks";
 import {MapsStore} from "@/store/maps";
 
+const mapsStore = useStore(MapsStore)
+const tmpSearch = ref(mapsStore.searchKey)
+useWatch(() => mapsStore.searchKey, (it) => {
+  tmpSearch.value = it
+})
+const onSearch = (v: string) => {
+  tmpSearch.value = v.replace('  ', ' ')//reduce space
+  return mapsStore.search(v)
+}
+
 function regexForTag(tag: string) {
   return new RegExp('@' + tag + ':(\\w+)')
 }
 
-export default defineComponent({
-  components: {ActionUpload, MapList},
-  setup() {
-    const mapsStore = useStore(MapsStore)
-    const tmpSearch = ref(mapsStore.searchKey)
-    useWatch(() => mapsStore.searchKey, (it) => {
-      tmpSearch.value = it
-    })
-    const onSearch = (v: string) => {
-      tmpSearch.value = v.replace('  ', ' ')//reduce space
-      return mapsStore.search(v)
-    }
-    return {
-      modes: gameModes,
-      searchKey: tmpSearch,
-      onSearch,
-      getTag(tag: string) {
-        const match = tmpSearch.value.match(regexForTag(tag))
-        return match ? match[1] : null
-      },
-      replaceTag(tag: string, value: string) {
-        const regex = regexForTag(tag)
-        if (tmpSearch.value.match(regex) === null)
-          onSearch(tmpSearch.value + ` @${tag}:${value} `)
-        else {
-          const v = value == 'X' ? '' : `@${tag}:${value}`
-          onSearch(tmpSearch.value.replace(regex, v))
-        }
-      },
-    }
-  },
-})
+function getTag(tag: string) {
+  const match = tmpSearch.value.match(regexForTag(tag))
+  return match ? match[1] : null
+}
+
+function replaceTag(tag: string, value: string) {
+  const regex = regexForTag(tag)
+  if (!tmpSearch.value.match(regex))
+    onSearch(tmpSearch.value + ` @${tag}:${value} `)
+  else {
+    const v = value == 'X' ? '' : `@${tag}:${value}`
+    onSearch(tmpSearch.value.replace(regex, v))
+  }
+}
+
 </script>
 
 <style lang="stylus" scoped>

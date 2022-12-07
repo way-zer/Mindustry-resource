@@ -23,12 +23,18 @@ export async function requestToken(action: string): Promise<string> {
             };
         });
     }
-    const msg = ElMessage.info({message: "正在加载reCaptcha组件", duration: 0})
+    let msg = ElMessage.info({message: "正在加载reCaptcha组件", duration: 0})
     try {
         await loadGRecaptcha
-        msg.close()
     } catch (e) {
         ElMessage.error({message: "加载reCaptcha组件失败,可能网络不佳\n" + e, duration: 30_000, showClose: true})
+    } finally {
+        msg.close()
     }
-    return grecaptcha.execute(key, {action});
+    msg = ElMessage.info({message: "正在获取reCaptcha验证码", duration: 0})
+    try {
+        return await grecaptcha.execute(key, {action});
+    } finally {
+        msg.close
+    }
 }

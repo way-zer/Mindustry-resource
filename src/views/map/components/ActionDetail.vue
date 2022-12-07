@@ -1,10 +1,10 @@
 <template>
-  <el-tooltip content="地图详情">
+  <tooltip content="地图详情">
     <!--    <router-link :to="`/map/${$props.thread}/${$props.hash}`"/>-->
     <el-button @click="click" :link="!$props.circle" :circle="$props.circle">
       <el-icon-more/>
     </el-button>
-  </el-tooltip>
+  </tooltip>
 </template>
 
 <script lang="ts" setup>

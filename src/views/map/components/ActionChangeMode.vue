@@ -8,11 +8,11 @@
       <el-button type="primary" @click="submit">确定</el-button>
     </template>
   </el-dialog>
-  <el-tooltip content="设置游戏模式">
+  <tooltip content="设置游戏模式">
     <el-button circle @click="mode = now;show = true">
       <el-icon-edit/>
     </el-button>
-  </el-tooltip>
+  </tooltip>
 </template>
 
 <script lang="tsx">

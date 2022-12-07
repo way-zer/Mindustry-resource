@@ -7,7 +7,7 @@ import {readFileSync} from "fs";
 
 function createSSRHandler(server: ViteDevServer): NextHandleFunction {
     return async (request, response, next) => {
-        if (request.method !== 'GET' || request.url!.includes(".ico"))
+        if (request.method !== 'GET' || request.url!.includes(".ico") || request.url!.includes(".json"))
             return next()
         let template: string
         try {

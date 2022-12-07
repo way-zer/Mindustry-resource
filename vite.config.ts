@@ -64,6 +64,7 @@ export default defineConfig(({mode, ssrBuild}) => {
                 workbox: {
                     dontCacheBustURLsMatching: /assets\/.*/,
                     navigateFallback: 'index.html',
+                    navigateFallbackDenylist: [/api\/.*/],
                     runtimeCaching: [
                         {
                             urlPattern: /icons-\d+\.\d+\.png/,

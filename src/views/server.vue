@@ -18,12 +18,12 @@ meta:
         </el-space>
       </el-row>
     </template>
-    <el-table :data="data" v-loading="loading" row-key="address" id="table"
+    <el-table :data="store.data" v-loading="store.loading" row-key="address" id="table"
               :default-sort="{prop:'players',order:'descending'}">
       <el-table-column label="地址" prop="address" fixed="left"
                        :filters="versionFilters" :filter-method="versionFilter">
         <template #default="scope">
-          <el-tooltip>
+          <tooltip>
             <template #content>
               <span v-if="i(scope).online">延迟{{ i(scope).timeMs }}ms</span>
               <span v-else>最后在线{{ ((Date.now() - i(scope).lastOnline) / 60000).toFixed(2) }}分钟前</span>
@@ -35,7 +35,7 @@ meta:
               <el-icon-orange v-else style="color: orangered"/>
               版本 {{ i(scope).version }}
             </div>
-          </el-tooltip>
+          </tooltip>
         </template>
       </el-table-column>
       <el-table-column label="名字" prop="name">
@@ -75,72 +75,74 @@ meta:
   </el-card>
 </template>
 
-<script lang="ts">
-import {defineComponent, onMounted} from 'vue'
+<script lang="ts" setup>
+import {onMounted} from 'vue'
 import {ServerInfo} from '@/store/server/type'
 import {modeFilters, modeMap} from '@/util/mindustry'
 import {useStore} from "pinia-class-store";
 import {ServerStore} from "@/store/server";
 
-export default defineComponent({
-  setup() {
-    const serverStore = useStore(ServerStore)
-    let intervalId
-    onServerPrefetch(() => serverStore.refresh())
-    onMounted(() => {
-      if (serverStore.data.length === 0)
-        serverStore.refresh().then()
-      intervalId = setInterval(() => {
-        serverStore.refresh().then()
-      }, 60000)
-    })
-    onBeforeUnmount(() => {
-      clearInterval(intervalId)
-    })
-    return {
-      loading: computed(() => (serverStore.loading)),
-      data: computed(() => (serverStore.data)),
-      modeMap, modeFilters,
-      autoUpdate: true,
-      showModal: false,
-      adding: false,
-      address: '',
-      versionFilters: [
-        {text: '5.0 正式版', value: 5},
-        {text: '6.0 版本', value: 6},
-        {text: 'BE测试版', value: 'BE'},
-      ],
-      versionFilter: (f, v: ServerInfo) => {
-        if (f == 5) return v.version <= 104
-        if (f == 6) return v.version > 104 && v.version <= 1000
-        if (f == 'BE') return v.version > 1000
-      },
-      i: (scope) => (scope.row as ServerInfo),
-      async check() {
-        if (this.adding) return
-        this.adding = true
-        try {
-          await serverStore.add(this.address)
-          //success
-          this.address = ''
-          this.showModal = false
-        } catch (e) {
-        } finally {
-          this.adding = false
-        }
-      },
-      score(v: ServerInfo) {
-        if (!v.online) return -1 + v.players / 1000
-        if (v.type == 'hub') return v.players / 1000
-        return v.players
-      },
-    }
-  }
+const store = useStore(ServerStore)
+onServerPrefetch(() => store.refresh())
+
+const autoUpdate = ref(true)
+
+let intervalId
+onMounted(() => {
+  if (store.data.length === 0)
+    store.refresh().then()
+  intervalId = setInterval(() => {
+    if (autoUpdate.value) store.refresh().then()
+  }, 60000)
 })
+onBeforeUnmount(() => {
+  clearInterval(intervalId)
+})
+
+//for table view
+const versionFilters = [
+  {text: '5.0 正式版', value: '5'},
+  {text: '6.0 版本', value: '6'},
+  {text: 'BE测试版', value: 'BE'},
+]
+
+function versionFilter(f, v: ServerInfo) {
+  if (f === '5') return v.version <= 104
+  if (f === '6') return v.version > 104 && v.version <= 1000
+  if (f === 'BE') return v.version > 1000
+}
+
+function i(scope) {
+  return scope.row as ServerInfo
+}
+
+function score(v: ServerInfo) {
+  if (!v.online) return -1 + v.players / 1000
+  if (v.type == 'hub') return v.players / 1000
+  return v.players
+}
+
+//for modal
+const showModal = ref(false)
+const address = ref('')
+const adding = ref(false)
+
+async function check() {
+  if (adding.value) return
+  adding.value = true
+  try {
+    await store.add(this.address)
+    //success
+    address.value = ''
+    showModal.value = false
+  } catch (e) {
+  } finally {
+    adding.value = false
+  }
+}
 </script>
 
 <style lang="stylus" scoped>
-
 #table
   white-space nowrap
 

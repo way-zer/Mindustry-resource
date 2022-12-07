@@ -1,6 +1,9 @@
-export default defineComponent(function ({}, {slots}) {
-    if (import.meta.env.SSR) return () => ""
-    else {
-        return slots.default
+export default defineComponent({
+    name: "ClientOnly",
+    inheritAttrs: false,
+    setup({}, {slots}) {
+        const ssr = ref(true)
+        onMounted(() => ssr.value = false)
+        return () => ssr ? "" : <>{slots.default}</>
     }
 })

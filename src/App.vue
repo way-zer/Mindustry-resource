@@ -13,15 +13,10 @@
   </el-container>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import TheLogin from '@/views/user/_TheLogin.vue'
-import {defineComponent} from 'vue'
 import TheHeader from '@/views/layout/_TheHeader.vue'
 import ClientOnly from "@/components/ClientOnly";
-
-export default defineComponent({
-  components: {TheHeader, TheLogin, ClientOnly},
-})
 </script>
 
 <style lang="stylus" scoped>

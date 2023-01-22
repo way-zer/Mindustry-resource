@@ -1,17 +1,16 @@
 import axios from 'axios'
 import {ElMessage} from 'element-plus'
-import {API_BASE} from "@/const";
+import {mapUrl} from "@/const";
 
 export function initAxios() {
     if (axios.INIT) return
     axios.INIT = true
     if (import.meta.env.SSR)
-        axios.interceptors.request.use((req) => {
-            req.withCredentials = true
-            if (req.url?.startsWith("/api/"))
-                req.url = API_BASE + req.url!!.substring(5)
-            return req
-        })
+        axios.interceptors.request.use((req) => ({
+            ...req,
+            withCredentials: true,
+            url: mapUrl(req.url!!)
+        }))
     axios.interceptors.response.use((resp) => {
         return resp.data
     }, (error => {

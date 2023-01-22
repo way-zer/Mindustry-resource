@@ -19,11 +19,6 @@ www.mindustry.top {
 	@ssr {
 		not path_regexp .*\.(html|ico|js|png|css|json)
 	}
-	handle /api/* {
-		reverse_proxy https://mdt.wayzer.top {
-			header_up Host {upstream_hostport}
-		}
-	}
 	reverse_proxy @ssr 127.0.0.1:6173 {
 		@error status 500 503
 		handle_response @error {

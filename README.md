@@ -9,8 +9,8 @@ UI: element-plus
 IDE建议: IDEA(or Webstorm) 或 VSCode(with Volar)
 
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ### 附注
@@ -22,4 +22,4 @@ npm run dev
 
 ## 版权
 
-本仓库所有公开代码为资源站专有,未经额外注明,不允许他用.
+本仓库所有代码如无其他说明均为资源站专有,未经额外,不允许他用.

@@ -20,7 +20,7 @@ meta:
     </template>
     <el-table :data="store.data" v-loading="store.loading" row-key="address" id="table"
               :default-sort="{prop:'players',order:'descending'}">
-      <el-table-column label="地址" prop="address" fixed="left"
+      <el-table-column label="地址 (按版本筛选)" prop="address" fixed="left"
                        :filters="versionFilters" :filter-method="versionFilter">
         <template #default="scope">
           <tooltip>
@@ -29,6 +29,9 @@ meta:
               <span v-else>最后在线{{ ((Date.now() - i(scope).lastOnline) / 60000).toFixed(2) }}分钟前</span>
             </template>
             <div>
+              <template v-if="i(scope).ext.sponsor">
+                <span style="color: goldenrod;font-size: 1.2em;font-weight: bold">赞助置顶</span>
+              </template>
               {{ i(scope).address }}
               <br/>
               <el-icon-orange v-if="i(scope).online" style="color: forestgreen"/>
@@ -45,17 +48,17 @@ meta:
           <ColorizeSpan :text="i(scope).description"/>
         </template>
       </el-table-column>
-      <el-table-column label="人数" prop="players" :sort-by="score" sortable>
+      <el-table-column label="人数" prop="players" :sort-by="it=>i(it).ext.score" sortable>
         <template #default="scope">
           <b>{{ i(scope).players }}</b>/{{ i(scope).limit || '无限制' }}
-          <template v-if="i(scope).type === 'hub'">
+          <template v-if="i(scope).ext.isHub">
             <br/>
             <el-icon-warning style="color: orangered"/>
             本服为大厅服,人数非真实
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="地图" prop="map"
+      <el-table-column label="地图 (按模式筛选)" prop="map"
                        :filters="modeFilters" :filter-method="(f,v)=>(v.mode===f)">
         <template #default="scope">
           <ColorizeSpan :text="i(scope).mapName"/>
@@ -81,6 +84,9 @@ import {ServerInfo} from '@/store/server/type'
 import {modeFilters, modeMap} from '@/util/mindustry'
 import {useStore} from "pinia-class-store";
 import {ServerStore} from "@/store/server";
+import Tooltip from "@/components/Tooltip";
+import ClientOnly from "@/components/ClientOnly";
+import ColorizeSpan from "@/components/ColorizeSpan.vue";
 
 const store = useStore(ServerStore)
 onServerPrefetch(() => store.refresh())
@@ -101,25 +107,18 @@ onBeforeUnmount(() => {
 
 //for table view
 const versionFilters = [
-  {text: '5.0 正式版', value: '5'},
-  {text: '6.0 版本', value: '6'},
-  {text: 'BE测试版', value: 'BE'},
+  {text: '5.0 正式版', value: '5', maxVersion: 104},
+  {text: '6.0 版本', value: '6', maxVersion: 126},
+  {text: '7.0 版本', value: '7', maxVersion: 1000},
+  {text: 'BE测试版', value: 'BE', maxVersion: Number.MAX_VALUE},
 ]
 
 function versionFilter(f, v: ServerInfo) {
-  if (f === '5') return v.version <= 104
-  if (f === '6') return v.version > 104 && v.version <= 1000
-  if (f === 'BE') return v.version > 1000
+  return f === versionFilters.find(it => v.version < it.maxVersion)?.value
 }
 
 function i(scope) {
   return scope.row as ServerInfo
-}
-
-function score(v: ServerInfo) {
-  if (!v.online) return -1 + v.players / 1000
-  if (v.type == 'hub') return v.players / 1000
-  return v.players
 }
 
 //for modal

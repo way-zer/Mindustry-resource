@@ -122,6 +122,7 @@ export default defineConfig(({mode, ssrBuild}) => {
             },
         },
         ssr: {
+            noExternal: ['pinia-class-store']
             // noExternal: [/.*node-module.*/]
         }
     }

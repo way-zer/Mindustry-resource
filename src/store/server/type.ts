@@ -13,6 +13,11 @@ export interface ServerInfo {
     lastOnline: number;
     online: boolean;
     lastUpdate: number;
+    ext: {
+        score: string,
+        sponsor: boolean,
+        isHub: boolean,
+    }
 }
 
 export enum Mode {

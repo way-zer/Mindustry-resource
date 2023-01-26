@@ -22,8 +22,7 @@ function createSSRHandler(server: ViteDevServer): NextHandleFunction {
             const entryPoint = '/src/main.ts'
 
             let resolvedEntryPoint = await server.ssrLoadModule(entryPoint, {fixStacktrace: true})
-            resolvedEntryPoint = resolvedEntryPoint.default || resolvedEntryPoint
-            const render = (resolvedEntryPoint.render || resolvedEntryPoint) as Renderer
+            const render = (resolvedEntryPoint.default) as Renderer
 
             const ctx = {
                 kind: 'server',

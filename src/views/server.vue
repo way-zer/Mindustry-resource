@@ -48,7 +48,7 @@ meta:
           <ColorizeSpan :text="i(scope).description"/>
         </template>
       </el-table-column>
-      <el-table-column label="人数" prop="players" :sort-by="it=>i(it).ext.score" sortable>
+      <el-table-column label="人数" prop="players" :sort-by="it=>it.ext.score" sortable>
         <template #default="scope">
           <b>{{ i(scope).players }}</b>/{{ i(scope).limit || '无限制' }}
           <template v-if="i(scope).ext.isHub">

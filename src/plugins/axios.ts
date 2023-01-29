@@ -5,12 +5,11 @@ import {mapUrl} from "@/const";
 export function initAxios() {
     if (axios.INIT) return
     axios.INIT = true
-    if (import.meta.env.SSR)
-        axios.interceptors.request.use((req) => ({
-            ...req,
-            withCredentials: true,
-            url: mapUrl(req.url!!)
-        }))
+    axios.interceptors.request.use((req) => ({
+        ...req,
+        withCredentials: true,
+        url: mapUrl(req.url!!)
+    }))
     axios.interceptors.response.use((resp) => {
         return resp.data
     }, (error => {

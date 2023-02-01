@@ -36,6 +36,6 @@ export const MapApi = {
     },
     async download(hash: string) {
         const token = await requestToken("mapDownload")
-        window.open(`/api/maps/${hash}/download?token=${token}`);
+        window.open(mapUrl(`/api/maps/${hash}/download?token=${token}`));
     },
 }

@@ -10,7 +10,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "noImplicitThis": false,
     "noImplicitAny": false,
     "skipLibCheck": true,
     "lib": [

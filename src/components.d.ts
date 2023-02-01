@@ -7,9 +7,9 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    ClientOnly: typeof import('./components/ClientOnly.tsx')['default']
-    ColorizeSpan: typeof import('./components/ColorizeSpan.vue')['default']
-    ElAlert: typeof import('element-plus/es')['ElAlert']
+      ClientOnly: typeof import('./components/ClientOnly.tsx')['default']
+      ColorizeSpan: typeof import('./components/ColorizeSpan.vue')['default']
+      ElAlert: typeof import('element-plus/es')['ElAlert']
       ElBacktop: typeof import('element-plus/es')['ElBacktop']
       ElButton: typeof import('element-plus/es')['ElButton']
       ElCard: typeof import('element-plus/es')['ElCard']
@@ -50,15 +50,15 @@ declare module '@vue/runtime-core' {
       ElTable: typeof import('element-plus/es')['ElTable']
       ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
       ElTabPane: typeof import('element-plus/es')['ElTabPane']
-    ElTabs: typeof import('element-plus/es')['ElTabs']
-    ElTag: typeof import('element-plus/es')['ElTag']
-    ElTooltip: typeof import('element-plus/es')['ElTooltip']
-    ElUpload: typeof import('element-plus/es')['ElUpload']
-    PageHeader: typeof import('./components/PageHeader.vue')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
-    SquaredImage: typeof import('./components/SquaredImage.vue')['default']
-    Tooltip: typeof import('./components/Tooltip.tsx')['default']
+      ElTabs: typeof import('element-plus/es')['ElTabs']
+      ElTag: typeof import('element-plus/es')['ElTag']
+      ElTooltip: typeof import('element-plus/es')['ElTooltip']
+      ElUpload: typeof import('element-plus/es')['ElUpload']
+      PageHeader: typeof import('./components/PageHeader.vue')['default']
+      RouterLink: typeof import('vue-router')['RouterLink']
+      RouterView: typeof import('vue-router')['RouterView']
+      SquaredImage: typeof import('./components/SquaredImage.vue')['default']
+      Tooltip: typeof import('./components/Tooltip.tsx')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']

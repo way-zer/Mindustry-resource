@@ -130,7 +130,7 @@ async function check() {
   if (adding.value) return
   adding.value = true
   try {
-    await store.add(this.address)
+    await store.add(address.value)
     //success
     address.value = ''
     showModal.value = false

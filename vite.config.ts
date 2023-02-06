@@ -122,7 +122,7 @@ export default defineConfig(({mode, ssrBuild}) => {
             },
         },
         ssr: {
-            noExternal: ['pinia-class-store']
+            noExternal: ['simple-vite-vue-ssr', 'pinia-class-store']
             // noExternal: [/.*node-module.*/]
         }
     }

@@ -10,7 +10,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {resolve} from 'path'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
-import viteSSR from "./src/util/viteSSR/plugin";
+import viteSSR from "simple-vite-vue-ssr/plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig(({mode, ssrBuild}) => {

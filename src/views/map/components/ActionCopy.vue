@@ -5,7 +5,7 @@
       <el-tooltip content="拷贝换图指令" virtual-triggering :virtual-ref="buttonRef"/>
       <el-popover trigger="click" :persistent="false" width="unset" virtual-triggering :virtual-ref="buttonRef">
         粘贴指令到支持网络换图的服务器使用
-        <pre ref="commandRef">/vote map {{ $props.thread }}</pre>
+        <pre ref="commandRef">/vote map {{ thread }}</pre>
       </el-popover>
     </client-only>
   </el-button>

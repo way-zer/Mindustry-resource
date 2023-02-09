@@ -20,7 +20,7 @@ import {gameModes} from '@/store/maps/type'
 import {MapApi} from '@/store/maps/api'
 import {useRouter} from "vue-router";
 
-const {thread, now} = defineProps({
+const props = defineProps({
   thread: Number,
   now: {
     type: String,
@@ -34,7 +34,7 @@ const show = ref(false)
 const selectMode = ref('')
 
 async function submit() {
-  await MapApi.edit('' + thread, 'selectMode', selectMode.value);
+  await MapApi.edit('' + props.thread, 'mode', selectMode.value);
   router.go(0)
 }
 </script>

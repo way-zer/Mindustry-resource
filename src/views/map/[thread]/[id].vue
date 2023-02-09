@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <client-only>
     <el-dialog model-value @close="close" width="100%">
       <!--    <el-skeleton :loading="!detail.hash">-->
       <el-row type="flex" justify="center">
@@ -85,7 +85,6 @@
             </li>
             <li>太阳能发电: {{ rules.solarPowerMultiplier || '1' }}倍</li>
           </ul>
-          <!--        <object-inspector :data="data" name="元数据"/>-->
           <b>原始数据:</b>
           <json-viewer :value="tags" :expandDepth="0" style="padding: 0"/>
         </el-col>
@@ -95,10 +94,10 @@
         <pre>{{ path }}</pre>
       </div>
     </el-dialog>
-  </div>
+  </client-only>
 </template>
 
-<script lang="tsx">
+<script lang="tsx" setup>
 import {computed, defineComponent, ref, watch} from 'vue'
 import {JsonViewer} from 'vue3-json-viewer'
 import SquaredImage from '@/components/SquaredImage.vue'
@@ -112,51 +111,41 @@ import ActionChangeMode from '@/views/map/components/ActionChangeMode.vue'
 import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
 import {MapsStore} from "@/store/maps";
+import ClientOnly from "@/components/ClientOnly";
 
-export default defineComponent({
-  name: 'Detail',
-  components: {
-    ActionChangeMode,
-    ActionUpload,
-    ActionDownload,
-    ActionCopy,
-    SquaredImage,
-    JsonViewer,
-  },
-  setup() {
-    const userStore = useStore(UserStore)
-    const mapsStore = useStore(MapsStore)
-    const route = useRoute()
-    const router = useRouter()
-    const ret = ref<MapDetail>({} as any)
-    watch(() => route.params, async (p) => {
-      if (typeof p.thread === 'string' && typeof p.id === 'string')
-        ret.value = await MapApi.detail(p.thread, p.id || 'latest')
-    }, {immediate: true})
-    return {
-      mapsStore,
-      detail: ret,
-      tags: computed(() => ((ret.value.tags || {}) as Tags)),
-      rules: computed(() => ((ret.value.tags?.rules || {}) as Rules)),
-      rulesOld: computed(() => ((ret.value.tags?.rules || {}) as RulesV5)),
-      version: computed(() => {
-        let build = (ret.value.tags?.build || -1)
-        if (build > 104) return 6
-        if (build > 0) return 5
-        return 0
-      }),
-      admin: computed(() => {
-        const info = userStore.info
-        if (!info) return false
-        return info.name == ret.value.user || info.role == 'Admin' || info.role == 'SuperAdmin'
-      }),
-      path: computed(() => location.toString()),
-      close: () => {
-        router.push({path: '/map'})
-      },
-    }
-  },
+
+const userStore = useStore(UserStore)
+const mapsStore = useStore(MapsStore)
+const route = useRoute()
+const router = useRouter()
+const path = computed(() => location.toString())
+
+const detail = computed(() => (mapsStore.detail))
+const tags = computed(() => ((detail.value.tags || {}) as Tags))
+const rules = computed(() => ((detail.value.tags?.rules || {}) as Rules))
+const rulesOld = computed(() => ((detail.value.tags?.rules || {}) as RulesV5))
+const version = computed(() => {
+  let build = (detail.value.tags?.build || -1)
+  if (build > 104) return 6
+  if (build > 0) return 5
+  return 0
 })
+const admin = computed(() => {
+  if (!userStore.logged) return false
+  return userStore.admin || userStore.info.name == detail.value.user
+})
+onServerPrefetch(async () => {
+  const {thread, id} = route.params
+  await mapsStore.loadDetail(thread as string, id as string || 'latest')
+})
+watch(() => route.params, async (p) => {
+  if (typeof p.thread === 'string' && typeof p.id === 'string')
+    await mapsStore.loadDetail(p.thread, p.id || 'latest')
+}, {immediate: true})
+
+function close() {
+  router.push({path: '/map'})
+}
 </script>
 
 <style scoped lang="stylus">

@@ -2,7 +2,7 @@ import {ElTooltip} from "element-plus";
 
 export default defineComponent({
     ...ElTooltip,
-    name: "Tooltip",
+    inheritAttrs: false,
     setup(props, {slots}) {
         const ssr = ref(true)
         onMounted(() => ssr.value = false)

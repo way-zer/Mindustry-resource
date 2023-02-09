@@ -29,7 +29,7 @@
     "pinia-class-store": "^1.1.1",
     "select": "^1.1.2",
     "ses": "^0.18.1",
-    "simple-vite-vue-ssr": "^1.0.5",
+    "simple-vite-vue-ssr": "^1.0.6",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6",
     "vue3-json-viewer": "^2.2.2"

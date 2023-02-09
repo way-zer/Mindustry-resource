@@ -1,18 +1,24 @@
 import {User} from '@/store/user/type'
 import {UserApi} from '@/store/user/api'
 
+const defaultUser = {name: "NOT_LOG", role: "NOT_LOG"}
+
 export class UserStore {
     first: boolean = true
-    info: User | null = null
+    info: User = defaultUser
     showDialog = false
 
     get logged() {
-        return this.info != null
+        return this.info === defaultUser
+    }
+
+    get admin() {
+        return this.logged && (this.info.role == 'Admin' || this.info.role == 'SuperAdmin')
     }
 
     async refresh() {
         this.first = false
-        this.info = await UserApi.info().catch(() => null)
+        this.info = await UserApi.info().catch(() => defaultUser)
     }
 
     async login({user, password}: { user: string, password: string }) {
@@ -35,6 +41,6 @@ export class UserStore {
         if (!this.logged) return
         this.first = false
         await UserApi.logout()
-        this.info = null
+        this.info = defaultUser
     }
 }

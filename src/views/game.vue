@@ -44,7 +44,7 @@ export default {
     const store = useStore(GameStore)
     const useMirror = ref(true)
     onServerPrefetch(() => store.tryLoad())
-    onBeforeUnmount(() => store.tryLoad())
+    onBeforeMount(() => store.tryLoad())
     return {
       store,
       useMirror,

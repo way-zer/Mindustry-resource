@@ -11,7 +11,10 @@
 import {useRouter} from 'vue-router'
 
 const props = defineProps({
-  thread: Number,
+  thread: {
+    type: Number,
+    required: true
+  },
   hash: {
     type: String,
     default: 'latest',

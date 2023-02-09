@@ -9,19 +9,19 @@ import {createPinia} from "pinia";
 
 export default viteSSR(App, async ({app, state, kind}) => {
     initAxios()
-    const pinia = createPinia()
-    const elPrefix = state.elPrefix || Math.floor(Math.random() * 10000)
-    app.provide(ID_INJECTION_KEY, {prefix: elPrefix, current: 0})
+    app.provide(ID_INJECTION_KEY, {prefix: 7777, current: 0})
         .use((app) => {
             app.config.globalProperties.$ELEMENT = {locale, zIndex: 100}
         })
-        .use(pinia)
+
+    const pinia = createPinia()
+    app.use(pinia)
     if (kind == 'server') {
-        state.elPrefix = elPrefix
         state.pinia = pinia.state.value
     } else if (kind == 'client') {
         pinia.state.value = state.pinia
     }
+
     return {
         router: createRouter(),
     }

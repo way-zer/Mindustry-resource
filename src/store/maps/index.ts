@@ -1,4 +1,4 @@
-import {MapInfo} from '@/store/maps/type'
+import {MapDetail, MapInfo} from '@/store/maps/type'
 import {MapApi} from '@/store/maps/api'
 
 export class MapsStore {
@@ -6,6 +6,8 @@ export class MapsStore {
     noMore = false
     searchKey = ''
     data = [] as MapInfo[]
+    detailKey = ""
+    detail: MapDetail = {} as any
 
     load(key: string) {
         this.loading = true
@@ -36,5 +38,12 @@ export class MapsStore {
         let initSearchKey = decodeURI(location.search.substring(1))
         if (initSearchKey && initSearchKey != this.searchKey)
             await this.search(initSearchKey)
+    }
+
+    async loadDetail(thread: string, version: string) {
+        const key = `${thread}/${version}`
+        if (key == this.detailKey) return
+        this.detail = await MapApi.detail(thread, version)
+        this.detailKey = key
     }
 }

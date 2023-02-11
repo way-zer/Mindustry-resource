@@ -8,18 +8,12 @@ export class GameStore {
     async tryLoad() {
         if (this.loading) return
         this.loading = true
-        let load1, load2
-        if (!this.releases.length) {
-            load1 = GameApi.getRelease('Anuken/Mindustry', 5)
-                .then(d => this.releases = d)
-        } else load1 = null
-        if (!this.beReleases.length) {
-            load2 = GameApi.getRelease('Anuken/MindustryBuilds', 15)
+        await Promise.all([
+            this.releases.length || GameApi.getRelease('Anuken/Mindustry', 5)
+                .then(d => this.releases = d),
+            this.beReleases.length || GameApi.getRelease('Anuken/MindustryBuilds', 15)
                 .then(d => this.beReleases = d)
-        } else load2 = null
-
-        await load1
-        await load2
+        ])
         this.loading = false
     }
 }

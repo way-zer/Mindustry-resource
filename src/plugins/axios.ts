@@ -1,15 +1,17 @@
 import axios from 'axios'
 import {ElMessage} from 'element-plus'
-import {mapUrl} from "@/const";
+import {API_BASE, mapUrl} from "@/const";
 
 export function initAxios() {
     if (axios.INIT) return
     axios.INIT = true
-    axios.interceptors.request.use((req) => ({
-        ...req,
-        withCredentials: true,
-        url: mapUrl(req.url!!)
-    }))
+    axios.interceptors.request.use((req) => {
+        const url = mapUrl(req.url!!)
+        return {
+            ...req, url,
+            withCredentials: url.startsWith(API_BASE),
+        }
+    })
     axios.interceptors.response.use((resp) => {
         return resp.data
     }, (error => {
@@ -32,7 +34,7 @@ declare module 'axios' {
         INIT: boolean
     }
 
-    interface AxiosRequestConfig {
+    interface RawAxiosRequestConfig {
         skipErrorHandler?: boolean
     }
 }

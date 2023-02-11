@@ -24,7 +24,7 @@ meta:
         <b>支持作者,可以选择付费,或者在Steam购买正版</b>
       </details>
     </el-card>
-    <el-card header="7.0 BE 测试版">
+    <el-card header="BE 测试版">
       <ReleaseList :list="store.beReleases" :get-download-url="getDownloadUrl"/>
     </el-card>
   </PageHeader>

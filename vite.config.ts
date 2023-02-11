@@ -1,4 +1,4 @@
-import {defineConfig} from 'vite'
+import {defineConfig, splitVendorChunkPlugin} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import {VitePWA} from 'vite-plugin-pwa'
@@ -22,17 +22,20 @@ export default defineConfig(({mode, ssrBuild}) => {
     return {
         // base: '/v2/',
         plugins: [
+            splitVendorChunkPlugin(),
             viteSSR(),
             vue(),
             vueJsx(),
             Pages({
                 exclude: ['**/components/**', '**/res/**', '**/_**'],
                 importMode: (path) => {
+                    if (path.includes("/about"))
+                        return "async"
                     if (path.includes("/masm"))
                         return "async"
                     return 'sync'
                 },
-                pagesDir: [
+                dirs: [
                     {dir: 'src/views', baseRoute: ''},
                 ],
             }),
@@ -57,7 +60,6 @@ export default defineConfig(({mode, ssrBuild}) => {
             }),
             Icons({
                 autoInstall: true,
-
             }),
             VitePWA({
                 registerType: 'autoUpdate',
@@ -84,6 +86,7 @@ export default defineConfig(({mode, ssrBuild}) => {
             }),
             visualizer({
                 brotliSize: true,
+                filename: ssrBuild ? "stats.server.html" : "stats.client.html"
             }) as any,
         ],
         publicDir: "src/assets/public",
@@ -98,20 +101,6 @@ export default defineConfig(({mode, ssrBuild}) => {
             target: ['chrome89', 'esnext'],
             sourcemap: true,
             chunkSizeWarningLimit: 1000,
-            rollupOptions: {
-                output: {
-                    // manualChunks(id, api) {
-                    //     if (id.includes('node_modules')) {
-                    //         console.log(api.getModuleInfo(id))
-                    //         for (const idElement of api.getModuleIds()) {
-                    //             if (idElement.includes("src/main.ts"))
-                    //                 return 'vendor'
-                    //         }
-                    //     }
-                    //     return null
-                    // },
-                },
-            },
         },
         server: {
             proxy: {

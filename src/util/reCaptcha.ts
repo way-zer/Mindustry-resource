@@ -35,6 +35,6 @@ export async function requestToken(action: string): Promise<string> {
     try {
         return await grecaptcha.execute(key, {action});
     } finally {
-        msg.close
+        msg.close()
     }
 }

@@ -9,7 +9,7 @@
         <the-login/>
       </client-only>
     </el-main>
-    <el-footer id="footer" class="test">WayZer ©2021</el-footer>
+    <el-footer id="footer" class="test">WayZer ©{{ year }}</el-footer>
   </el-container>
 </template>
 
@@ -17,6 +17,8 @@
 import TheLogin from '@/views/user/_TheLogin.vue'
 import TheHeader from '@/views/layout/_TheHeader.vue'
 import ClientOnly from "@/components/ClientOnly";
+
+const year = computed(() => new Date().getFullYear())
 </script>
 
 <style lang="stylus" scoped>

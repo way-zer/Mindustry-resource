@@ -1,4 +1,4 @@
-export const API_BASE = "https://mdt.wayzer.top/api/"
+export const API_BASE = "https://api.mindustry.top/"
 
 export function mapUrl(raw: string) {
     if (import.meta.env.DEV && !import.meta.env.SSR) return raw

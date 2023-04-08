@@ -99,7 +99,7 @@ export default defineConfig(({mode, ssrBuild}) => {
         build: {
             outDir: "dist/client",
             target: ['chrome89', 'esnext'],
-            sourcemap: true,
+            sourcemap: mode === 'development',
             chunkSizeWarningLimit: 1000,
         },
         server: {

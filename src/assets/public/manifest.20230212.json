@@ -7,6 +7,12 @@
   "display": "standalone",
   "theme_color": "#001529",
   "background_color": "#f0f2f5",
+  "lang": "zh",
+  "orientation": "any",
+  "categories": [
+    "games",
+    "utilities"
+  ],
   "icons": [
     {
       "src": "/icons-192.20210425.png",
@@ -16,7 +22,8 @@
     {
       "src": "/icons-512.20210425.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     }
   ],
   "shortcuts": [

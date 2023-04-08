@@ -25,6 +25,7 @@
     "element-plus": "^2.2.28",
     "fastify": "^4.12.0",
     "lodash-es": "^4.17.21",
+    "lru-cache": "^8.0.5",
     "pinia": "^2.0.29",
     "pinia-class-store": "^1.1.1",
     "select": "^1.1.2",

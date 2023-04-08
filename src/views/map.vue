@@ -63,14 +63,11 @@ import {gameModes} from '@/store/maps/type'
 import MapList from '@/views/map/components/MapList.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
 import {useStore} from "pinia-class-store";
-import {useWatch} from "@/util/hooks";
 import {MapsStore} from "@/store/maps";
 
 const mapsStore = useStore(MapsStore)
 const tmpSearch = ref(mapsStore.searchKey)
-useWatch(() => mapsStore.searchKey, (it) => {
-  tmpSearch.value = it
-})
+watch(() => mapsStore.searchKey, (it) => tmpSearch.value = it)
 const onSearch = (v: string) => {
   tmpSearch.value = v.replace('  ', ' ')//reduce space
   return mapsStore.search(v)
@@ -86,13 +83,14 @@ function getTag(tag: string) {
 }
 
 function replaceTag(tag: string, value: string) {
-  const regex = regexForTag(tag)
-  if (!tmpSearch.value.match(regex))
-    onSearch(tmpSearch.value + ` @${tag}:${value} `)
-  else {
-    const v = value == 'X' ? '' : `@${tag}:${value}`
-    onSearch(tmpSearch.value.replace(regex, v))
-  }
+    const regex = regexForTag(tag)
+    const search = tmpSearch.value
+    if (!search.match(regex))
+        onSearch(search + ` @${tag}:${value} `)
+    else {
+        const v = value == 'X' ? '' : `@${tag}:${value}`
+        onSearch(search.replace(regex, v))
+    }
 }
 
 </script>

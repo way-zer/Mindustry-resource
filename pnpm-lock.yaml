@@ -17,6 +17,7 @@ specifiers:
   element-plus: ^2.2.28
   fastify: ^4.12.0
   lodash-es: ^4.17.21
+  lru-cache: ^8.0.5
   monaco-editor: ^0.33.0
   pinia: ^2.0.29
   pinia-class-store: ^1.1.1
@@ -51,11 +52,12 @@ dependencies:
   element-plus: 2.2.28_vue@3.2.41
   fastify: 4.12.0
   lodash-es: 4.17.21
+  lru-cache: 8.0.5
   pinia: 2.0.29_l7r24p6nevbtlimqmqcwa3ouhu
   pinia-class-store: 1.1.1_pinia@2.0.29
   select: 1.1.2
   ses: 0.18.1
-  simple-vite-vue-ssr: 1.0.6_vite@4.1.1+vue@3.2.41
+  simple-vite-vue-ssr: 1.0.7_vite@4.1.1+vue@3.2.41
   vue: 3.2.41
   vue-router: 4.1.6_vue@3.2.41
   vue3-json-viewer: 2.2.2_vue@3.2.41
@@ -3488,6 +3490,11 @@ packages:
       yallist: 4.0.0
     dev: false
 
+  /lru-cache/8.0.5:
+    resolution: { integrity: sha512-MhWWlVnuab1RG5/zMRRcVGXZLCXrZTgfwMikgzCegsPnG62yDQo5JnqKkrK4jO5iKqDAZGItAqN5CtKBCBWRUA== }
+    engines: { node: '>=16.14' }
+    dev: false
+
   /magic-string/0.25.9:
     resolution: { integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ== }
     dependencies:
@@ -4150,8 +4157,8 @@ packages:
     resolution: { integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ== }
     dev: true
 
-  /simple-vite-vue-ssr/1.0.6_vite@4.1.1+vue@3.2.41:
-    resolution: { integrity: sha512-/4wWG2DAsroy5wNXWDtYIFPY08N7nmKd1RdC4CWae4PiOVEYirgH9sPOmmhUwEKxNMO+dB6/GJbx+RmNeyfT6A== }
+  /simple-vite-vue-ssr/1.0.7_vite@4.1.1+vue@3.2.41:
+    resolution: { integrity: sha512-0JTCG0cBMeG84UvnSHcr62T0mLY1OimDm/dPOSK9UAIsjXuQlIC9Mod90dJrnVo0Jncgr2HV/CUjdDcVIQPXOw== }
     peerDependencies:
       vite: ^4.0.0
       vue: ^3.2.41

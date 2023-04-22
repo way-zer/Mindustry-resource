@@ -1,40 +1,32 @@
 import axios from 'axios'
 import {ElMessage} from 'element-plus'
 import {API_BASE, mapUrl} from "@/const";
+import {Method, AxiosRequestConfig, AxiosResponse} from "axios";
 
-export function initAxios() {
-    if (axios.INIT) return
-    axios.INIT = true
-    axios.interceptors.request.use((req) => {
-        const url = mapUrl(req.url!!)
-        return {
-            ...req, url,
-            withCredentials: url.startsWith(API_BASE),
-        }
-    })
-    axios.interceptors.response.use((resp) => {
+export interface MyRequestConfig extends AxiosRequestConfig {
+    skipErrorHandler?: boolean
+}
+
+export async function request<R>(method: Method, url: string, option?: MyRequestConfig): Promise<R> {
+    option = {
+        ...option, method,
+        url: mapUrl(url)
+    }
+    option.withCredentials = option.url!!.startsWith(API_BASE)
+    try {
+        const resp = await axios.request<any, AxiosResponse<R>>(option)
         return resp.data
-    }, (error => {
-        if (axios.isAxiosError(error) && !error.config?.skipErrorHandler) {
-            if ((error.response?.status || 0) / 100 == 4) {
-                if (import.meta.env.SSR) console.warn(`请求失败`, error)
+    } catch (e) {
+        if (axios.isAxiosError(e) && !option.skipErrorHandler) {
+            if ((e.response?.status || 0) / 100 == 4) {
+                if (import.meta.env.SSR) console.warn(`请求失败`, e)
                 else ElMessage.error({
-                    message: `请求失败: ${error.response?.status}\n${error.response?.data}`,
+                    message: `请求失败: ${e.response?.status}\n${e.response?.data}`,
                     duration: 30_000,
                     showClose: true
                 })
             }
         }
-        throw error
-    }))
-}
-
-declare module 'axios' {
-    interface AxiosStatic {
-        INIT: boolean
-    }
-
-    interface RawAxiosRequestConfig {
-        skipErrorHandler?: boolean
+        throw e
     }
 }

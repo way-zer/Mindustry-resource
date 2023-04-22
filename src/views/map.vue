@@ -15,6 +15,7 @@ meta:
         </el-space>
       </el-row>
     </template>
+    <el-alert type="info">你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert>
     <div class="filter">
       <b>按模式筛选: </b>
       <el-radio-group size="small"
@@ -64,13 +65,17 @@ import MapList from '@/views/map/components/MapList.vue'
 import ActionUpload from '@/views/map/components/ActionUpload.vue'
 import {useStore} from "pinia-class-store";
 import {MapsStore} from "@/store/maps";
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 const mapsStore = useStore(MapsStore)
 const tmpSearch = ref(mapsStore.searchKey)
 watch(() => mapsStore.searchKey, (it) => tmpSearch.value = it)
-const onSearch = (v: string) => {
-  tmpSearch.value = v.replace('  ', ' ')//reduce space
-  return mapsStore.search(v)
+const onSearch = async (v: string) => {
+    tmpSearch.value = v.replace('  ', ' ')//reduce space
+    if (v.match(/\d{5}/))
+        return await router.push({path: `/map/${v}/latest`})
+    return mapsStore.search(v)
 }
 
 function regexForTag(tag: string) {

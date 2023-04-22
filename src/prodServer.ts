@@ -32,6 +32,7 @@ const cache = new LRUCache<string, string>({
         if (request.url.match(".*\.(html|ico|js|png|css|json)"))
             return "404"
         if (cache.has(request.url)) {
+            reply.type("text/html")
             return reply.send(cache.get(request.url))
         }
         await ssrHandler(request as any, reply.raw)

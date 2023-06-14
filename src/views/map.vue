@@ -73,7 +73,7 @@ const tmpSearch = ref(mapsStore.searchKey)
 watch(() => mapsStore.searchKey, (it) => tmpSearch.value = it)
 const onSearch = async (v: string) => {
     tmpSearch.value = v.replace('  ', ' ')//reduce space
-    if (v.match(/\d{5}/))
+    if (v.match(/^\d{5}$/))
         return await router.push({path: `/map/${v}/latest`})
     return mapsStore.search(v)
 }

@@ -1,0 +1,19 @@
+import {GameApi, Release} from '@/store/game/api'
+
+export class GameStore {
+    loading = false
+    releases = [] as Release[]
+    beReleases = [] as Release[]
+
+    async tryLoad() {
+        if (this.loading) return
+        this.loading = true
+        await Promise.all([
+            this.releases.length || GameApi.getRelease('Anuken/Mindustry', 5)
+                .then(d => this.releases = d),
+            this.beReleases.length || GameApi.getRelease('Anuken/MindustryBuilds', 15)
+                .then(d => this.beReleases = d)
+        ])
+        this.loading = false
+    }
+}

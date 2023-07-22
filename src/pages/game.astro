@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+import GamePage from "@old/views/game.vue";
+import { setActivePinia, createPinia, getActivePinia } from "pinia";
+import {GameStore} from "@old/store/game";
+import {useStore} from "pinia-class-store";
+
+const pinia = createPinia()
+setActivePinia(pinia)
+await useStore(GameStore).tryLoad()
+---
+<Layout title="游戏下载">
+    <meta id="pinia-data" data-data={JSON.stringify(pinia.state.value)}/>
+    <GamePage client:idle/>
+</Layout>

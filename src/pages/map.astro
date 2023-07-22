@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MapPage from "@old/views/map.vue";
+import { setActivePinia, createPinia } from "pinia";
+
+// const pinia = createPinia()
+// setActivePinia(pinia)
+---
+<Layout title="公共服务器列表">
+    <!-- <meta id="pinia-data" data-data={JSON.stringify(pinia.state.value)}/> -->
+    {/* el-table can't SSR, so ServerPage no need SSR */}
+    <MapPage client:only="vue"/>
+</Layout>

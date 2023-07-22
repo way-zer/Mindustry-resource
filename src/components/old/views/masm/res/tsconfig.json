@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "ESNext"
+    ],
+    "noResolve": true,
+    "moduleResolution": "classic",
+    "module": "None"
+  },
+  "include": [
+    "*"
+  ]
+}

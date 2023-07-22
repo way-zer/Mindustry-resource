@@ -12,11 +12,21 @@
   "dependencies": {
     "@astrojs/node": "^5.3.0",
     "@astrojs/vue": "^2.2.1",
+    "@unocss/reset": "^0.53.6",
     "@vite-pwa/astro": "^0.1.1",
     "astro": "^2.9.1",
+    "axios": "^1.4.0",
+    "element-plus": "^2.3.8",
+    "pinia": "^2.1.4",
+    "pinia-class-store": "^1.1.1",
+    "stylus": "^0.59.0",
+    "unocss": "^0.53.6",
     "unocss-preset-daisy": "^6.0.0",
     "vite-plugin-pwa": ">=0.16.3 <1",
-    "vue": "^3.2.30",
-    "unocss": "^0.53.6"
+    "vue": "^3.2.30"
+  },
+  "devDependencies": {
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.1"
   }
 }

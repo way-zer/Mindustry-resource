@@ -1,16 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ServerPage from "@old/views/server.vue";
-import { setActivePinia, createPinia } from "pinia";
+import { setActivePinia, createPinia, getActivePinia } from "pinia";
 import {ServerStore} from "@old/store/server";
 import {useStore} from "pinia-class-store";
 
-const pinia = createPinia()
-setActivePinia(pinia)
+setActivePinia(createPinia())
 await useStore(ServerStore).refresh()
 ---
 <Layout title="公共服务器列表">
-    <meta id="pinia-data" data-data={JSON.stringify(pinia.state.value)}/>
+    <meta id="pinia-data" data-data={JSON.stringify(getActivePinia()!.state.value)}/>
     {/* el-table can't SSR, so ServerPage no need SSR */}
-    <ServerPage client:only="vue"/>
+    <ServerPage client:load/>
 </Layout>

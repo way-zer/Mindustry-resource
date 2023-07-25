@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { request } from '../axios'
 
 export interface Release {
     html_url: string;
@@ -9,6 +9,6 @@ export interface Release {
 
 export const GameApi = {
     async getRelease(repo: string, perPage: number): Promise<Release[]> {
-        return axios.get(`https://api.github.com/repos/${repo}/releases?per_page=${perPage}`)
+        return request("GET", `https://api.github.com/repos/${repo}/releases?per_page=${perPage}`)
     },
 }

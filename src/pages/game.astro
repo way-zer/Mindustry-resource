@@ -10,6 +10,6 @@ setActivePinia(pinia)
 await useStore(GameStore).tryLoad()
 ---
 <Layout title="游戏下载">
-    <meta id="pinia-data" data-data={JSON.stringify(pinia.state.value)}/>
+    <meta id="pinia-data" data-data={JSON.stringify(getActivePinia()!.state.value)}/>
     <GamePage client:idle/>
 </Layout>

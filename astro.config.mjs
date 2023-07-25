@@ -14,7 +14,7 @@ import node from "@astrojs/node";
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    vue({jsx:true,appEntrypoint: '/src/app.vue.ts'}),
+    vue({ jsx: true, appEntrypoint: '/src/app.vue.ts' }),
     UnoCSS({
       injectReset: true // or a path to the reset file
     }),
@@ -28,13 +28,20 @@ export default defineConfig({
       ],
       imports: ['vue']
       /* options */
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()],
     })
   ],
+  vite: {
+    plugins: [
+      // Components({
+        // resolvers: [ElementPlusResolver()],
+      // }),
+    ]
+  },
   output: "server",
   adapter: node({
     mode: "standalone"
-  })
+  }),
+  experimental: {
+    assets: true,
+  }
 });

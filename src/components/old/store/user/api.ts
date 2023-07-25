@@ -1,6 +1,6 @@
-import {User} from "@/store/user/type";
+import type {User} from "./type";
 import {requestToken} from "@/util/reCaptcha";
-import {request} from "@/plugins/axios";
+import {request} from "../axios";
 
 export const UserApi = {
     async info(): Promise<User> {

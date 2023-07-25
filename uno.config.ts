@@ -5,7 +5,9 @@ export default defineConfig({
     presets: [
         presetTagify({ prefix: "un-" }),
         presetUno(),
-        presetDaisy(),
+        presetDaisy({
+            themes: ["corporate"]
+        }),
         presetTypography(),
     ],
     transformers: [

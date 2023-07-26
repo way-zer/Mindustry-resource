@@ -3,6 +3,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "baseUrl": ".",
+    "outDir": "dist/",
     "paths": {
       "@components/*": [
         "src/components/*"

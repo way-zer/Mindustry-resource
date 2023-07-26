@@ -1,6 +1,7 @@
 import {GameApi, Release} from './api'
 
 export class GameStore {
+    static name = "GameStore"
     loading = false
     useMirror = true
     releases = [] as Release[]

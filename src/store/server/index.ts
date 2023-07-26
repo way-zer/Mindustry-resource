@@ -2,6 +2,7 @@ import type {ServerInfo} from './type'
 import {ServerApi} from './api'
 
 export class ServerStore {
+    static name = "ServerStore"
     loading = true
     data = [] as ServerInfo[]
     autoRefresh = true

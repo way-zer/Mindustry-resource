@@ -58,7 +58,7 @@
 <script lang="ts" setup>
 import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
-import ClientOnly from "@/components/ClientOnly";
+import ClientOnly from "@components/ClientOnly";
 import {ElForm} from "element-plus";
 import {UserApi} from "@/store/user/api";
 

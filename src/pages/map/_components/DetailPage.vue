@@ -105,20 +105,19 @@
 </template>
 
 <script lang="tsx" setup>
-import {computed, defineComponent, ref, watch} from 'vue'
 import {JsonViewer} from 'vue3-json-viewer'
 import SquaredImage from '@/components/SquaredImage.vue'
 import {MapApi} from '@/store/maps/api'
 import {MapDetail, Rules, RulesV5, Tags} from '@/store/maps/type'
 import {useRoute, useRouter} from 'vue-router'
-import ActionCopy from '@/views/map/components/ActionCopy.vue'
-import ActionDownload from '@/views/map/components/ActionDownload.vue'
-import ActionUpload from '@/views/map/components/ActionUpload.vue'
-import ActionChangeMode from '@/views/map/components/ActionChangeMode.vue'
+import ActionCopy from './ActionCopy.vue'
+import ActionDownload from './ActionDownload.vue'
+import ActionUpload from './ActionUpload.vue'
+import ActionChangeMode from './ActionChangeMode.vue'
 import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
 import {MapsStore} from "@/store/maps";
-import ClientOnly from "@/components/ClientOnly";
+import ClientOnly from "@components/ClientOnly";
 
 
 const userStore = useStore(UserStore)
@@ -151,13 +150,13 @@ watch(() => route.params, async (p) => {
 }, {immediate: true})
 
 function close() {
-    router.push({path: '/map'})
+    router.push({path: '/'})
 }
 
 async function doDelete() {
     await MapApi.edit('' + detail.value.thread, "delete", "")
     mapsStore.data = mapsStore.data.filter(it => it.id != detail.value.thread)
-    await router.replace({path: '/map'})
+    await router.replace({path: '/'})
 }
 </script>
 

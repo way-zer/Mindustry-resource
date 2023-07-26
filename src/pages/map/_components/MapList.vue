@@ -31,6 +31,7 @@
     <div class="center" v-if="loading">内容加载中..</div>
     <div class="center" v-if="noMore">没有更多了</div>
   </el-row>
+  <router-view/>
   <el-backtop/>
 </template>
 
@@ -38,9 +39,9 @@
 import SquaredImage from '@/components/SquaredImage.vue'
 import ColorizeSpan from '@/components/ColorizeSpan.vue'
 import {computed, defineComponent} from 'vue'
-import ActionDownload from '@/views/map/components/ActionDownload.vue'
-import ActionCopy from '@/views/map/components/ActionCopy.vue'
-import ActionDetail from '@/views/map/components/ActionDetail.vue'
+import ActionDownload from './ActionDownload.vue'
+import ActionCopy from './ActionCopy.vue'
+import ActionDetail from './ActionDetail.vue'
 import infiniteScroll from '@/util/infiniteScroll'
 import {useStore} from "pinia-class-store";
 import {MapsStore} from '@/store/maps'
@@ -49,11 +50,6 @@ export default defineComponent({
   components: {ActionDetail, ActionCopy, ActionDownload, ColorizeSpan, SquaredImage},
   setup() {
     const mapsStore = useStore(MapsStore)
-    onServerPrefetch(() => mapsStore.pullMore())
-    onBeforeMount(() => {
-      if (!mapsStore.loading && !mapsStore.noMore && mapsStore.data.length == 0)
-        mapsStore.pullMore()
-    })
     infiniteScroll(200, 10, () => (mapsStore.loading || mapsStore.noMore), mapsStore.pullMore)
     return {
       maps: computed(() => mapsStore.data),

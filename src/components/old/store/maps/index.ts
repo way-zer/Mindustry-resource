@@ -21,6 +21,8 @@ export class MapsStore {
     }
 
     async search(key: string) {
+        while (key.includes('  '))
+            key = key.replace('  ', ' ')//reduce space
         if (key == this.searchKey) return
         this.load(key)
         const newMaps = await MapApi.list(0, key)

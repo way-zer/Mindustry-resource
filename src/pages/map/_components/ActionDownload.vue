@@ -1,7 +1,7 @@
 <template>
   <tooltip content="下载地图">
     <el-button @click="download" :link="!circle" :circle="circle">
-      <el-icon-download/>
+      <el-icon-download class="h-4"/>
     </el-button>
   </tooltip>
 </template>
@@ -11,6 +11,7 @@ import {MapApi} from '@/store/maps/api'
 import {ElMessage} from 'element-plus'
 import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
+import Tooltip from "@components/Tooltip";
 
 const userStore = useStore(UserStore)
 

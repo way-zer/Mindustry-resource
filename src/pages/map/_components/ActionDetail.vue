@@ -2,13 +2,14 @@
   <tooltip content="地图详情">
     <!--    <router-link :to="`/map/${$props.thread}/${$props.hash}`"/>-->
     <el-button @click="click" :link="!$props.circle" :circle="$props.circle">
-      <el-icon-more/>
+      <el-icon-more class="h-4"/>
     </el-button>
   </tooltip>
 </template>
 
 <script lang="ts" setup>
-import {useRouter} from 'vue-router'
+import Tooltip from "@components/Tooltip";
+import {useMapsRouter} from "../_clientRouter";
 
 const props = defineProps({
   thread: {
@@ -25,9 +26,9 @@ const props = defineProps({
   },
 })
 
-const router = useRouter()
+const router = useMapsRouter()
 
 async function click() {
-  await router.push({path: `/map/${props.thread}/${props.hash}`})
+  await router.push({path: `/${props.thread}/${props.hash}`})
 }
 </script>

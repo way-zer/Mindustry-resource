@@ -9,7 +9,7 @@ export class UserStore {
     showDialog = false
 
     get logged() {
-        return typeof this.info === "object" && this.info.role !== defaultUser.role
+        return this.info.role !== defaultUser.role
     }
 
     get admin() {

@@ -1,6 +1,6 @@
 import type {MapDetail, MapInfo} from "@/store/maps/type";
 import {requestToken} from "@/util/reCaptcha";
-import {request,API_BASE,mapUrl} from "../axios";
+import {request, mapUrl} from "../axios";
 
 export const MapApi = {
     async list(begin: number, search: string): Promise<MapInfo[]> {

@@ -1,11 +1,25 @@
 ---
-import MapPage from "../../components/old/views/map.vue";
+import MapPage from "./_components/index.vue";
 import Layout from "../../layouts/Layout.astro";
+import SearchInput from './_components/SearchInput.vue'
+import ActionUpload from './_components/ActionUpload.vue'
+import {useMapsRouter} from "./_clientRouter";
+import {createPinia, getActivePinia, setActivePinia} from "pinia";
+import {useStore} from "pinia-class-store";
+import {MapsStore} from "../../components/old/store/maps";
 
-//委托给客户端路由
+setActivePinia(createPinia())
+console.log(MapsStore)
+await useStore(MapsStore).pullMore()
+//委托给Vue路由处理
+useMapsRouter().push(Astro.url.pathname.replace('/map', ''))
 ---
-<Layout title="地图下载">
-    <!-- <meta id="pinia-data" data-data={JSON.stringify(pinia.state.value)}/> -->
+<Layout title="地图分享">
+    <div slot="actions" class="flex">
+        <SearchInput client:idle/>
+        <ActionUpload client:idle/>
+    </div>
     {/* el-table can't SSR, so ServerPage no need SSR */}
-    <MapPage client:only="vue"/>
+    <MapPage client:idle/>
+    <meta id="pinia-data" data-data={JSON.stringify(getActivePinia()!.state.value)}/>
 </Layout>

@@ -33,7 +33,7 @@ import NavUserInfo from "@components/NavUserInfo.vue";
         })(window, document, "clarity", "script", "gsj4e9xc0u");
     </script>
 </head>
-<body class="bg-">
+<body>
 <header class="navbar">
     <div class="navbar-start">
         <img src={logo.src} alt="logo" height="42"/>
@@ -43,7 +43,7 @@ import NavUserInfo from "@components/NavUserInfo.vue";
     </div>
     <div class="navbar-center tabs">
         {navRoutes.map(({path, name}) => (
-                <a href={path} class:list={["tab","tab-lg",{"tab-active": path == Astro.url.pathname}]}>
+                <a href={path} class:list={["tab","tab-lg",{"tab-active": Astro.url.pathname.startsWith(path)}]}>
                     {name}
                 </a>
         ))}

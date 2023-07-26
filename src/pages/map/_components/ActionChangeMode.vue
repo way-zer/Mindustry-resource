@@ -10,7 +10,7 @@
   </el-dialog>
   <tooltip content="设置游戏模式">
     <el-button circle @click="selectMode = now;show = true">
-      <el-icon-edit/>
+      <el-icon-edit class="h-4"/>
     </el-button>
   </tooltip>
 </template>
@@ -18,7 +18,7 @@
 <script lang="tsx" setup>
 import {gameModes} from '@/store/maps/type'
 import {MapApi} from '@/store/maps/api'
-import {useRouter} from "vue-router";
+import Tooltip from "@components/Tooltip";
 
 const props = defineProps({
   thread: Number,
@@ -29,12 +29,11 @@ const props = defineProps({
   },
 })
 
-const router = useRouter()
 const show = ref(false)
 const selectMode = ref('')
 
 async function submit() {
   await MapApi.edit('' + props.thread, 'mode', selectMode.value);
-  router.go(0)
+  history.back()
 }
 </script>

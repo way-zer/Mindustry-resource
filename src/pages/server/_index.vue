@@ -52,7 +52,7 @@ import type {ServerInfo} from '@/store/server/type'
 import {modeMap} from '@/util/mindustry'
 import {useStore} from "pinia-class-store";
 import {ServerStore} from "@/store/server";
-import Tooltip from "@/components/Tooltip";
+import Tooltip from "@components/Tooltip";
 import ColorizeSpan from "@/components/ColorizeSpan.vue";
 
 const store = useStore(ServerStore)

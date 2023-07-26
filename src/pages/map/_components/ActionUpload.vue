@@ -4,13 +4,14 @@
   </el-button>
   <tooltip v-else content="更新地图">
     <el-button circle @click="click">
-      <el-icon-upload/>
+      <el-icon-upload class="h-4"/>
     </el-button>
   </tooltip>
 </template>
 
 <script lang="ts" setup>
-import {useRouter} from "vue-router";
+import Tooltip from "@components/Tooltip";
+import {useMapsRouter} from "../_clientRouter";
 
 const props = defineProps({
   thread: {//如果用于更新地图，不为空
@@ -23,9 +24,9 @@ const props = defineProps({
   }
 })
 
-const router = useRouter()
+const router = useMapsRouter()
 
 function click() {
-  router.push("/map/upload" + (props.thread ? `?update=${props.thread}` : ''))
+  router.push("/upload" + (props.thread ? `?update=${props.thread}` : ''))
 }
 </script>

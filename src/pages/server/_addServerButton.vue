@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ClientOnly from "@/components/ClientOnly";
+import ClientOnly from "@components/ClientOnly";
 import { useStore } from "pinia-class-store";
 import {ServerStore} from "@/store/server";
 

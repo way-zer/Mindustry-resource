@@ -33,7 +33,7 @@ import {ElMessage} from 'element-plus'
 import {MapApi} from '@/store/maps/api'
 import {useStore} from "pinia-class-store";
 import {UserStore} from "@/store/user";
-import ClientOnly from "@/components/ClientOnly";
+import ClientOnly from "@components/ClientOnly";
 
 
 export default defineComponent({
@@ -59,11 +59,11 @@ export default defineComponent({
           router.back()
         } else {
           const thread = await MapApi.newThread(hash)
-          await router.replace({path: `/map/${thread}/latest`})
+          await router.replace({path: `/${thread}/latest`})
         }
       },
       close: () => {
-        router.push({path: '/map'})
+        router.push({path: '/'})
       },
     }
   },

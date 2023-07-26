@@ -56,7 +56,6 @@ import Tooltip from "@components/Tooltip";
 import ColorizeSpan from "@components/ColorizeSpan.vue";
 
 const store = useStore(ServerStore)
-console.log(store.data.length)
 // onServerPrefetch(() => store.refresh())
 
 if (!import.meta.env.SSR)

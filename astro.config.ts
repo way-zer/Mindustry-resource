@@ -16,11 +16,14 @@ export default defineConfig({
     integrations: [
         vue({jsx: true, appEntrypoint: '/src/app.vue.ts'}),
         UnoCSS({
-            injectReset: true // or a path to the reset file
+            injectReset: "@unocss/reset/tailwind-compat.css" // or a path to the reset file
         }),
         vitePwa({
             registerType: "autoUpdate",
-            workbox: {}
+            workbox: {
+                globPatterns: ['**/*.{css,js,html,svg,png,ico,txt}'],
+            },
+            manifestFilename: "src/manifest.json",
         }),
         AutoImport({
             dts: "src/types/auto-import.d.ts",

@@ -1,6 +1,7 @@
 <template>
   <el-button v-if="!circle" type="primary" @click="click">
-    上传地图<i class="el-icon-upload el-icon--right"/>
+    上传地图
+    <el-icon-upload class="h-4"/>
   </el-button>
   <tooltip v-else content="更新地图">
     <el-button circle @click="click">

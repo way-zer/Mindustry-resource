@@ -20,6 +20,8 @@ const router = createRouter({
 })
 
 export function useMapsRouter() {
-    getCurrentInstance()?.appContext.app.use(router)
+    const app = getCurrentInstance()?.appContext?.app
+    if (app != null && !app.config.globalProperties["$router"])
+        app.use(router)
     return router
 }

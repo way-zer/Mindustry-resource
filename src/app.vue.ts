@@ -2,7 +2,6 @@ import { ID_INJECTION_KEY, default as ElementPlus } from "element-plus"
 import {createPinia, getActivePinia, setActivePinia} from "pinia"
 import type { App } from "vue"
 import locale from 'element-plus/es/locale/lang/zh-cn'
-import 'element-plus/dist/index.css'
 
 export default (app: App) => {
     let pinia = getActivePinia()

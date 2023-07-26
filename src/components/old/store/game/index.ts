@@ -2,6 +2,7 @@ import {GameApi, Release} from '@/store/game/api'
 
 export class GameStore {
     loading = false
+    useMirror = true
     releases = [] as Release[]
     beReleases = [] as Release[]
 
@@ -15,5 +16,10 @@ export class GameStore {
                 .then(d => this.beReleases = d)
         ])
         this.loading = false
+    }
+
+    getDownloadUrl(url: string){
+        if (!this.useMirror) return url
+        return 'https://gh.tinylake.tk/' + url
     }
 }

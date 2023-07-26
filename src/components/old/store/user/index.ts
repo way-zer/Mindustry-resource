@@ -1,4 +1,4 @@
-import {User} from '@/store/user/type'
+import type {User} from '@/store/user/type'
 import {UserApi} from '@/store/user/api'
 
 const defaultUser = {name: "NOT_LOG", role: "NOT_LOG"}
@@ -9,7 +9,7 @@ export class UserStore {
     showDialog = false
 
     get logged() {
-        return this.info.role !== defaultUser.role
+        return typeof this.info === "object" && this.info.role !== defaultUser.role
     }
 
     get admin() {

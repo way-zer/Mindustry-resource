@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ServerPage from "./_server.vue";
+import ToggleRefreshButton from "./_toggleRefreshButton.vue";
+import AddServerButton from "./_addServerButton.vue";
+import { setActivePinia, createPinia, getActivePinia } from "pinia";
+import {ServerStore} from "../../components/old/store/server";
+import {useStore} from "pinia-class-store";
+
+setActivePinia(createPinia())
+await useStore(ServerStore).refresh()
+---
+<Layout title="公共服务器列表">
+    <meta id="pinia-data" data-data={JSON.stringify(getActivePinia()!.state.value)}/>
+    <div slot="actions">
+        <ToggleRefreshButton client:idle/>
+        <AddServerButton client:idle/>
+    </div>
+    {/* el-table don't support SSR */}
+    <ServerPage client:only="vue"/>
+</Layout>

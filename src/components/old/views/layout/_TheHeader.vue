@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import NavUserInfo from '@/views/user/components/NavUserInfo.vue'
+import NavUserInfo from '@components/NavUserInfo.vue'
 
 const routes = [
   { path: '/map', name: "地图" },

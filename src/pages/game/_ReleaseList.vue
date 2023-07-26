@@ -10,7 +10,7 @@
             <strong>{{ asset.name }}</strong>
             <small>{{ (asset.size / 1024 / 1024).toFixed(2) }} MB</small>
           </el-space>
-          <a :href="getDownloadUrl(asset.browser_download_url)" rel="nofollow">下载</a>
+          <a :href="store.getDownloadUrl(asset.browser_download_url)" rel="nofollow">下载</a>
         </el-row>
       </el-col>
     </el-collapse-item>
@@ -19,15 +19,15 @@
 </template>
 
 <script lang="ts" setup>
-
-import {defineComponent, PropType} from 'vue'
 import type {Release} from '@/store/game/api'
-import {ElSwitch,ElCard,ElRow,ElSpace,ElCollapse,ElCollapseItem,ElCol,ElEmpty} from 'element-plus';
+import {ElRow,ElSpace,ElCollapse,ElCollapseItem,ElCol,ElEmpty} from 'element-plus';
+import {useStore} from "pinia-class-store";
+import {GameStore} from "@/store/game";
 
+const store = useStore(GameStore)
 const v = ref('1')
 const props = defineProps<{
   list: Release[]
-  getDownloadUrl: (url: string) => string
 }>()
 </script>
 

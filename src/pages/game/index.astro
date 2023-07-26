@@ -1,15 +1,19 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import GamePage from "@old/views/game.vue";
+import Layout from "@layouts/Layout.astro";
+import GamePage from "./_game.vue";
 import { setActivePinia, createPinia, getActivePinia } from "pinia";
 import {GameStore} from "@old/store/game";
 import {useStore} from "pinia-class-store";
+import ToggleMirrorButton from "./_toggleMirrorButton.vue"
 
 const pinia = createPinia()
 setActivePinia(pinia)
 await useStore(GameStore).tryLoad()
 ---
-<Layout title="游戏下载">
+<Layout title="游戏下载与安装">
+    <div slot="actions">
+        <ToggleMirrorButton client:idle/>
+    </div>
     <meta id="pinia-data" data-data={JSON.stringify(getActivePinia()!.state.value)}/>
     <GamePage client:idle/>
 </Layout>

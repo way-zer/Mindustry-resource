@@ -1,47 +1,70 @@
---- 
+---
+import logo from "../assets/icons-64.png";
 interface Props {
-	title: string;
+    title: string;
 }
 
-const { title } = Astro.props;
-// Astro.glob()
-import {ElContainer,ElHeader,ElMain,ElFooter} from "element-plus";
-import TheHeader from "@components/TheHeader.astro";
+const {title} = Astro.props;
+import {navRoutes} from "../const";
+import NavUserInfo from "@components/NavUserInfo.vue";
 ---
 
 <!DOCTYPE html>
 <html lang="cn">
-	<head>
-		<meta charset="UTF-8" />
-		<title>Mindustry资源站 - {title}</title>
-		<meta name="description" content="像素工厂资源站，丰富的地图资源，大量中文服务器地址"/>
-		<link rel="manifest" href="/manifest.20230212.json">
-		<link rel="icon" href="/icons-192.20210425.png"/>
-		<meta name="viewport" content="width=device-width" />
-		<meta name="theme-color" content="#001529"/>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Mindustry资源站 - {title}</title>
+    <meta name="description" content="像素工厂资源站，丰富的地图资源，大量中文服务器地址"/>
+    <link rel="manifest" href="/manifest.20230212.json">
+    <link rel="icon" href="/icons-192.20210425.png"/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="theme-color" content="#001529"/>
 
-		<script type="text/javascript">
-			(function (c, l, a, r, i, t, y) {
-				c[a] = c[a] || function () {
-					(c[a].q = c[a].q || []).push(arguments)
-				};
-				t = l.createElement(r);
-				t.async = 1;
-				t.src = "https://www.clarity.ms/tag/" + i;
-				y = l.getElementsByTagName(r)[0];
-				y.parentNode.insertBefore(t, y);
-			})(window, document, "clarity", "script", "gsj4e9xc0u");
-		</script>
-	</head>
-	<body class="bg-">
-		<ElContainer class="is-vertical">
-			<ElHeader>
-				<TheHeader />
-			</ElHeader>
-			<ElMain>
-				<slot />
-			</ElMain>	
-			<ElFooter class="text-center">WayZer @{new Date().getFullYear()}</ElFooter>
-		</ElContainer>
-	</body>
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () {
+                (c[a].q = c[a].q || []).push(arguments)
+            };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "gsj4e9xc0u");
+    </script>
+</head>
+<body class="bg-">
+<header class="navbar">
+    <div class="navbar-start">
+        <img src={logo.src} alt="logo" height="42"/>
+        <span class="hidden sm:block color-primary text-6 font-bold"
+        >Mindustry 资源站</span
+        >
+    </div>
+    <div class="navbar-center tabs">
+        {navRoutes.map(({path, name}) => (
+                <a href={path} class:list={["tab","tab-lg",{"tab-active": path == Astro.url.pathname}]}>
+                    {name}
+                </a>
+        ))}
+    </div>
+    <div class="navbar-end">
+        <NavUserInfo client:idle/>
+    </div>
+</header>
+<main class="sm:p-4">
+    <div class="border rounded shadow divide-y">
+        <div class="p-4 flex flex-row justify-between">
+            <h2 class="flex-none font-black text-lg">{title}</h2>
+            <div class="justify-self-end"><slot name="actions"/></div>
+        </div>
+        <div class="p-2">
+            <slot/>
+        </div>
+    </div>
+</main>
+<footer class="footer footer-center">
+    WayZer @{new Date().getFullYear()}
+</footer>
+</body>
 </html>

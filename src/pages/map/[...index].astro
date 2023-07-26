@@ -1,0 +1,11 @@
+---
+import MapPage from "../../components/old/views/map.vue";
+import Layout from "../../layouts/Layout.astro";
+
+//委托给客户端路由
+---
+<Layout title="地图下载">
+    <!-- <meta id="pinia-data" data-data={JSON.stringify(pinia.state.value)}/> -->
+    {/* el-table can't SSR, so ServerPage no need SSR */}
+    <MapPage client:only="vue"/>
+</Layout>

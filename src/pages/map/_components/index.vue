@@ -1,6 +1,6 @@
 <template>
   <el-alert type="info">你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert>
-  <div class="filter">
+  <div class="filter flex flex-wrap items-center">
     <b>按模式筛选: </b>
     <el-radio-group size="small"
                     :model-value="getTag('mode')"
@@ -10,7 +10,7 @@
       <el-radio-button label="X"/>
     </el-radio-group>
   </div>
-  <div class="filter">
+  <div class="filter flex flex-wrap items-center">
     <b>按游戏版本筛选: </b>
     <el-radio-group size="small"
                     :model-value="getTag('version')"
@@ -23,7 +23,7 @@
       <el-radio-button label="X"/>
     </el-radio-group>
   </div>
-  <div class="filter">
+  <div class="filter flex flex-wrap items-center">
     <b>排序方式: </b>
     <el-radio-group size="small"
                     :model-value="getTag('sort')||'X'"

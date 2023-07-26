@@ -1,7 +1,7 @@
 <template>
-  <el-table :data="store.data" v-loading="store.loading" row-key="address" style="white-space: nowrap"
+  <el-table :data="store.data" v-loading="store.loading" row-key="address"
             :default-sort="{prop:'players',order:'descending'}">
-    <el-table-column label="地址" prop="address" fixed="left">
+    <el-table-column label="地址" prop="address" min-width="200">
       <template #default="scope">
         <tooltip>
           <template #content>
@@ -20,7 +20,7 @@
         </tooltip>
       </template>
     </el-table-column>
-    <el-table-column label="名字" prop="name">
+    <el-table-column label="名字" prop="name" min-width="260">
       <template #default="scope">
         <ColorizeSpan :text="i(scope).name"/>
         <br/>
@@ -37,7 +37,7 @@
         </template>
       </template>
     </el-table-column>
-    <el-table-column label="地图" prop="map">
+    <el-table-column label="地图" prop="map" min-width="200">
       <template #default="scope">
         <ColorizeSpan :text="i(scope).mapName"/>
         <br/>

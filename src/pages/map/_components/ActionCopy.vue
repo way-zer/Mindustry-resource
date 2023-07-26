@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import {copyContent} from '@/util/copyContent'
+import {copyContent} from '../../../util/copyContent'
 import ClientOnly from "@components/ClientOnly";
 
 defineProps({

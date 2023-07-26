@@ -7,10 +7,10 @@
 </template>
 
 <script lang="ts" setup>
-import {MapApi} from '@/store/maps/api'
+import {MapApi} from '../../../store/maps/api'
 import {ElMessage} from 'element-plus'
 import {useStore} from "pinia-class-store";
-import {UserStore} from "@/store/user";
+import {UserStore} from "../../../store/user";
 import Tooltip from "@components/Tooltip";
 
 const userStore = useStore(UserStore)

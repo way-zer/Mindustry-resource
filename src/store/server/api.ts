@@ -1,4 +1,4 @@
-import type {ServerInfo} from '@/store/server/type'
+import type {ServerInfo} from './type'
 import {request} from "../axios";
 
 export const ServerApi = {

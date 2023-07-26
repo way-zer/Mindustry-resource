@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useStore} from "pinia-class-store";
-import {MapsStore} from "@/store/maps";
+import {MapsStore} from "../../../store/maps";
 import {useMapsRouter} from "../_clientRouter";
 
 const router = useMapsRouter()

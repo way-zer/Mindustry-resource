@@ -4,7 +4,7 @@ import ServerPage from "./_index.vue";
 import ToggleRefreshButton from "./_toggleRefreshButton.vue";
 import AddServerButton from "./_addServerButton.vue";
 import { setActivePinia, createPinia, getActivePinia } from "pinia";
-import {ServerStore} from "../../components/old/store/server";
+import {ServerStore} from "../../store/server";
 import {useStore} from "pinia-class-store";
 
 setActivePinia(createPinia())

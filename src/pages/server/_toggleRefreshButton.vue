@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useStore} from "pinia-class-store";
-import {ServerStore} from "@/store/server";
+import {ServerStore} from "../../store/server";
 
 const store = useStore(ServerStore)
 </script>

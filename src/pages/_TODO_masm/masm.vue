@@ -23,10 +23,10 @@ meta:
 
 <script lang="ts" setup>
 import PageHeader from "@/components/PageHeader.vue";
-import MonacoEditor from './masm/_editor.vue';
-import {compile, configTS, runCodes} from "@/views/masm/_myUtil";
+import MonacoEditor from './_editor.vue';
+import {compile, configTS, runCodes} from "./_myUtil";
 import {ref, watch} from "vue";
-import IndexTs from "./masm/res/index.ts?raw"
+import IndexTs from "./res?raw"
 
 const KEY = "masmSave"
 const file = "inmemory:/index.ts"

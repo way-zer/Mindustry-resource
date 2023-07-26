@@ -1,5 +1,5 @@
-import type {ServerInfo} from '@/store/server/type'
-import {ServerApi} from '@/store/server/api'
+import type {ServerInfo} from './type'
+import {ServerApi} from './api'
 
 export class ServerStore {
     loading = true

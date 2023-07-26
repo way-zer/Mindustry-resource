@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ClientOnly from "@components/ClientOnly";
 import { useStore } from "pinia-class-store";
-import {ServerStore} from "@/store/server";
+import {ServerStore} from "../../store/server";
 
 const store = useStore(ServerStore)
 const showModal = ref(false)

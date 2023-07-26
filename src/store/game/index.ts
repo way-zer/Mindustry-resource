@@ -1,4 +1,4 @@
-import {GameApi, Release} from '@/store/game/api'
+import {GameApi, Release} from './api'
 
 export class GameStore {
     loading = false

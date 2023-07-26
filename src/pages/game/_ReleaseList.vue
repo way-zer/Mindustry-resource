@@ -19,10 +19,10 @@
 </template>
 
 <script lang="ts" setup>
-import type {Release} from '@/store/game/api'
+import type {Release} from '../../store/game/api'
 import {ElRow,ElSpace,ElCollapse,ElCollapseItem,ElCol,ElEmpty} from 'element-plus';
 import {useStore} from "pinia-class-store";
-import {GameStore} from "@/store/game";
+import {GameStore} from "../../store/game";
 
 const store = useStore(GameStore)
 const v = ref('1')

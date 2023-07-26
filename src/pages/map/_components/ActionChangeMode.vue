@@ -16,8 +16,8 @@
 </template>
 
 <script lang="tsx" setup>
-import {gameModes} from '@/store/maps/type'
-import {MapApi} from '@/store/maps/api'
+import {gameModes} from '../../../store/maps/type'
+import {MapApi} from '../../../store/maps/api'
 import Tooltip from "@components/Tooltip";
 
 const props = defineProps({

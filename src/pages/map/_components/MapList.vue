@@ -36,15 +36,15 @@
 </template>
 
 <script lang="tsx">
-import SquaredImage from '@/components/SquaredImage.vue'
-import ColorizeSpan from '@/components/ColorizeSpan.vue'
+import SquaredImage from '@components/SquaredImage.vue'
+import ColorizeSpan from '@components/ColorizeSpan.vue'
 import {computed, defineComponent} from 'vue'
 import ActionDownload from './ActionDownload.vue'
 import ActionCopy from './ActionCopy.vue'
 import ActionDetail from './ActionDetail.vue'
-import infiniteScroll from '@/util/infiniteScroll'
+import infiniteScroll from '../../../util/infiniteScroll'
 import {useStore} from "pinia-class-store";
-import {MapsStore} from '@/store/maps'
+import {MapsStore} from '../../../store/maps'
 
 export default defineComponent({
   components: {ActionDetail, ActionCopy, ActionDownload, ColorizeSpan, SquaredImage},

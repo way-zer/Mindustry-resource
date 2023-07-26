@@ -1,5 +1,5 @@
-import type {MapDetail, MapInfo} from "@/store/maps/type";
-import {requestToken} from "@/util/reCaptcha";
+import type {MapDetail, MapInfo} from "./type";
+import {requestToken} from "../../util/reCaptcha";
 import {request, mapUrl} from "../axios";
 
 export const MapApi = {

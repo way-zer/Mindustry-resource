@@ -15,13 +15,7 @@
       ],
       "@services/*": [
         "src/services/*"
-      ],
-      "@old/*": [
-        "src/components/old/*"
-      ],
-      "@/*": [
-        "src/components/old/*"
-      ],
+      ]
     }
   }
 }

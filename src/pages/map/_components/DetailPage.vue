@@ -106,17 +106,17 @@
 
 <script lang="tsx" setup>
 import {JsonViewer} from 'vue3-json-viewer'
-import SquaredImage from '@/components/SquaredImage.vue'
-import {MapApi} from '@/store/maps/api'
-import {MapDetail, Rules, RulesV5, Tags} from '@/store/maps/type'
+import SquaredImage from '@components/SquaredImage.vue'
+import {MapApi} from '../../../store/maps/api'
+import {MapDetail, Rules, RulesV5, Tags} from '../../../store/maps/type'
 import {useRoute, useRouter} from 'vue-router'
 import ActionCopy from './ActionCopy.vue'
 import ActionDownload from './ActionDownload.vue'
 import ActionUpload from './ActionUpload.vue'
 import ActionChangeMode from './ActionChangeMode.vue'
 import {useStore} from "pinia-class-store";
-import {UserStore} from "@/store/user";
-import {MapsStore} from "@/store/maps";
+import {UserStore} from "../../../store/user";
+import {MapsStore} from "../../../store/maps";
 import ClientOnly from "@components/ClientOnly";
 
 

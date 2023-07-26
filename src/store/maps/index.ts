@@ -1,5 +1,5 @@
-import type {MapDetail, MapInfo} from '@/store/maps/type'
-import {MapApi} from '@/store/maps/api'
+import type {MapDetail, MapInfo} from './type'
+import {MapApi} from './api'
 
 export class MapsStore {
     loading = false

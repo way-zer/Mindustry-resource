@@ -7,7 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    _editor: typeof import('./../components/old/views/masm/_editor.vue')['default']
+    _editor: typeof import('../pages/_TODO_masm/_editor.vue')['default']
     _TheHeader: typeof import('./../components/old/views/layout/_TheHeader.vue')['default']
     _TheLogin: typeof import('./../components/old/views/user/_TheLogin.vue')['default']
     '[id]': typeof import('./../components/old/views/map/[thread]/[id].vue')['default']
@@ -16,7 +16,7 @@ declare module 'vue' {
     ActionDetail: typeof import('../pages/map/_components/ActionDetail.vue')['default']
     ActionDownload: typeof import('../pages/map/_components/ActionDownload.vue')['default']
     ActionUpload: typeof import('../pages/map/_components/ActionUpload.vue')['default']
-    ColorizeSpan: typeof import('./../components/old/components/ColorizeSpan.vue')['default']
+    ColorizeSpan: typeof import('./../components/ColorizeSpan.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -54,12 +54,12 @@ declare module 'vue' {
     ElUpload: typeof import('element-plus/es')['ElUpload']
     Map: typeof import('../pages/map/_components/index.vue')['default']
     MapList: typeof import('../pages/map/_components/MapList.vue')['default']
-    Masm: typeof import('./../components/old/views/masm.vue')['default']
+    Masm: typeof import('../pages/_TODO_masm/masm.vue')['default']
     NavUserInfo: typeof import('./../components/NavUserInfo.vue')['default']
     PageHeader: typeof import('./../components/old/components/PageHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SquaredImage: typeof import('./../components/old/components/SquaredImage.vue')['default']
+    SquaredImage: typeof import('./../components/SquaredImage.vue')['default']
     Upload: typeof import('./../components/old/views/map/upload.vue')['default']
   }
   export interface ComponentCustomProperties {

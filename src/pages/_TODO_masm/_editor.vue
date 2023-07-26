@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import {onBeforeUnmount, ref, watch} from "vue";
-import {loadMonaco} from "@/views/masm/_myUtil";
+import {loadMonaco} from "./_myUtil";
 import * as Monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 const props = defineProps({

@@ -24,7 +24,7 @@
 import 'element-plus/dist/index.css'
 import ReleaseList from './_ReleaseList.vue'
 import { useStore } from "pinia-class-store";
-import { GameStore } from "@/store/game";
+import { GameStore } from "../../store/game";
 import { ElSwitch, ElCard } from 'element-plus';
 
 const store = useStore(GameStore)

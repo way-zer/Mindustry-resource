@@ -5,7 +5,7 @@
 </template>
 
 <script lang="tsx" setup>
-import {colorize} from "@/util/mindustry";
+import {colorize} from "../util/mindustry";
 
 const props = defineProps<{ text: string }>()
 const colorized = computed(() => colorize(props.text))

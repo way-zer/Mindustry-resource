@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useStore} from "pinia-class-store";
 import {ElSwitch} from "element-plus";
-import {GameStore} from "@/store/game";
+import {GameStore} from "../../store/game";
 
 const store = useStore(GameStore)
 </script>

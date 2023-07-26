@@ -6,7 +6,7 @@ import ActionUpload from './_components/ActionUpload.vue'
 import {useMapsRouter} from "./_clientRouter";
 import {createPinia, getActivePinia, setActivePinia} from "pinia";
 import {useStore} from "pinia-class-store";
-import {MapsStore} from "../../components/old/store/maps";
+import {MapsStore} from "../../store/maps";
 
 setActivePinia(createPinia())
 console.log(MapsStore)

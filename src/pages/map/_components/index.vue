@@ -41,9 +41,9 @@
 </template>
 
 <script lang="tsx" setup>
-import {gameModes} from '@/store/maps/type'
+import {gameModes} from '../../../store/maps/type'
 import {useStore} from "pinia-class-store";
-import {MapsStore} from "@/store/maps";
+import {MapsStore} from "../../../store/maps";
 import {useMapsRouter} from "../_clientRouter";
 
 

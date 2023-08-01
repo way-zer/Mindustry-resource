@@ -14,6 +14,9 @@ import node from "@astrojs/node";
 export default defineConfig({
     integrations: [
         UnoCSS({
+            content: {
+                filesystem: ["src/pages/**/*"]
+            },
             injectReset: "@unocss/reset/tailwind-compat.css" // or a path to the reset file
         }),
         vue({

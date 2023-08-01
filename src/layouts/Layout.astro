@@ -60,7 +60,7 @@ import {registerSW} from "virtual:pwa-register";
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
                 </svg>
             </label>
-            <ul tabindex="0" class="menu dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-60">
+            <ul tabindex="0" class="menu dropdown-content mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-60">
                 {navRoutes.map(({path, name}) => (
                         <li><a href={path}>{name}</a></li>
                 ))}

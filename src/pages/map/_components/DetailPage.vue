@@ -25,7 +25,7 @@
                     </h4>
                     <h4><b>地图编号:</b> {{ detail.thread }} <b>游戏模式:</b> {{ detail.mode }} <b>上传者:</b>
                         <el-tooltip content="点击查看该用户更多地图">
-                            <router-link to="/map" @click="mapsStore.search('@user:' + detail.user).then()">
+                            <router-link to="/" @click="mapsStore.search('@user:' + detail.user).then()">
                                 {{ detail.user }}
                             </router-link>
                         </el-tooltip>

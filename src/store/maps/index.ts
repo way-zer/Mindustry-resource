@@ -2,6 +2,7 @@ import type {MapDetail, MapInfo} from './type'
 import {MapApi} from './api'
 
 export class MapsStore {
+    //@ts-ignore
     static name = "MapsStore"
     loading = false
     noMore = false

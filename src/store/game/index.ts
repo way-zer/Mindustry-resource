@@ -1,6 +1,7 @@
-import {GameApi, Release} from './api'
+import {GameApi, type Release} from './api'
 
 export class GameStore {
+    //@ts-ignore
     static name = "GameStore"
     loading = false
     useMirror = true

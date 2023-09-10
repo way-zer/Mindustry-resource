@@ -1,4 +1,4 @@
-import { defineComponent, ref, onMounted, h } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 export default defineComponent({
     name: "ClientOnly",
     inheritAttrs: false,

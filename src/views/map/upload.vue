@@ -26,8 +26,7 @@
   </client-only>
 </template>
 
-<script lang="ts">
-import {defineComponent, ref} from 'vue'
+<script lang="ts" setup>
 import {useRoute, useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
 import {MapApi} from '@/store/maps/api'
@@ -36,43 +35,34 @@ import {UserStore} from "@/store/user";
 import ClientOnly from "@/components/ClientOnly";
 
 
-export default defineComponent({
-  name: 'TheUpload',
-  components: {ClientOnly},
-  setup() {
-    const userStore = useStore(UserStore)
-    const router = useRouter()
-    const update = useRoute().query.update?.toString()
-    const uploadUrl = ref<string>('404')
-    return {
-      uploadUrl,
-      update,
-      upload: async (info: { file: File }) => {
-        if (!userStore.logged) {
-          userStore.showDialog = true
-          ElMessage.error({message: '请先登录后再进行上传', duration: 10_000})
-          return Promise.reject()
-        }
-        const hash = await MapApi.upload(info.file)
-        if (update) {
-          await MapApi.updateThread(update, hash)
-          router.back()
-        } else {
-          const thread = await MapApi.newThread(hash)
-          await router.replace({path: `/map/${thread}/latest`})
-        }
-      },
-      close: () => {
-        router.push({path: '/map'})
-      },
-    }
-  },
-})
+const userStore = useStore(UserStore)
+const router = useRouter()
+const update = useRoute().query.update?.toString()
+
+async function upload(info: { file: File }) {
+  if (!userStore.logged) {
+    userStore.showDialog = true
+    ElMessage.error({message: '请先登录后再进行上传', duration: 10_000})
+    return Promise.reject()
+  }
+  const hash = await MapApi.upload(info.file)
+  if (update) {
+    await MapApi.updateThread(update, hash)
+    router.back()
+  } else {
+    const thread = await MapApi.newThread(hash)
+    await router.replace({path: `/${thread}/latest`})
+  }
+}
+
+function close() {
+  router.push({path: '/'})
+}
 </script>
 
 <style lang="stylus" scoped>
 :global(.upload-dialog)
-  width 80% !important
+  width 80%
   max-width fit-content
   margin 0 auto
 

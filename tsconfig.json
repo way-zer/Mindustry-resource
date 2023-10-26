@@ -3,15 +3,16 @@
     "experimentalDecorators": true,
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "esModuleInterop": true,
+    "verbatimModuleSyntax": true,
     "isolatedModules": true,
-    "noImplicitAny": false,
+    "noEmit": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "jsx": "preserve",
     "lib": [
       "esnext",
       "dom"
@@ -30,14 +31,9 @@
     }
   },
   "include": [
-    "renderer/**/*.ts",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue"
+    "src"
   ],
   "exclude": [
-    "node_modules",
     "src/views/masm/res"
   ]
 }

@@ -1,5 +1,5 @@
-import {ServerInfo} from '@/store/server/type'
-import {request} from "@/plugins/axios";
+import type {ServerInfo} from './type'
+import {request} from "../axios";
 
 export const ServerApi = {
     async list(): Promise<ServerInfo[]> {

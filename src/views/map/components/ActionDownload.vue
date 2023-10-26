@@ -1,7 +1,7 @@
 <template>
   <tooltip content="下载地图">
     <el-button @click="download" :link="!circle" :circle="circle">
-      <el-icon-download/>
+      <el-icon-download class="h-4"/>
     </el-button>
   </tooltip>
 </template>

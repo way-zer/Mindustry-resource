@@ -11,6 +11,8 @@ import Components from 'unplugin-vue-components/vite'
 import {resolve} from 'path'
 import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
 import viteSSR from "simple-vite-vue-ssr/plugin";
+import UnoCSS from 'unocss/vite'
+import pwaManifest from './src/manifest.json';
 
 // https://vitejs.dev/config/
 export default defineConfig(({mode, ssrBuild}) => {
@@ -22,12 +24,13 @@ export default defineConfig(({mode, ssrBuild}) => {
     return {
         // base: '/v2/',
         plugins: [
+            UnoCSS(),
             splitVendorChunkPlugin(),
-            viteSSR(),
+            //viteSSR(),
             vue(),
             vueJsx(),
             Pages({
-                exclude: ['**/components/**', '**/res/**', '**/_**'],
+                exclude: ['**/components/**', '**/res/**', '**/[A-Z]**', '**/_**'],
                 importMode: (path) => {
                     if (path.includes("/about"))
                         return "async"
@@ -40,12 +43,13 @@ export default defineConfig(({mode, ssrBuild}) => {
                 ],
             }),
             AutoImport({
-                dts: "src/auto-imports.d.ts",
+                dts: "src/types/auto-import.d.ts",
                 imports: ['vue'],
             }),
             Components({
-                dts: "src/components.d.ts",
-                extensions: ['vue', 'tsx'],
+                dts: "src/types/components.d.ts",
+                dirs: ["src/components/"],
+                extensions: ["vue", "tsx"],
                 resolvers: [
                     IconsResolver({
                         prefix: false,
@@ -54,7 +58,6 @@ export default defineConfig(({mode, ssrBuild}) => {
                     }),
                     ElementPlusResolver({
                         importStyle: false
-                        // ssr:true
                     }),
                 ],
             }),
@@ -63,30 +66,33 @@ export default defineConfig(({mode, ssrBuild}) => {
             }),
             VitePWA({
                 registerType: 'autoUpdate',
-                manifest: false,
+                manifest: (pwaManifest as any),
                 workbox: {
-                    dontCacheBustURLsMatching: /assets\/.*/,
+                    globPatterns: ['*.{png,js,html}'],
                     navigateFallback: 'index.html',
                     navigateFallbackDenylist: [/api\/.*/],
+                    navigationPreload: false,
                     runtimeCaching: [
+                        {urlPattern: /\/assets\//, handler: 'CacheFirst', options: {cacheName: "assets"}},
+                        {urlPattern: /\.(css|js|svg|png|ico)$/, handler: 'CacheFirst', options: {cacheName: "static"}},
                         {
-                            urlPattern: /icons-\d+\.\d+\.png/,
-                            handler: 'CacheFirst',
-                        },
-                        {
-                            urlPattern: /manifest\.\d+\.json/,
-                            handler: 'CacheFirst',
+                            urlPattern: /^https:\/\/unpkg\.com\/.*/i, handler: 'CacheFirst',
+                            options: {cacheName: "cdn-resource", cacheableResponse: {statuses: [0, 200]}}
                         },
                         {
                             urlPattern: /api\/.*/,
                             handler: 'NetworkFirst',
+                        },
+                        {
+                            urlPattern: (url) => url.sameOrigin && url.url.pathname.match(/\/[^.]+$/),
+                            handler: 'NetworkFirst'
                         },
                     ],
                 },
             }),
             visualizer({
                 brotliSize: true,
-                filename: ssrBuild ? "stats.server.html" : "stats.client.html"
+                filename: `dist/stats.${ssrBuild ? "server" : "client"}.html`
             }) as any,
         ],
         publicDir: "src/assets/public",
@@ -98,7 +104,6 @@ export default defineConfig(({mode, ssrBuild}) => {
         },
         build: {
             outDir: "dist/client",
-            target: ['chrome89', 'esnext'],
             sourcemap: mode === 'development',
             chunkSizeWarningLimit: 1000,
         },

@@ -1,8 +1,3 @@
-<route lang="yaml">
-meta:
-  navName: 逻辑编辑器
-  navIndex: 15
-</route>
 <template>
   <PageHeader title="高级逻辑编辑器">
     <el-alert type="warning" show-icon>编辑会自动保存，但注意定期备份，以免丢失</el-alert>
@@ -23,10 +18,10 @@ meta:
 
 <script lang="ts" setup>
 import PageHeader from "@/components/PageHeader.vue";
-import MonacoEditor from './masm/_editor.vue';
+import MonacoEditor from './Editor.vue';
 import {compile, configTS, runCodes} from "@/views/masm/_myUtil";
 import {ref, watch} from "vue";
-import IndexTs from "./masm/res/index.ts?raw"
+import IndexTs from "./res?raw"
 
 const KEY = "masmSave"
 const file = "inmemory:/index.ts"

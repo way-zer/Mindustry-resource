@@ -1,7 +1,9 @@
-import {MapDetail, MapInfo} from '@/store/maps/type'
-import {MapApi} from '@/store/maps/api'
+import type {MapDetail, MapInfo} from './type'
+import {MapApi} from './api'
 
 export class MapsStore {
+    //@ts-ignore
+    static name = "MapsStore"
     loading = false
     noMore = false
     searchKey = ''
@@ -21,6 +23,8 @@ export class MapsStore {
     }
 
     async search(key: string) {
+        while (key.includes('  '))
+            key = key.replace('  ', ' ').trim()//reduce space
         if (key == this.searchKey) return
         this.load(key)
         const newMaps = await MapApi.list(0, key)

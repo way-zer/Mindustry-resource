@@ -27,7 +27,8 @@ export async function requestToken(action: string): Promise<string> {
     try {
         await loadGRecaptcha
     } catch (e) {
-        ElMessage.error({message: "加载reCaptcha组件失败,可能网络不佳\n" + e, duration: 30_000, showClose: true})
+        console.error(e)
+        ElMessage.error({message: "加载reCaptcha组件失败,可能网络不佳", duration: 30_000, showClose: true})
     } finally {
         msg.close()
     }

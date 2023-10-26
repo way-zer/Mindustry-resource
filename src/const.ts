@@ -1,8 +1,9 @@
 export const API_BASE = "https://api.mindustry.top/"
 
-export function mapUrl(raw: string) {
-    if (import.meta.env.DEV && !import.meta.env.SSR) return raw
-    if (raw?.startsWith("/api/"))
-        return API_BASE + raw?.substring(5)
-    return raw
-}
+export const navRoutes = [
+    {path: "/map", name: "地图"},
+    {path: "/server", name: "服务器列表"},
+    {path: "/game", name: "游戏下载"},
+    {path: "/masm", name: "逻辑编辑器"},
+    {path: "/about", name: "关于本站"},
+]

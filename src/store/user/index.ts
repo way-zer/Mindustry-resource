@@ -1,9 +1,10 @@
-import {User} from '@/store/user/type'
-import {UserApi} from '@/store/user/api'
+import type {User} from './type'
+import {UserApi} from './api'
 
 const defaultUser = {name: "NOT_LOG", role: "NOT_LOG"}
 
 export class UserStore {
+    static name = "UserStore"
     first: boolean = true
     info: User = defaultUser
     showDialog = false

@@ -5,6 +5,7 @@ import {ID_INJECTION_KEY} from "element-plus";
 import viteSSR from "simple-vite-vue-ssr";
 import createRouter from "@/plugins/router";
 import {createPinia} from "pinia";
+import 'virtual:uno.css'
 
 export default viteSSR(App, async (ctx) => {
     ctx.router = createRouter()

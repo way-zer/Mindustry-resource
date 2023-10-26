@@ -1,9 +1,3 @@
-<route lang="yaml">
-meta:
-  navName: 地图
-  navIndex: 0
-</route>
-
 <template>
   <el-card>
     <template #header>

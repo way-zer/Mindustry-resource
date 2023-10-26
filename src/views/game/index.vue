@@ -1,8 +1,3 @@
-<route lang="yaml">
-meta:
-  navName: 游戏下载
-  navIndex: 10
-</route>
 <template>
   <PageHeader title="游戏下载与安装">
     <template #actions>
@@ -32,7 +27,7 @@ meta:
 
 <script lang="ts">
 import PageHeader from '@/components/PageHeader.vue'
-import ReleaseList from './game/_ReleaseList.vue'
+import ReleaseList from './ReleaseList.vue'
 import {ref} from 'vue'
 import {useStore} from "pinia-class-store";
 import {GameStore} from "@/store/game";

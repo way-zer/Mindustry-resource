@@ -20,8 +20,8 @@
 
 <script lang="ts">
 
-import {defineComponent, PropType} from 'vue'
-import {Release} from '@/store/game/api'
+import {defineComponent, type PropType} from 'vue'
+import type {Release} from '@/store/game/api'
 
 export default defineComponent({
   name: 'ReleaseList',

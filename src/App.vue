@@ -15,7 +15,7 @@
 
 <script lang="ts" setup>
 import TheLogin from '@/views/user/_TheLogin.vue'
-import TheHeader from '@/views/layout/_TheHeader.vue'
+import TheHeader from '@/components/TheHeader.vue'
 import ClientOnly from "@/components/ClientOnly";
 
 const year = computed(() => new Date().getFullYear())

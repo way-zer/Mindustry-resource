@@ -1,15 +1,14 @@
 <template>
   <el-row type="flex" :gutter=16>
-    <el-col :xs=24 :sm=12 :lg=6 v-for="map in maps" :key="map.latest">
+    <el-col :xs=24 :sm=12 :lg=6 v-for="map in mapsStore.data" :key="map.latest">
       <el-card class="mapCard">
         <SquaredImage :src="map.preview" alt="preview"/>
         <div>
           <div>
             <el-space size="small">
-              <el-tag
-                  v-for="tag in map.tags" :key="tag"
-                  size="small" effect="plain" :color="tag.split('§')[1] || 'default'"
-              >
+              <el-tag v-for="tag in map.tags" :key="tag"
+                      size="small" effect="plain"
+                      :color="tag.split('§')[1] || 'default'">
                 <ColorizeSpan :text="tag.split('§')[0]"/>
               </el-tag>
             </el-space>
@@ -22,46 +21,37 @@
             <el-divider direction="vertical"/>
             <ActionDownload :hash="map.latest"/>
             <el-divider direction="vertical"/>
-            <ActionDetail :thread="map.id"/>
+            <tooltip content="地图详情">
+              <el-button link>
+                <router-link :to="`/map/${map.id}/latest`">
+                  <el-icon-more class="h-4"/>
+                </router-link>
+              </el-button>
+            </tooltip>
           </el-row>
         </div>
       </el-card>
     </el-col>
-    <el-empty v-if="maps.length===0" style="width: 100%" description="暂无数据，尝试切换关键词试试"/>
-    <div class="center" v-if="loading">内容加载中..</div>
-    <div class="center" v-if="noMore">没有更多了</div>
+    <el-empty v-if="mapsStore.data.length === 0" style="width: 100%" description="暂无数据，尝试切换关键词试试"/>
+    <div class="center" v-if="mapsStore.loading">内容加载中..</div>
+    <div class="center" v-if="mapsStore.noMore">没有更多了</div>
   </el-row>
   <el-backtop/>
 </template>
 
-<script lang="tsx">
-import SquaredImage from '@/components/SquaredImage.vue'
-import ColorizeSpan from '@/components/ColorizeSpan.vue'
-import {computed, defineComponent} from 'vue'
-import ActionDownload from '@/views/map/components/ActionDownload.vue'
-import ActionCopy from '@/views/map/components/ActionCopy.vue'
-import ActionDetail from '@/views/map/components/ActionDetail.vue'
+<script lang="tsx" setup>
 import infiniteScroll from '@/util/infiniteScroll'
 import {useStore} from "pinia-class-store";
 import {MapsStore} from '@/store/maps'
+import ActionCopy from "@/views/map/components/ActionCopy.vue";
+import ActionDownload from "@/views/map/components/ActionDownload.vue";
 
-export default defineComponent({
-  components: {ActionDetail, ActionCopy, ActionDownload, ColorizeSpan, SquaredImage},
-  setup() {
-    const mapsStore = useStore(MapsStore)
-    onServerPrefetch(() => mapsStore.pullMore())
-    onBeforeMount(() => {
-      if (!mapsStore.loading && !mapsStore.noMore && mapsStore.data.length == 0)
-        mapsStore.pullMore()
-    })
-    infiniteScroll(200, 10, () => (mapsStore.loading || mapsStore.noMore), mapsStore.pullMore)
-    return {
-      maps: computed(() => mapsStore.data),
-      loading: computed(() => mapsStore.loading),
-      noMore: computed(() => mapsStore.noMore),
-    }
-  },
+const mapsStore = useStore(MapsStore)
+onMounted(() => {
+  if (!mapsStore.noMore && mapsStore.data.length === 0)
+    mapsStore.pullMore().then()
 })
+infiniteScroll(200, 10, () => (mapsStore.loading || mapsStore.noMore), mapsStore.pullMore)
 </script>
 
 <style lang="stylus" scoped>

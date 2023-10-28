@@ -19,6 +19,7 @@
     "nuxt": "^3.8.0",
     "nuxt-icon": "^0.6.0",
     "stylus": "^0.60.0",
+    "unocss-preset-daisy": "^7.0.0",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
   }

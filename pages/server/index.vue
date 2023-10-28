@@ -1,17 +1,12 @@
 <template>
-  <el-card>
-    <template #header>
-      <el-row id="header" type="flex" justify="space-between" align="middle">
-        <b style="font-size: large">公共服务器列表</b>
-        <el-space>
-          <el-switch active-text="自动刷新" inactive-text="手动刷新" v-model="autoRefresh" />
-          <AddServerButton />
-        </el-space>
-      </el-row>
+  <PageHeader title="公共服务器列表">
+    <template #action>
+      <el-switch active-text="自动刷新" inactive-text="手动刷新" v-model="autoRefresh" />
+      <AddServerButton />
     </template>
     <el-table :data="data" v-loading="pending" row-key="address" id="table"
       :default-sort="{ prop: 'players', order: 'descending' }">
-      <el-table-column label="地址 (按版本筛选)" prop="address"  min-width="200">
+      <el-table-column label="地址 (按版本筛选)" prop="address" min-width="200">
         <template #default="scope">
           <tooltip>
             <template #content>
@@ -30,7 +25,7 @@
           </tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="名字" prop="name"  min-width="300">
+      <el-table-column label="名字" prop="name" min-width="300">
         <template #default="scope">
           <ColorizeSpan :text="i(scope).name" />
           <br />
@@ -56,7 +51,7 @@
         </template>
       </el-table-column>
     </el-table>
-  </el-card>
+  </PageHeader>
 </template>
 
 <script lang="ts" setup>

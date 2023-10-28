@@ -1,9 +1,8 @@
 import {ElTooltip} from "element-plus";
 
 export default defineComponent({
-    ...ElTooltip,
     inheritAttrs: false,
-    sorts: ['content'],
+    sorts: ['content','default'],
     setup(props, {slots}) {
         const ssr = ref(true)
         onMounted(() => ssr.value = false)

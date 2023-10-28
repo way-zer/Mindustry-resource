@@ -11,9 +11,13 @@ export default defineNuxtConfig({
   ],
   routeRules: {
     "/": { redirect: "/map" },
+    '/api/**': {
+      proxy: 'https://api.mindustry.top/**'
+    }
   },
   ignoreOptions: { ignorecase: false },
   ignore: [
+    "old/**",
     "pages/**/[A-Z]*.*",
   ]
 })

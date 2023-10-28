@@ -10,11 +10,13 @@ function initialSearchKey() {
     return ''
 }
 
-export default function () {
-    const searchKey = useState('map/search-key', initialSearchKey)
-    const { data } = useAsyncData<MapInfo[]>('maps', () => MapApi.list(0, searchKey.value), { default: () => [] })
+export default defineStore("map", () => {
+    const searchKey = ref(initialSearchKey())
+    const { data } = asyncData(() => MapApi.list(0, searchKey.value), [])
     const loading = ref(false)
     const noMore = ref(false)
+
+    const query = useUrlSearchParams('history')
 
     return {
         searchKey, data, loading, noMore,
@@ -32,14 +34,14 @@ export default function () {
                 key = key.replace('  ', ' ').trim()//reduce space
             if (key == searchKey.value) return
             loading.value = true
-            searchKey.value = key
+            searchKey.value = query.q = key
             const newMaps = await MapApi.list(0, key)
             data.value = newMaps
             noMore.value = newMaps.length === 0
             loading.value = false
         }
     }
-}
+})
 
 export function useMapDetail(thread: string, version: string) {
     const key = `${thread}/${version}`

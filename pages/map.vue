@@ -34,8 +34,8 @@
       </el-radio-group>
     </div>
     <MapList />
-    <router-view />
   </PageHeader>
+  <NuxtPage />
 </template>
 
 <script lang="tsx" setup>
@@ -43,14 +43,14 @@ import { gameModes } from '@/backendApi/maps/type'
 import MapList from './map/components/MapList.vue'
 import ActionUpload from './map/components/ActionUpload.vue'
 
-const { searchKey, search } = useMapStore()
-const tmpSearch = ref(searchKey.value)
-watch(searchKey, (it) => tmpSearch.value = searchKey.value)
+const store = useMapStore()
+const tmpSearch = ref(store.searchKey)
+watch(() => store.searchKey, (it) => tmpSearch.value = store.searchKey)
 const onSearch = async (v: string) => {
   tmpSearch.value = v.replace('  ', ' ')//reduce space
   if (v.match(/^\d{5}$/))
     return await navigateTo(`/map/${v}/latest`)
-  return search(v)
+  return store.search(v)
 }
 
 function regexForTag(tag: string) {

@@ -5,16 +5,13 @@ export interface ReleaseType {
     assets: { name: string; browser_download_url: string; size: number }[];
 }
 
-function releaseUrl(repo: string, perPage: number) {
-    return `https://api.github.com/repos/${repo}/releases?per_page=${perPage}`
-}
-function useRelease(repo: string, perPage: number) {
-    return useFetch<ReleaseType[]>(releaseUrl(repo, perPage), { server: false, default: () => [] })
+function getRelease(repo: string, perPage: number) {
+    return request<ReleaseType[]>('GET', `https://api.github.com/repos/${repo}/releases?per_page=${perPage}`)
 }
 
-export default function () {
-    const { data: releases } = useRelease('Anuken/Mindustry', 5)
-    const { data: beReleases } = useRelease('Anuken/MindustryBuilds', 15)
+export default defineStore('game', () => {
+    const { data: releases } = asyncData(() => getRelease('Anuken/Mindustry', 5), [], { server: false })
+    const { data: beReleases } = asyncData(() => getRelease('Anuken/MindustryBuilds', 15), [], { server: false })
     const useMirror = ref(true)
     return {
         releases, beReleases, useMirror,
@@ -24,4 +21,4 @@ export default function () {
             return 'https://gh.tinylake.tk/' + url
         }
     }
-}
+})

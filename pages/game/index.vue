@@ -1,10 +1,10 @@
 <template>
   <PageHeader title="游戏下载与安装">
     <template #actions>
-      <el-switch active-text="使用镜像加速" inactive-text="不使用镜像加速" v-model="useMirror" />
+      <el-switch active-text="使用镜像加速" inactive-text="不使用镜像加速" v-model="store.useMirror" />
     </template>
     <el-card header="正式版">
-      <ReleaseList :list="releases" :get-download-url="getDownloadUrl" />
+      <ReleaseList :list="store.releases" :get-download-url="store.getDownloadUrl" />
       <details>
         <summary>
           apk等版本请前往
@@ -20,7 +20,7 @@
       </details>
     </el-card>
     <el-card header="BE 测试版">
-      <ReleaseList :list="beReleases" :get-download-url="getDownloadUrl" />
+      <ReleaseList :list="store.beReleases" :get-download-url="store.getDownloadUrl" />
     </el-card>
   </PageHeader>
 </template>
@@ -28,5 +28,5 @@
 <script lang="ts" setup>
 import ReleaseList from './ReleaseList.vue'
 
-const { releases, beReleases, useMirror, getDownloadUrl } = useGameStore()
+const store = useGameStore()
 </script>

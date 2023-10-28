@@ -8,18 +8,18 @@
       {{ route.name }}
     </el-menu-item>
     <el-menu-item disabled style="margin-left: auto">
-      <div v-if="logged">
-        Hi {{ userInfo.name }}
-        <el-link :underline="false" @click="logout">登出</el-link>
+      <div v-if="userStore.logged">
+        Hi {{ userStore.info.name }}
+        <el-link :underline="false" @click="userStore.logout">登出</el-link>
       </div>
-      <el-link v-else :underline="false" @click="() => showDialog = true">登录</el-link>
+      <el-link v-else :underline="false" @click="() => userStore.showDialog = true">登录</el-link>
     </el-menu-item>
   </el-menu>
-  <login-dialog v-if="showDialog" />
+  <login-dialog v-if="userStore.showDialog" />
 </template>
 
 <script lang="ts" setup>
-const { info: userInfo, showDialog, logged, logout } = useUserStore()
+const userStore = useUserStore()
 </script>
 
 <style lang="stylus" scoped>

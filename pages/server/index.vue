@@ -1,10 +1,10 @@
 <template>
   <PageHeader title="公共服务器列表">
     <template #action>
-      <el-switch active-text="自动刷新" inactive-text="手动刷新" v-model="autoRefresh" />
+      <el-switch active-text="自动刷新" inactive-text="手动刷新" v-model="store.autoRefresh" />
       <AddServerButton />
     </template>
-    <el-table :data="data" v-loading="pending" row-key="address" id="table"
+    <el-table :data="store.data" v-loading="store.pending" row-key="address" id="table"
       :default-sort="{ prop: 'players', order: 'descending' }">
       <el-table-column label="地址 (按版本筛选)" prop="address" min-width="200">
         <template #default="scope">
@@ -58,12 +58,12 @@
 import AddServerButton from "./AddServerButton.vue";
 import type { ServerInfo } from '~/backendApi/server';
 
-const { data, pending, autoRefresh, refresh } = useServerStore()
+const store = useServerStore()
 
 watchPostEffect((cleanFn) => {
-  if (!autoRefresh.value) return
+  if (!store.autoRefresh) return
   const intervalId = setInterval(() => {
-    refresh().then()
+    store.refresh().then()
   }, 60000)
   cleanFn(() => clearInterval(intervalId))
 })

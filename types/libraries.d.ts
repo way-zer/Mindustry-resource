@@ -1,5 +1,4 @@
 import {DefineComponent} from "vue";
-import 'vue-router'
 
 declare module 'vue3-json-viewer' {
     import {DefineComponent} from '@vue/runtime-core'

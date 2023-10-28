@@ -10,7 +10,7 @@
 import {MapApi} from '@/backendApi/maps'
 import {ElMessage} from 'element-plus'
 
-// const userStore = useUserStore()
+const userStore = useUserStore()
 
 const props = withDefaults(defineProps<{
   hash?: string,
@@ -19,8 +19,8 @@ const props = withDefaults(defineProps<{
 
 async function download() {
   if (!props.hash) return
-  if (!userStore.logged.value) {
-    userStore.showDialog.value = true
+  if (!userStore.logged) {
+    userStore.showDialog = true
     return ElMessage.error({message: '请先登录后再下载', duration: 10_000})
   }
   await MapApi.download(props.hash)

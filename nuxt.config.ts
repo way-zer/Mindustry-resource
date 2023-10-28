@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@unocss/nuxt",
     "@element-plus/nuxt",
     "nuxt-icon",
+    "@pinia/nuxt",
   ],
   routeRules: {
     "/": { redirect: "/map" },

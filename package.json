@@ -13,6 +13,7 @@
     "@element-plus/nuxt": "^1.0.6",
     "@nuxt/devtools": "latest",
     "@nuxtjs/strapi": "^1.9.3",
+    "@pinia/nuxt": "^0.5.1",
     "@unocss/nuxt": "^0.57.1",
     "@vite-pwa/nuxt": "^0.1.1",
     "@vueuse/nuxt": "^10.5.0",

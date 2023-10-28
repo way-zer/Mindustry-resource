@@ -1,6 +1,6 @@
 <template>
   <el-row type="flex" :gutter=16>
-    <el-col :xs=24 :sm=12 :lg=6 v-for="map in data" :key="map.latest">
+    <el-col :xs=24 :sm=12 :lg=6 v-for="map in store.data" :key="map.latest">
       <el-card class="mapCard">
         <SquaredImage :src="map.preview" alt="preview" />
         <div>
@@ -31,11 +31,10 @@
         </div>
       </el-card>
     </el-col>
-    <el-empty v-if="data.length === 0" style="width: 100%" description="暂无数据，尝试切换关键词试试" />
-    <div class="center" v-if="loading">内容加载中..</div>
-    <div class="center" v-if="noMore">没有更多了</div>
+    <el-empty v-if="store.data.length === 0" style="width: 100%" description="暂无数据，尝试切换关键词试试" />
+    <div class="center" v-if="store.loading">内容加载中..</div>
+    <div class="center" v-if="store.noMore">没有更多了</div>
   </el-row>
-  <NuxtPage/>
   <el-backtop />
 </template>
 
@@ -43,8 +42,8 @@
 import ActionCopy from "./ActionCopy.vue";
 import ActionDownload from "./ActionDownload.vue";
 
-const { data, loading, noMore, pullMore } = useMapStore()
-infiniteScroll(200, 10, () => (loading.value || noMore.value), pullMore)
+const store = useMapStore()
+infiniteScroll(200, 10, () => (store.loading || store.noMore), store.pullMore)
 </script>
 
 <style lang="stylus" scoped>

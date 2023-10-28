@@ -1,5 +1,5 @@
 <template>
-  <el-dialog model-value @close="() => showDialog = false" :title="isLogin ? '登录' : '注册'" center>
+  <Dialog maxWidth="600px" @close="() => userStore.showDialog = false" :title="isLogin ? '登录' : '注册'">
     <el-form ref="formRef" :model="form" @submit="submit">
       <el-form-item label="用户名" prop="user" :rules="[
         { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -43,15 +43,13 @@
         <span v-else>已有账号,点击<el-button link type="primary" @click="isLogin = true">登录</el-button></span>
       </el-form-item>
     </el-form>
-  </el-dialog>
+  </Dialog>
 </template>
 
 <script lang="tsx" setup>
-import { ElForm } from 'element-plus'
 import { UserApi } from '~/backendApi/user';
 
 const userStore = useUserStore()
-const { showDialog } = userStore
 const isLogin = ref(true)
 const formRef = ref<typeof ElForm>()
 const form = ref({

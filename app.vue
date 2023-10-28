@@ -18,10 +18,6 @@ const year = computed(() => new Date().getFullYear())
 <style lang="stylus">
 body
   margin 0
-
-.el-dialog
-  @media (max-width: 768px)
-    width 100%
 </style>
 
 <style lang="stylus" scoped>

@@ -68,7 +68,7 @@ watchPostEffect((cleanFn) => {
   cleanFn(() => clearInterval(intervalId))
 })
 
-function i(scope) {
+function i(scope: any) {
   return scope.row as ServerInfo
 }
 </script>

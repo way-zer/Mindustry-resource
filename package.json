@@ -22,5 +22,9 @@
     "unocss-preset-daisy": "^7.0.0",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "select": "^1.1.2",
+    "vue3-json-viewer": "^2.2.2"
   }
 }

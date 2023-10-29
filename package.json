@@ -17,6 +17,7 @@
     "@unocss/nuxt": "^0.57.1",
     "@vite-pwa/nuxt": "^0.1.1",
     "@vueuse/nuxt": "^10.5.0",
+    "monaco-editor": "^0.44.0",
     "nuxt": "^3.8.0",
     "nuxt-icon": "^0.6.0",
     "stylus": "^0.60.0",
@@ -25,7 +26,9 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@monaco-editor/loader": "^1.4.0",
     "select": "^1.1.2",
+    "ses": "^0.18.8",
     "vue3-json-viewer": "^2.2.2"
   }
 }

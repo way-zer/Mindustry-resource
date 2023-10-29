@@ -5,9 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@monaco-editor/loader':
+    specifier: ^1.4.0
+    version: 1.4.0(monaco-editor@0.44.0)
   select:
     specifier: ^1.1.2
     version: 1.1.2
+  ses:
+    specifier: ^0.18.8
+    version: 0.18.8
   vue3-json-viewer:
     specifier: ^2.2.2
     version: 2.2.2(vue@3.3.7)
@@ -34,6 +40,9 @@ devDependencies:
   '@vueuse/nuxt':
     specifier: ^10.5.0
     version: 10.5.0(nuxt@3.8.0)(rollup@2.79.1)(vue@3.3.7)
+  monaco-editor:
+    specifier: ^0.44.0
+    version: 0.44.0
   nuxt:
     specifier: ^3.8.0
     version: 3.8.0(rollup@2.79.1)(stylus@0.60.0)(vite@4.5.0)
@@ -1342,6 +1351,10 @@ packages:
       - supports-color
     dev: true
 
+  /@endo/env-options@0.1.4:
+    resolution: {integrity: sha512-Ol8ct0aW8VK1ZaqntnUJfrYT59P6Xn36XPbHzkqQhsYkpudKDn5ILYEwGmSO/Ff+XJjv/pReNI0lhOyyrDa9mg==}
+    dev: false
+
   /@esbuild/android-arm64@0.18.20:
     resolution: {integrity: sha512-Nz4rJcchGDtENV0eMKUNa6L12zz2zBDXuhj/Vjh18zGqB44Bi7MBMSXjgunJgjRhCmKOjnPuZp4Mb6OKqtMHLQ==}
     engines: {node: '>=12'}
@@ -1867,6 +1880,15 @@ packages:
       - encoding
       - supports-color
     dev: true
+
+  /@monaco-editor/loader@1.4.0(monaco-editor@0.44.0):
+    resolution: {integrity: sha512-00ioBig0x642hytVspPl7DbQyaSWRaolYie/UFNjoTdvoKPzo6xrXLhTk9ixgIKcLH5b5vDOjVNiGyY+uDCUlg==}
+    peerDependencies:
+      monaco-editor: '>= 0.21.0 < 1'
+    dependencies:
+      monaco-editor: 0.44.0
+      state-local: 1.0.7
+    dev: false
 
   /@netlify/functions@2.3.0:
     resolution: {integrity: sha512-E3kzXPWMP/r1rAWhjTaXcaOT47dhEvg/eQUJjRLhD9Zzp0WqkdynHr+bqff4rFNv6tuXrtFZrpbPJFKHH0c0zw==}
@@ -6290,6 +6312,9 @@ packages:
       ufo: 1.3.1
     dev: true
 
+  /monaco-editor@0.44.0:
+    resolution: {integrity: sha512-5SmjNStN6bSuSE5WPT2ZV+iYn1/yI9sd4Igtk23ChvqB7kDk9lZbB9F5frsuvpB+2njdIeGGFf2G4gbE6rCC9Q==}
+
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -7844,6 +7869,12 @@ packages:
       - supports-color
     dev: true
 
+  /ses@0.18.8:
+    resolution: {integrity: sha512-kOH1AhJc6gWDXKURKeU1w7iFUdImAegAljVvBg5EUBgNqjH4bxcEsGVUadVEPtA2PVRMyQp1fiSMDwEZkQNj1g==}
+    dependencies:
+      '@endo/env-options': 0.1.4
+    dev: false
+
   /set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
     dev: true
@@ -8048,6 +8079,10 @@ packages:
   /standard-as-callback@2.1.0:
     resolution: {integrity: sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==}
     dev: true
+
+  /state-local@1.0.7:
+    resolution: {integrity: sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==}
+    dev: false
 
   /statuses@2.0.1:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}

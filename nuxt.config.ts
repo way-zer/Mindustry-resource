@@ -19,6 +19,7 @@ export default defineNuxtConfig({
   ignoreOptions: { ignorecase: false },
   ignore: [
     "old/**",
-    "pages/**/[A-Z]*.*",
+    "pages/**/[A-Z_]*.*",
+    "pages/**/res/**",
   ]
 })

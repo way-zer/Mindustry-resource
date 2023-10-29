@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   ],
   routeRules: {
     "/": { redirect: "/map" },
+    "/pwa-fallback": { ssr: false, prerender: true },
     '/api/**': {
       proxy: 'https://api.mindustry.top/**'
     }
@@ -52,21 +53,18 @@ export default defineNuxtConfig({
     registerType: "autoUpdate",
     manifest: (pwaManifest as any),
     workbox: {
-      navigationPreload: false,
+      navigateFallback: "/pwa-fallback",
+      navigateFallbackDenylist: [/api\/.*/],
       runtimeCaching: [
         { urlPattern: /\/_nuxt\//, handler: 'CacheFirst', options: { cacheName: "assets" } },
         { urlPattern: /\.(css|js|svg|png|ico)$/, handler: 'CacheFirst', options: { cacheName: "static" } },
         {
+          urlPattern: /^https:\/\/api.mindustry.top\/.*/i, handler: 'NetworkFirst',
+          options: { cacheName: "api", cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
           urlPattern: /^https:\/\/cdn\.bootcdn\.net\/.*/i, handler: 'CacheFirst',
           options: { cacheName: "cdn-resource", cacheableResponse: { statuses: [0, 200] } }
-        },
-        {
-          urlPattern: /api\/.*/,
-          handler: 'NetworkFirst',
-        },
-        {
-          urlPattern: (url) => url.sameOrigin && url.url.pathname.match(/\/[^.]+$/),
-          handler: 'NetworkFirst'
         },
       ],
     },

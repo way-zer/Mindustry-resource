@@ -4,7 +4,7 @@ import type { FetchOptions } from 'ofetch'
 type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
 export function mapUrl(raw: string) {
-    if (import.meta.env.DEV || !import.meta.env.SSR) return raw
+    if (import.meta.env.DEV && !import.meta.env.SSR) return raw
     if (raw?.startsWith("/api/"))
         return API_BASE + raw?.substring(5)
     return raw
@@ -15,7 +15,8 @@ export interface MyRequestConfig extends Omit<FetchOptions, "method"> {
 }
 
 export async function request<R>(method: Method, url: string, option?: MyRequestConfig): Promise<R> {
-    return await $fetch(mapUrl(url), {
+    url = mapUrl(url)
+    return await $fetch(url, {
         method, credentials: url!!.startsWith(API_BASE) ? "include" : undefined,
         responseType: "json",
         ...option,

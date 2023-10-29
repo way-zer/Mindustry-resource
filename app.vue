@@ -1,4 +1,8 @@
 <template>
+  <Head>
+    <Link rel="icon" href="/icons-192.20210425.png" />
+    <VitePwaManifest/>
+  </Head>
   <el-container>
     <el-header>
       <the-header />

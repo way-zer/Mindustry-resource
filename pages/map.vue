@@ -43,6 +43,13 @@ import { gameModes } from '@/backendApi/maps/type'
 import MapList from './map/components/MapList.vue'
 import ActionUpload from './map/components/ActionUpload.vue'
 
+useHead({
+  title: '地图分享',
+  meta: [
+    { name: 'description', content: '像素工厂资源站，丰富的地图资源下载' },
+    { name: 'keywords', content: 'Mindustry,像素工厂,资源站,地图,服务器,微泽' },
+  ],
+})
 const store = useMapStore()
 const tmpSearch = ref(store.searchKey)
 watch(() => store.searchKey, (it) => tmpSearch.value = store.searchKey)

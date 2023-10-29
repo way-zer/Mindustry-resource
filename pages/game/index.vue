@@ -29,4 +29,11 @@
 import ReleaseList from './ReleaseList.vue'
 
 const store = useGameStore()
+useHead({
+  title: '游戏下载',
+  meta: [
+    { name: 'description', content: '像素工厂资源站，最新游戏免费下载' },
+    { name: 'keywords', content: 'Mindustry,像素工厂,资源站,游戏,最新,免费下载,微泽' },
+  ],
+})
 </script>

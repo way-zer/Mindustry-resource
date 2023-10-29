@@ -58,6 +58,13 @@
 import AddServerButton from "./AddServerButton.vue";
 import type { ServerInfo } from '~/backendApi/server';
 
+useHead({
+  title: '服务器列表',
+  meta: [
+    { name: 'description', content: '像素工厂资源站，中文公共服务器排行榜' },
+    { name: 'keywords', content: 'Mindustry,像素工厂,资源站,服务器,多人,联机,微泽' },
+  ],
+})
 const store = useServerStore()
 
 watchPostEffect((cleanFn) => {

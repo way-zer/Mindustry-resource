@@ -106,6 +106,7 @@
 
 <script lang="tsx" setup>
 import { JsonViewer } from 'vue3-json-viewer'
+import "vue3-json-viewer/dist/index.css";
 import { MapApi } from '@/backendApi/maps'
 import type { MapDetail, Rules, RulesV5, Tags } from '@/backendApi/maps/type'
 import ActionCopy from '../components/ActionCopy.vue'
@@ -133,6 +134,10 @@ const version = computed(() => {
 const admin = computed(() => {
     if (!userStore.logged) return false
     return userStore.admin || userStore.info.name == detail.value.user
+})
+
+useHead({
+    title: computed(() => tags.value.name ? '地图详情 - ' + tags.value.name : '地图详情'),
 })
 
 async function doDelete() {

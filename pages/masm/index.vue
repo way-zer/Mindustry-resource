@@ -23,6 +23,14 @@ import {compile, configTS, runCodes} from "./_myUtil";
 import {ref, watch} from "vue";
 import IndexTs from "./res?raw"
 
+useHead({
+  title: '逻辑生成器',
+  meta: [
+    { name: 'description', content: '像素工厂资源站，逻辑生成器' },
+    { name: 'keywords', content: 'Mindustry,像素工厂,资源站,游戏,逻辑,Logic,mlog,微泽' },
+  ],
+})
+
 const KEY = "masmSave"
 const file = "inmemory:/index.ts"
 

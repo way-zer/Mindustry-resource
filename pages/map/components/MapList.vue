@@ -20,13 +20,11 @@
             <el-divider direction="vertical" />
             <ActionDownload :hash="map.latest" />
             <el-divider direction="vertical" />
-            <tooltip content="地图详情">
-              <el-button link>
-                <NuxtLink :to="`/map/${map.id}/latest`">
-                  <el-icon-more class="h-4" />
-                </NuxtLink>
-              </el-button>
-            </tooltip>
+            <NuxtLink :to="`/map/${map.id}/latest`" custom v-slot="{ href, navigate }">
+              <tooltip content="地图详情">
+                <el-button link tag="a" :href="href" @click="navigate"><el-icon-more class="h-4" /></el-button>
+              </tooltip>
+            </NuxtLink>
           </el-row>
         </div>
       </el-card>
@@ -39,6 +37,7 @@
 </template>
 
 <script lang="tsx" setup>
+import type { ElButton } from "#build/components";
 import ActionCopy from "./ActionCopy.vue";
 import ActionDownload from "./ActionDownload.vue";
 

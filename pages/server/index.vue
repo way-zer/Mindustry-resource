@@ -1,6 +1,6 @@
 <template>
   <PageHeader title="公共服务器列表">
-    <template #action>
+    <template #actions>
       <el-switch active-text="自动刷新" inactive-text="手动刷新" v-model="store.autoRefresh" />
       <AddServerButton />
     </template>

@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "id": "mindustry-resources-site",
   "name": "Mindustry中文资源站",
   "short_name": "Mindustry资源站",
   "description": "Mindustry中文资源站",
@@ -13,6 +15,12 @@
     "games",
     "utilities"
   ],
+  "launch_handler": {
+    "client_mode": [
+      "navigate-existing",
+      "auto"
+    ]
+  },
   "icons": [
     {
       "src": "/icons-192.20210425.png",

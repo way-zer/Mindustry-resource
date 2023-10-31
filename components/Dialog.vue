@@ -20,4 +20,6 @@ const props = defineProps<{
 </template>
 
 <style lang="stylus" scoped>
+.modal-box
+    padding 0
 </style>

@@ -12,8 +12,8 @@
               </el-tag>
             </el-space>
           </div>
-          <b>{{ map.name }}</b>
-          <p class="desc">{{ map.desc }}</p>
+          <b><ColorizeSpan :text="map.name" no-color/></b>
+          <p class="desc"><ColorizeSpan :text="map.desc" no-color/></p>
           <el-divider />
           <el-row justify="space-around" type="flex">
             <ActionCopy :thread="map.id" :hash="map.latest" />
@@ -30,8 +30,8 @@
       </el-card>
     </el-col>
     <el-empty v-if="store.data.length === 0" style="width: 100%" description="暂无数据，尝试切换关键词试试" />
-    <div class="center" v-if="store.loading">内容加载中..</div>
-    <div class="center" v-if="store.noMore">没有更多了</div>
+    <div class="text-center" v-if="store.loading">内容加载中..</div>
+    <div class="text-center" v-if="store.noMore">没有更多了</div>
   </el-row>
   <el-backtop />
 </template>
@@ -46,10 +46,6 @@ infiniteScroll(200, 10, () => (store.loading || store.noMore), store.pullMore)
 </script>
 
 <style lang="stylus" scoped>
-.center
-  width 100%
-  text-align center
-
 .desc
   height 4em
   -webkit-line-clamp 3

@@ -53,6 +53,9 @@ const colorMap = {
 
     // special
     accent: '#bf972a',
+    unlaunched: '#8982ed',
+    stat: '#ffd37f',
+    negstat: '#e55454',
 }
 
 export function colorize(text: string): ColorData[] {

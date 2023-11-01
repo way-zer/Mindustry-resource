@@ -1,107 +1,84 @@
 ---
-import {pwaInfo} from 'virtual:pwa-info';
-import logo from "../assets/icons-64.png";
+import { pwaInfo } from "virtual:pwa-info";
+import Header from "../components/Header.astro";
 interface Props {
     title: string;
 }
 
-const {title} = Astro.props;
-import {navRoutes} from "../const";
-import NavUserInfo from "@components/NavUserInfo.vue";
-import {registerSW} from "virtual:pwa-register";
+const { title } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="cn">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Mindustry资源站 - {title}</title>
-    <meta name="description" content="像素工厂资源站，丰富的地图资源，大量中文服务器地址"/>
-    <link rel="icon" href="/icons-192.20210425.png"/>
-    <meta name="viewport" content="width=device-width"/>
-    <meta name="theme-color" content="#001529"/>
-    {pwaInfo &&
-            <Fragment set:html={pwaInfo.webManifest.linkTag}/>}
+    <head>
+        <meta charset="UTF-8" />
+        <title>Mindustry资源站 - {title}</title>
+        <meta
+            name="description"
+            content="像素工厂资源站，丰富的地图资源，大量中文服务器地址"
+        />
+        <link rel="icon" href="/icons-192.20210425.png" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="theme-color" content="#001529" />
+        {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
 
-    <link rel="stylesheet" href="//unpkg.com/element-plus/dist/index.css" crossorigin="anonymous"/>
-    <script type="text/javascript">
+        <link
+            rel="stylesheet"
+            href="//unpkg.com/element-plus/dist/index.css"
+            crossorigin="anonymous"
+        />
+        <script type="text/javascript">
         (function (c, l, a, r, i, t, y) {
-            c[a] = c[a] || function () {
-                (c[a].q = c[a].q || []).push(arguments)
-            };
+            c[a] =
+                c[a] ||
+                function () {
+                    (c[a].q = c[a].q || []).push(arguments);
+                };
             t = l.createElement(r);
             t.async = 1;
             t.src = "https://www.clarity.ms/tag/" + i;
             y = l.getElementsByTagName(r)[0];
             y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "gsj4e9xc0u");
-    </script>
-    <script>
-        import {registerSW} from 'virtual:pwa-register'
+        </script>
+        <script>
+            import { registerSW } from "virtual:pwa-register";
 
-        registerSW({
-            immediate: true,
-            onRegisteredSW(swScriptUrl) {
-                console.log('SW registered: ', swScriptUrl)
-            },
-            onOfflineReady() {
-                console.log('PWA application ready to work offline')
-            },
-        })
-    </script>
-</head>
-<body>
-<header class="navbar justify-between items-center">
-    <div class="navbar-start w-auto flex-none md:hidden">
-        <div class="dropdown">
-            <label tabindex="0" class="btn btn-ghost btn-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
-                </svg>
-            </label>
-            <ul tabindex="0" class="menu dropdown-content mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-60">
-                {navRoutes.map(({path, name}) => (
-                        <li><a href={path}>{name}</a></li>
-                ))}
-            </ul>
-        </div>
-    </div>
-    <img src={logo.src} alt="logo" class="h-12 flex-none hidden md:block"/>
-    <span class="w-auto flex-none color-primary text-6 font-bold text-nowrap">Mindustry 资源站</span>
-    <div class="navbar-center tabs grow hidden md:block">
-        {navRoutes.map(({path, name}) => (
-                <a href={path} class:list={["tab", "text-lg", {"tab-active": Astro.url.pathname.startsWith(path)}]}>
-                    {name}
-                </a>
-        ))}
-    </div>
-    <div class="navbar-end flex-none w-auto">
-        <NavUserInfo client:idle/>
-    </div>
-</header>
-<main class="sm:p-4">
-    <div class="border rounded shadow divide-y">
-        <div class="p-4 flex flex-row justify-between flex-wrap">
-            <h2 class="flex-none font-black text-lg">{title}</h2>
-            <div class="justify-self-end">
-                <slot name="actions"/>
+            registerSW({
+                immediate: true,
+                onRegisteredSW(swScriptUrl) {
+                    console.log("SW registered: ", swScriptUrl);
+                },
+                onOfflineReady() {
+                    console.log("PWA application ready to work offline");
+                },
+            });
+        </script>
+    </head>
+    <body>
+        <Header />
+        <main class="sm:p-4">
+            <div class="border rounded shadow divide-y">
+                <div class="p-4 flex flex-row justify-between flex-wrap">
+                    <h2 class="flex-none font-black text-lg">{title}</h2>
+                    <div class="justify-self-end">
+                        <slot name="actions" />
+                    </div>
+                </div>
+                <div class="p-2">
+                    <slot />
+                </div>
             </div>
-        </div>
-        <div class="p-2">
-            <slot/>
-        </div>
-    </div>
-</main>
-<footer class="footer footer-center">
-    WayZer @{new Date().getFullYear()}
-</footer>
-</body>
+        </main>
+        <footer class="footer footer-center">
+            WayZer @{new Date().getFullYear()}
+        </footer>
+    </body>
 </html>
 
 <style is:global>
     @media (max-width: 768px) {
-        .el-dialog{
+        .el-dialog {
             width: 100%;
         }
     }

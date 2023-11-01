@@ -1,0 +1,62 @@
+---
+import { navRoutes } from "../const";
+import NavUserInfo from "@components/NavUserInfo.vue";
+import logo from "../assets/icons-64.png";
+---
+
+<header class="navbar justify-between items-center">
+    <div class="navbar-start w-auto flex-none md:hidden">
+        <div class="dropdown">
+            <label tabindex="0" class="btn btn-ghost btn-circle">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h7"></path>
+                </svg>
+            </label>
+            <ul
+                tabindex="0"
+                class="menu dropdown-content mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-60"
+            >
+                {
+                    navRoutes.map(({ path, name }) => (
+                        <li>
+                            <a href={path}>{name}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+    <img src={logo.src} alt="logo" class="h-12 flex-none hidden md:block" />
+    <span class="w-auto flex-none color-primary text-6 font-bold text-nowrap"
+        >Mindustry 资源站</span
+    >
+    <div class="navbar-center tabs grow hidden md:block">
+        {
+            navRoutes.map(({ path, name }) => (
+                <a
+                    href={path}
+                    class:list={[
+                        "tab",
+                        "text-lg",
+                        { "tab-active": Astro.url.pathname.startsWith(path) },
+                    ]}
+                >
+                    {name}
+                </a>
+            ))
+        }
+    </div>
+    <div class="navbar-end flex-none w-auto">
+        <NavUserInfo client:idle />
+    </div>
+</header>

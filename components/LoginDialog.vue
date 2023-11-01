@@ -4,7 +4,7 @@
       <el-form-item label="用户名" prop="user" :rules="[
         { required: true, message: '请输入用户名', trigger: 'blur' },
         { pattern: /[-_a-zA-Z0-9]{6,16}/, message: '用户名需要6-16位字母数字下划线构成', trigger: 'change' },
-        ...mode === 'login' ? [] : [{ pattern: /^(?!qq)[-_a-zA-Z0-9]{4,16}/, message: '用户名不能以qq开头', trigger: 'change' }],
+        ...mode === 'login' ? [] : [{ pattern: /^(?!qq).*/, message: '用户名不能以qq开头', trigger: 'change' }],
       ]">
         <el-input v-model.trim="form.user" autocomplete="username" />
         <span class="tip" v-if="mode === 'login'">忘记账号?可以翻看已上传的地图，或者使用"qq+号码"代替，例"qq123456"</span>

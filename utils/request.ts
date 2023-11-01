@@ -24,24 +24,21 @@ export async function request<R>(method: Method, url: string, option?: MyRequest
         })
     } catch (e: any) {
         if (option?.skipErrorHandler) throw e
+        let message
         if (e.data && e.data.errorMessage) {
             const { errorMessage, data } = e.data
-            ElMessage.error({
-                message: h("div", {}, [
-                    `请求失败(${e.status}): ${errorMessage}`,
-                    h("br"),
-                    data && h("pre", {}, JSON.stringify(data))
-                ]),
-                duration: 30_000,
-                showClose: true
-            })
+            message = h("div", {}, [
+                `请求失败(${e.status}): ${errorMessage}`,
+                h("br"),
+                data && h("pre", {}, JSON.stringify(data))
+            ])
+        } else if (e.status) {
+            message = `请求失败(${e.status}): ${e.data ?? e.statusText}`
         } else {
-            ElMessage.error({
-                message: `请求失败(${e.status}): ${e.data ?? e.statusText}`,
-                duration: 30_000,
-                showClose: true
-            })
+            message = e.message ?? e.toString()
         }
+
+        ElMessage.error({ message, duration: 30_000, showClose: true })
         throw e
     }
 }

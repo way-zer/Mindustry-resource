@@ -21,4 +21,16 @@ export const UserApi = {
     async logout(): Promise<void> {
         return request("GET", "/api/users/logout")
     },
+    async tokenRequest(): Promise<string/*Code*/> {//not used, for device
+        return request("POST", "/api/users/tokenRequest")
+    },
+    async tokenInfo(code: string): Promise<{ ip: string, type: string, name: string }> {
+        return request("GET", `/api/users/tokenRequest/${code}`)
+    },
+    async tokenConfirm(code: string, action: 'confirm' | 'reject'): Promise<void> {
+        return request("POST", `/api/users/tokenRequest/${code}/action?op=${action}`)
+    },
+    async getToken(code: string): Promise<string/*Token*/> {//not used, for device
+        return request("GET", `/api/users/tokenRequest/${code}/result`)
+    }
 }

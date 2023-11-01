@@ -1,0 +1,11 @@
+### Request-client
+POST https://api.mindustry.top/users/tokenRequest
+User-Agent: Mindustry/v146 UUID/ASDSADW
+
+### Request-server
+POST https://api.mindustry.top/users/tokenRequest
+User-Agent: Mindustry/v146 SERVER/ScriptAgent
+
+### GET Result
+GET https://api.mindustry.top/users/tokenRequest/23559e16-ddcf-4192-af9a-b67ecc670172/result
+User-Agent: Mindustry/v146 UUID/ASDSADW

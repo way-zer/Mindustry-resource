@@ -3,13 +3,13 @@ import pwaManifest from './assets/manifest.json';
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    "@nuxtjs/strapi",
     "@vueuse/nuxt",
     "@vite-pwa/nuxt",
     "@unocss/nuxt",
     "@element-plus/nuxt",
     "nuxt-icon",
     "@pinia/nuxt",
+    "nuxt-typed-router",
   ],
   routeRules: {
     "/": { redirect: "/map" },
@@ -20,7 +20,6 @@ export default defineNuxtConfig({
   },
   ignoreOptions: { ignorecase: false },
   ignore: [
-    "old/**",
     "pages/**/[A-Z_]*.*",
     "pages/**/res/**",
   ],
@@ -29,6 +28,7 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: "%s - Mindustry资源站",
       charset: "utf-8",
+      htmlAttrs: { lang: "zh-CN" },
       meta: [
         { name: "theme-color", content: "#001529" },
       ],

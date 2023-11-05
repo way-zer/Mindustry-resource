@@ -12,7 +12,6 @@
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.6",
     "@nuxt/devtools": "latest",
-    "@nuxtjs/strapi": "^1.9.3",
     "@pinia/nuxt": "^0.5.1",
     "@unocss/nuxt": "^0.57.1",
     "@vite-pwa/nuxt": "^0.1.1",
@@ -20,6 +19,7 @@
     "monaco-editor": "^0.44.0",
     "nuxt": "^3.8.0",
     "nuxt-icon": "^0.6.0",
+    "nuxt-typed-router": "^3.3.2",
     "stylus": "^0.60.0",
     "unocss-preset-daisy": "^7.0.0",
     "vue": "^3.3.7",

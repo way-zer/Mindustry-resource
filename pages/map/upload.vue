@@ -43,7 +43,7 @@ async function upload(info: { file: File }) {
     router.back()
   } else {
     const thread = await MapApi.newThread(hash)
-    await router.replace({ path: `/${thread}/latest` })
+    await router.replace({ path: `/map/${thread}/latest` })
   }
 }
 </script>

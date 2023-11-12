@@ -29,6 +29,7 @@
     "@monaco-editor/loader": "^1.4.0",
     "select": "^1.1.2",
     "ses": "^0.18.8",
-    "vue3-json-viewer": "^2.2.2"
+    "vue3-json-viewer": "^2.2.2",
+    "workbox-window": "^7.0.0"
   }
 }

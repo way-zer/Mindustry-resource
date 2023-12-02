@@ -61,10 +61,7 @@ export default defineNuxtConfig({
     manifest: (pwaManifest as any),
     workbox: {
       globPatterns: [
-        "_nuxt/**/*.{js,css,png}",
-        "*.png",
-        "*.html",
-        "*.js",
+        "**/*.{html,js,css,png}",
       ],
       navigateFallback: "/pwa-fallback",
       navigateFallbackDenylist: [/api\/.*/],

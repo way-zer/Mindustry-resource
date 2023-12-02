@@ -13,8 +13,7 @@ export default defineNuxtConfig({
   ],
   routeRules: {
     "/": { redirect: "/map" },
-    "/map": { isr: 60 },
-    "/map/**": { isr: 300 },
+    '/**': { isr: 60 },
     "/pwa-fallback": { ssr: false, prerender: true },
     '/api/**': {
       proxy: 'https://api.mindustry.top/**'
@@ -45,9 +44,6 @@ export default defineNuxtConfig({
     })(window, document, "clarity", "script", "gsj4e9xc0u");`},
       ]
     }
-  },
-nitro: {
-    preset: "vercel-edge",
   },
   vite: {
     build: {

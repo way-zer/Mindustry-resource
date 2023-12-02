@@ -13,8 +13,8 @@ export default defineNuxtConfig({
   ],
   routeRules: {
     "/": { redirect: "/map" },
-    '/**': { isr: 60 },
     "/pwa-fallback": { ssr: false, prerender: true },
+    '/**': { swr: 60, cache: { maxAge: 60, swr: true } },
     '/api/**': {
       proxy: 'https://api.mindustry.top/**'
     }
@@ -60,6 +60,9 @@ export default defineNuxtConfig({
     registerType: "autoUpdate",
     manifest: (pwaManifest as any),
     workbox: {
+      globPatterns: [
+        "/pwa-fallback"
+      ],
       navigateFallback: "/pwa-fallback",
       navigateFallbackDenylist: [/api\/.*/],
       runtimeCaching: [

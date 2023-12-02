@@ -6,12 +6,14 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "update-supabase": "supabase gen types typescript --project-id hetoulewvsghsaxuihyz --schema public > types/supabase.ts",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.7",
     "@nuxt/devtools": "^1.0.4",
+    "@nuxtjs/supabase": "^1.1.4",
     "@pinia/nuxt": "^0.5.1",
     "@unocss/nuxt": "^0.57.7",
     "@vite-pwa/nuxt": "^0.3.3",

@@ -10,7 +10,6 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@pinia/nuxt",
     "nuxt-typed-router",
-    "@nuxtjs/supabase",
   ],
   routeRules: {
     "/": { redirect: "/map" },

@@ -13,6 +13,8 @@ export default defineNuxtConfig({
   ],
   routeRules: {
     "/": { redirect: "/map" },
+    "/map": { isr: 60 },
+    "/map/**": { isr: 300 },
     "/pwa-fallback": { ssr: false, prerender: true },
     '/api/**': {
       proxy: 'https://api.mindustry.top/**'
@@ -34,7 +36,8 @@ export default defineNuxtConfig({
       ],
       script: [
         { src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298329918186847", async: true, crossorigin: "anonymous" },
-        { type: "text/javascript", textContent: `
+        {
+          type: "text/javascript", textContent: `
         <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -44,6 +47,9 @@ export default defineNuxtConfig({
 </script>`},
       ]
     }
+  },
+  nitro: {
+    preset: "vercel-edge",
   },
   vite: {
     build: {

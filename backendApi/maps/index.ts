@@ -31,9 +31,15 @@ export const MapApi = {
         return request('POST', "/api/maps/upload", { body: form, reCaptchaAction: 'mapUpload' })
     },
     async download(hash: string) {
-        const file = await request<Blob>('GET', `/api/maps/${hash}/download`, { responseType: 'blob', reCaptchaAction: 'mapDownload' })
+        let name = `${hash}.msav`
+        const file = await request<Blob>('GET', `/api/maps/${hash}/download`, {
+            responseType: 'blob', reCaptchaAction: 'mapDownload', onResponse: ({ response }) => {
+                name = response.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1] ?? name
+            }
+        })
         const a = document.createElement('a')
         a.href = URL.createObjectURL(file)
+        a.download = name
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)

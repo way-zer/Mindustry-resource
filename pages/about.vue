@@ -15,29 +15,20 @@ useHead({
     <p>联系邮箱: me@wayzer.top</p>
     <details>
       <summary>
-        资源站目前完全公益制作,如果觉得不错,可以考虑<a
-          href="https://afdian.net/@WayZer"
-          rel="nofollow">赞助</a
-      >
+        资源站目前完全公益制作,如果觉得不错,可以考虑<a href="https://afdian.net/@WayZer" rel="nofollow">赞助</a>
       </summary>
-      <img src="~/assets/赞助.png" alt="微信二维码"/>
+      <img src="~/assets/赞助.png" alt="微信二维码" />
     </details>
     <h2>其他项目</h2>
     <ul>
       <li>
-        <a href="https://git.io/SA4Mindustry" rel="nofollow"
-        >服务器插件 - ScriptAgent4Mindustry</a
-        >
+        <a href="https://git.io/SA4Mindustry" rel="nofollow">服务器插件 - ScriptAgent4Mindustry</a>
       </li>
       <li>
-        <a href="https://github.com/TinyLake/MindustryX" rel="nofollow"
-        >增强第三方服务端 - MindustryX</a
-        >
+        <a href="https://github.com/TinyLake/MindustryX" rel="nofollow">增强第三方服务端 - MindustryX</a>
       </li>
       <li>
-        <a href="https://github.com/way-zer/ContentsTweaker" rel="nofollow"
-        >属性修改器Mod - ContentsTweaker</a
-        >
+        <a href="https://github.com/way-zer/ContentsTweaker" rel="nofollow">属性修改器Mod - ContentsTweaker</a>
       </li>
     </ul>
   </article>

@@ -3,5 +3,8 @@
     <NuxtLink to="/map">进入首页</NuxtLink>
 </template>
 <script lang="ts" setup>
+useHead({
+    title: '加载中',
+})
 navigateTo("/map")
 </script>

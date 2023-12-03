@@ -1,9 +1,9 @@
-import type {MapDetail, MapInfo} from "./type";
+import type { MapDetail, MapInfo } from "./type";
 
 export const MapApi = {
     async list(begin: number, search: string): Promise<MapInfo[]> {
         return request<MapInfo[]>("GET", "/api/maps/list", {
-            params: {begin, search},
+            params: { begin, search },
         }).then((data) => {
             data.forEach(it => it.preview = mapUrl(it.preview))
             return data
@@ -17,7 +17,7 @@ export const MapApi = {
             })
     },
     async edit(thread: string, action: string, extra: string): Promise<void> {
-        return request('POST', `/api/maps/thread/${thread}/edit`, {body: {action, extra}})
+        return request('POST', `/api/maps/thread/${thread}/edit`, { body: { action, extra } })
     },
     async updateThread(thread: string, hash: string) {
         return request('POST', `/api/maps/thread/${thread}/update?map=` + hash)
@@ -26,13 +26,17 @@ export const MapApi = {
         return +await request<string>('POST', `/api/maps/thread/new?map=` + hash)
     },
     async upload(file: File): Promise<string> {
-        const token = await requestToken('mapUpload')
         const form = new FormData()
         form.append('file', file)
-        return request('POST', "/api/maps/upload?token=" + token, {body: form})
+        return request('POST', "/api/maps/upload", { body: form, reCaptchaAction: 'mapUpload' })
     },
     async download(hash: string) {
-        const token = await requestToken("mapDownload")
-        window.open(mapUrl(`/api/maps/${hash}/download?token=${token}`));
+        const file = await request<Blob>('GET', `/api/maps/${hash}/download`, { responseType: 'blob', reCaptchaAction: 'mapDownload' })
+        const a = document.createElement('a')
+        a.href = URL.createObjectURL(file)
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(a.href)
     },
 }

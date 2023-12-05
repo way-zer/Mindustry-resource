@@ -14,10 +14,10 @@ export default defineNuxtConfig({
   routeRules: {
     "/": { redirect: "/map" },
     "/pwa-fallback": { ssr: false, prerender: true },
-    '/**': { isr: 60, cache: { maxAge: 60, swr: true } },
     '/api/**': {
       proxy: 'https://api.mindustry.top/**'
-    }
+    },
+    '/**': { isr: 60, cache: { maxAge: 60, swr: true } },
   },
   ignoreOptions: { ignorecase: false },
   ignore: [

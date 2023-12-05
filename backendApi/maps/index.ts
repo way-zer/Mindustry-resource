@@ -34,7 +34,8 @@ export const MapApi = {
         let name = `${hash}.msav`
         const file = await request<Blob>('GET', `/api/maps/${hash}/download`, {
             responseType: 'blob', reCaptchaAction: 'mapDownload', onResponse: ({ response }) => {
-                name = response.headers.get('Content-Disposition')?.match(/filename="(.+)"/)?.[1] ?? name
+                const fromHeader = response.headers.get('Content-Disposition')?.match(/filename=(.+)/)?.[1]
+                if (fromHeader) name = decodeURI(fromHeader)
             }
         })
         const a = document.createElement('a')

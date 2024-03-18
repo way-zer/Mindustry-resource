@@ -1,4 +1,5 @@
 import type { MapDetail, MapInfo } from "./type";
+import { saveAs } from "file-saver";
 
 export const MapApi = {
     async list(begin: number, search: string): Promise<MapInfo[]> {
@@ -38,12 +39,6 @@ export const MapApi = {
                 if (fromHeader) name = decodeURI(fromHeader)
             }
         })
-        const a = document.createElement('a')
-        a.href = URL.createObjectURL(file)
-        a.download = name
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(a.href)
+        saveAs(file, name)
     },
 }

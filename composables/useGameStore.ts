@@ -18,7 +18,7 @@ export default defineStore('game', () => {
 
         getDownloadUrl(url: string) {
             if (!useMirror.value) return url
-            return 'https://gh.tinylake.tk/' + url
+            return 'https://gh.tinylake.tech/' + url
         }
     }
 })

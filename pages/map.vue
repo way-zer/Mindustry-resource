@@ -9,7 +9,7 @@
       <b>按模式筛选: </b>
       <el-radio-group size="small" :model-value="getTag('mode')" @change="(v) => { replaceTag('mode', v) }">
         <el-radio-button v-for="mode in gameModes" :key="mode" :value="mode">{{ mode }}</el-radio-button>
-        <el-radio-button value="X" />
+        <el-radio-button :value="false">X</el-radio-button>
       </el-radio-group>
     </div>
     <div class="filter">
@@ -19,13 +19,13 @@
         <el-radio-button value="4">v6(126)</el-radio-button>
         <el-radio-button value="5">v7(135)</el-radio-button>
         <el-radio-button value="7">v7.5(136/be)</el-radio-button>
-        <el-radio-button value="X" />
+        <el-radio-button :value="false">X</el-radio-button>
       </el-radio-group>
     </div>
     <div class="filter">
       <b>排序方式: </b>
       <el-radio-group size="small" :model-value="getTag('sort') || 'X'" @change="(v) => { replaceTag('sort', v) }">
-        <el-radio-button value="X">热度</el-radio-button>
+        <el-radio-button :value="false">热度</el-radio-button>
         <el-radio-button value="updateTime">更新时间</el-radio-button>
         <el-radio-button value="createTime">发布时间</el-radio-button>
         <el-radio-button value="download">下载量</el-radio-button>
@@ -69,13 +69,13 @@ function getTag(tag: string) {
   return match ? match[1] : undefined
 }
 
-function replaceTag(tag: string, value: string | number | boolean) {
+function replaceTag(tag: string, value: string | number | boolean | undefined) {
   const regex = regexForTag(tag)
   const search = tmpSearch.value
   if (!search.match(regex))
     onSearch(search + ` @${tag}:${value} `)
   else {
-    const v = value === 'X' ? '' : `@${tag}:${value}`
+    const v = !value ? '' : `@${tag}:${value}`
     onSearch(search.replace(regex, v))
   }
 }

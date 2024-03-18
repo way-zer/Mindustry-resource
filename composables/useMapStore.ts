@@ -35,6 +35,7 @@ export default defineStore("map", () => {
             if (key == searchKey.value) return
             loading.value = true
             searchKey.value = query.q = key
+            if (!key.length) query.q = []
             const newMaps = await MapApi.list(0, key)
             data.value = newMaps
             noMore.value = newMaps.length === 0

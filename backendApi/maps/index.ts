@@ -31,8 +31,8 @@ export const MapApi = {
         form.append('file', file)
         return request('POST', "/api/maps/upload", { body: form, reCaptchaAction: 'mapUpload' })
     },
-    async download(hash: string) {
-        let name = `${hash}.msav`
+    async download(hash: string, name?: string) {
+        name = `${name ?? hash}.msav`
         const file = await request<Blob>('GET', `/api/maps/${hash}/download`, {
             responseType: 'blob', reCaptchaAction: 'mapDownload', onResponse: ({ response }) => {
                 const fromHeader = response.headers.get('Content-Disposition')?.match(/filename=(.+)/)?.[1]

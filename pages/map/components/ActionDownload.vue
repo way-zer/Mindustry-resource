@@ -11,11 +11,12 @@ import { MapApi } from '@/backendApi/maps'
 
 const props = withDefaults(defineProps<{
   hash?: string,
+  mapName?: string,
   circle?: boolean
 }>(), { circle: false })
 
 async function download() {
   if (!props.hash) return
-  await MapApi.download(props.hash)
+  await MapApi.download(props.hash, props.mapName)
 }
 </script>

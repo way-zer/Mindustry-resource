@@ -18,7 +18,7 @@
           <el-row justify="space-around" type="flex">
             <ActionCopy :thread="map.id" :hash="map.latest" />
             <el-divider direction="vertical" />
-            <ActionDownload :hash="map.latest" />
+            <ActionDownload :hash="map.latest" :map-name="map.name"/>
             <el-divider direction="vertical" />
             <NuxtLink :to="`/map/${map.id}/latest`" custom v-slot="{ href, navigate }">
               <tooltip content="地图详情">

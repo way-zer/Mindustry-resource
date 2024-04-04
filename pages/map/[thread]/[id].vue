@@ -8,7 +8,7 @@
         <SquaredImage :src="detail.preview"/>
         <el-row :gutter="24" justify="center" type="flex">
           <ActionCopy :thread="detail.thread" :hash="detail.hash" circle/>
-          <ActionDownload :hash="detail.hash" circle :map-name="detail.tags.name"/>
+          <ActionDownload :hash="detail.hash" circle :map-name="tags.name"/>
           <ActionChangeMode v-if="admin" :thread="detail.thread" :now="detail.mode"/>
           <ActionUpload v-if="admin" :thread="detail.thread" circle/>
           <el-popconfirm title="确认删除地图？该操作不可恢复" @confirm="doDelete">

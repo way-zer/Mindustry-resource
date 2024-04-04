@@ -1,7 +1,7 @@
 <script lang="tsx" setup>
 import {colorize} from '~/utils/mindustry';
 
-const props = defineProps<{ text: string, noColor?: boolean }>()
+const props = defineProps<{ text?: string, noColor?: boolean }>()
 const colorized = computed(() => colorize(props.text))
 </script>
 

@@ -11,12 +11,18 @@ export default defineNuxtConfig({
         "@pinia/nuxt",
         "nuxt-typed-router",
     ],
+    nitro: {
+        devProxy: {
+            "/api": {
+                target: 'https://api.mindustry.top',
+                changeOrigin: true,
+                prependPath: true,
+            }
+        }
+    },
     routeRules: {
         "/": {redirect: "/map"},
         "/pwa-fallback": {ssr: false, prerender: true},
-        '/api/**': {
-            proxy: 'https://api.mindustry.top/**'
-        },
         '/**': {isr: 60, cache: {maxAge: 60, swr: true}},
     },
     ignoreOptions: {ignorecase: false},

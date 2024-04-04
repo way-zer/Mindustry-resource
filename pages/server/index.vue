@@ -68,7 +68,7 @@ useHead({
 const store = useServerStore()
 
 watchPostEffect((cleanFn) => {
-  if (!store.autoRefresh) return
+  if (!store.autoRefresh || import.meta.server) return
   const intervalId = setInterval(() => {
     store.refresh().then()
   }, 60000)

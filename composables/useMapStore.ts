@@ -1,5 +1,5 @@
-import type { MapDetail, MapInfo } from '~/backendApi/maps/type'
-import { MapApi } from '~/backendApi/maps'
+import type {MapDetail} from '~/backendApi/maps/type'
+import {MapApi} from '~/backendApi/maps'
 
 function initialSearchKey() {
     if (import.meta.server) {
@@ -12,7 +12,7 @@ function initialSearchKey() {
 
 export default defineStore("map", () => {
     const searchKey = ref(initialSearchKey())
-    const { data } = asyncData(() => MapApi.list(0, searchKey.value), [])
+    const {data} = asyncData(() => MapApi.list(0, searchKey.value), [])
     const loading = ref(false)
     const noMore = ref(false)
 

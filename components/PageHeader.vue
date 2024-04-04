@@ -4,11 +4,11 @@
       <el-row id="header" type="flex" justify="space-between" align="middle">
         <b style="font-size: large">{{ props.title }}</b>
         <el-space>
-          <slot name="actions" />
+          <slot name="actions"/>
         </el-space>
       </el-row>
     </template>
-    <slot />
+    <slot/>
   </el-card>
 </template>
 

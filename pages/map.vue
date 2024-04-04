@@ -1,8 +1,8 @@
 <template>
   <PageHeader title="地图分享">
     <template #actions>
-      <el-input v-model="tmpSearch" placeholder="查找地图" clearable @change="onSearch" />
-      <ActionUpload />
+      <el-input v-model="tmpSearch" placeholder="查找地图" clearable @change="onSearch"/>
+      <ActionUpload/>
     </template>
     <el-alert type="info">你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert>
     <div class="filter">
@@ -33,21 +33,21 @@
         <el-radio-button value="like">点赞数</el-radio-button>
       </el-radio-group>
     </div>
-    <MapList />
+    <MapList/>
   </PageHeader>
-  <NuxtPage />
+  <NuxtPage/>
 </template>
 
 <script lang="tsx" setup>
-import { gameModes } from '@/backendApi/maps/type'
+import {gameModes} from '@/backendApi/maps/type'
 import MapList from './map/components/MapList.vue'
 import ActionUpload from './map/components/ActionUpload.vue'
 
 useHead({
   title: '地图分享',
   meta: [
-    { name: 'description', content: '像素工厂资源站，丰富的地图资源下载' },
-    { name: 'keywords', content: 'Mindustry,像素工厂,资源站,地图,服务器,微泽' },
+    {name: 'description', content: '像素工厂资源站，丰富的地图资源下载'},
+    {name: 'keywords', content: 'Mindustry,像素工厂,资源站,地图,服务器,微泽'},
   ],
 })
 const store = useMapStore()

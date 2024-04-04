@@ -6,8 +6,9 @@
         { pattern: /[-_a-zA-Z0-9]{6,16}/, message: '用户名需要6-16位字母数字下划线构成', trigger: 'change' },
         ...mode === 'login' ? [] : [{ pattern: /^(?!qq).*/, message: '用户名不能以qq开头', trigger: 'change' }],
       ]">
-        <el-input v-model.trim="form.user" autocomplete="username" />
-        <span class="tip" v-if="mode === 'login'">忘记账号?可以翻看已上传的地图，或者使用"qq+号码"代替，例"qq123456"</span>
+        <el-input v-model.trim="form.user" autocomplete="username"/>
+        <span class="tip"
+              v-if="mode === 'login'">忘记账号?可以翻看已上传的地图，或者使用"qq+号码"代替，例"qq123456"</span>
       </el-form-item>
 
       <el-form-item label="密码" prop="password" :rules="[
@@ -15,7 +16,7 @@
         { min: 6, message: '密码需要至少6个字符', trigger: 'change' },
       ]">
         <el-input v-model="form.password" type="password"
-          :autocomplete="mode === 'login' ? 'current-password' : 'new-password'" />
+                  :autocomplete="mode === 'login' ? 'current-password' : 'new-password'"/>
         <span class="tip" v-if="mode === 'login'">忘记密码?点击
           <el-button link type="primary" @click="mode = 'resetPassword'">重置密码</el-button></span>
       </el-form-item>
@@ -24,7 +25,7 @@
         { required: true, message: '请输入密码', trigger: 'blur' },
         { validator: (_, v) => v === form.password, message: '重复密码不匹配,请重新输入', trigger: 'change' },
       ]">
-        <el-input v-model="form.password2" type="password" />
+        <el-input v-model="form.password2" type="password"/>
       </el-form-item>
 
       <el-form-item v-if="mode !== 'login'" label="QQ号验证" prop="code" required>
@@ -36,9 +37,9 @@
         </el-input>
         <el-alert v-if="form.code" type="warning" :closable="false">
           <p class="text-black">
-            请在资源站交流群(722163668)发送消息"资源站验证 {{ form.code }}"进行验证。<br />
-            <template v-if="mode === 'register'">一个QQ号仅允许注册一个账号, 请保管好自己的账号<br /></template>
-            <template v-else-if="mode === 'resetPassword'">请使用注册时使用的QQ号进行验证<br /></template>
+            请在资源站交流群(722163668)发送消息"资源站验证 {{ form.code }}"进行验证。<br/>
+            <template v-if="mode === 'register'">一个QQ号仅允许注册一个账号, 请保管好自己的账号<br/></template>
+            <template v-else-if="mode === 'resetPassword'">请使用注册时使用的QQ号进行验证<br/></template>
             <b>资源站会记录你的QQ号备用,继续即同意该条款</b>
           </p>
         </el-alert>
@@ -46,7 +47,7 @@
       <el-form-item>
         <el-button type="primary" @click="submit">提交</el-button>
         <span v-if="mode === 'login'">还没账号,点击<el-button link type="primary"
-            @click="mode = 'register'">注册</el-button></span>
+                                                              @click="mode = 'register'">注册</el-button></span>
         <span v-else>已有账号,点击<el-button link type="primary" @click="mode = 'login'">登录</el-button></span>
       </el-form-item>
     </el-form>
@@ -54,15 +55,18 @@
 </template>
 
 <script lang="tsx" setup>
-import { UserApi } from '~/backendApi/user';
+import {UserApi} from '~/backendApi/user';
 
 const userStore = useUserStore()
 const mode = ref<'login' | 'resetPassword' | 'register'>('login')
 const title = computed(() => {
   switch (mode.value) {
-    case 'login': return '登录'
-    case 'resetPassword': return '重置密码'
-    case 'register': return '注册'
+    case 'login':
+      return '登录'
+    case 'resetPassword':
+      return '重置密码'
+    case 'register':
+      return '注册'
   }
 })
 
@@ -75,6 +79,7 @@ const form = ref({
 })
 
 const genCodeCoolDown = ref(0)
+
 async function genCode() {
   genCodeCoolDown.value = 60
   const interval = setInterval(() => {

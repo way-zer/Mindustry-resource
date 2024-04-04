@@ -2,8 +2,8 @@
 useHead({
   title: '关于',
   meta: [
-    { name: 'description', content: '像素工厂资源站，关于页面' },
-    { name: 'keywords', content: 'Mindustry,像素工厂,资源站,微泽,TinyLake,WayZer' },
+    {name: 'description', content: '像素工厂资源站，关于页面'},
+    {name: 'keywords', content: 'Mindustry,像素工厂,资源站,微泽,TinyLake,WayZer'},
   ],
 })
 </script>
@@ -17,7 +17,7 @@ useHead({
       <summary>
         资源站目前完全公益制作,如果觉得不错,可以考虑<a href="https://afdian.net/@WayZer" rel="nofollow">赞助</a>
       </summary>
-      <img src="~/assets/赞助.png" alt="微信二维码" />
+      <img src="~/assets/赞助.png" alt="微信二维码"/>
     </details>
     <h2>其他项目</h2>
     <ul>

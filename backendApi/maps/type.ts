@@ -17,12 +17,12 @@ export interface MapDetail {
 }
 
 export interface Tags {
-    mods:           any[];
-    name:           string;
-    wave:           number;
-    build:          number;
-    rules:          RulesV5|Rules;
-    saved:          number;
+    mods: any[];
+    name: string;
+    wave: number;
+    build: number;
+    rules: RulesV5 | Rules;
+    saved: number;
     stats: any;
     width: number;
     author: string;
@@ -57,22 +57,22 @@ export interface RulesV5 {
 }
 
 export interface Rules {
-    teams:                       { [key: string]: Team };
-    waves:                       boolean;
-    spawns:                      Spawn[];
-    loadout:                     Loadout[];
-    unitAmmo:                    boolean;
-    waveSpacing:                 number;
-    dropZoneRadius:              number;
-    damageExplosions:            boolean;
-    reactorExplosions:           boolean;
-    buildCostMultiplier:         number;
-    buildSpeedMultiplier:        number;
-    enemyCoreBuildRadius:        number;
-    unitDamageMultiplier:        number;
-    blockDamageMultiplier:       number;
-    blockHealthMultiplier:       number;
-    unitBuildSpeedMultiplier:    number;
+    teams: { [key: string]: Team };
+    waves: boolean;
+    spawns: Spawn[];
+    loadout: Loadout[];
+    unitAmmo: boolean;
+    waveSpacing: number;
+    dropZoneRadius: number;
+    damageExplosions: boolean;
+    reactorExplosions: boolean;
+    buildCostMultiplier: number;
+    buildSpeedMultiplier: number;
+    enemyCoreBuildRadius: number;
+    unitDamageMultiplier: number;
+    blockDamageMultiplier: number;
+    blockHealthMultiplier: number;
+    unitBuildSpeedMultiplier: number;
     deconstructRefundMultiplier: number;
     attackMode: boolean;
     fire: boolean;

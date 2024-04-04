@@ -15,7 +15,7 @@
       <el-link v-else :underline="false" @click="() => userStore.showDialog = true">登录</el-link>
     </el-menu-item>
   </el-menu>
-  <login-dialog v-if="userStore.showDialog" />
+  <login-dialog v-if="userStore.showDialog"/>
 </template>
 
 <script lang="ts" setup>

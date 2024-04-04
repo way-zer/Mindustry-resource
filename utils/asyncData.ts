@@ -40,13 +40,15 @@ export default function <T>(f: () => Promise<T>, initialValue: T, options?: Opti
         pending.value = true
         error.value = null
         if (options?.resetBeforeRefresh) data.value = initialValue
-        await f().then(d => { data.value = d }, e => {
+        await f().then(d => {
+            data.value = d
+        }, e => {
             error.value = e
             pending.value = false
         })
     }
 
-    if (import.meta.server && options?.server !== false) 
+    if (import.meta.server && options?.server !== false)
         onServerPrefetch(execute)
     else if (options?.swr) execute()
     return {

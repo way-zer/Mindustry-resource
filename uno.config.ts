@@ -1,4 +1,4 @@
-import {defineConfig, presetUno, presetTypography} from 'unocss'
+import {defineConfig, presetTypography, presetUno} from 'unocss'
 import {presetDaisy} from "unocss-preset-daisy"
 
 export default defineConfig({

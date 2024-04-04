@@ -14,7 +14,7 @@
     <el-row align="middle">
       <el-upload id="upload" action="ohno" drag :multiple="false" :http-request="upload">
         <el-icon class="el-icon--upload">
-          <el-icon-upload-filled />
+          <el-icon-upload-filled/>
         </el-icon>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
         <span>只能上传.msav文件,且不超过200KB</span>
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MapApi } from '@/backendApi/maps'
+import {MapApi} from '@/backendApi/maps'
 
 
 const userStore = useUserStore()
@@ -34,7 +34,7 @@ const update = useRoute().query.update?.toString()
 async function upload(info: { file: File }) {
   if (!userStore.logged) {
     userStore.showDialog = true
-    ElMessage.error({ message: '请先登录后再进行上传', duration: 10_000 })
+    ElMessage.error({message: '请先登录后再进行上传', duration: 10_000})
     return Promise.reject()
   }
   const hash = await MapApi.upload(info.file)
@@ -43,7 +43,7 @@ async function upload(info: { file: File }) {
     router.back()
   } else {
     const thread = await MapApi.newThread(hash)
-    await router.replace({ path: `/map/${thread}/latest` })
+    await router.replace({path: `/map/${thread}/latest`})
   }
 }
 </script>

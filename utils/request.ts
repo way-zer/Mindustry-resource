@@ -1,5 +1,5 @@
-import { ElMessage } from 'element-plus'
-import type { FetchOptions } from 'ofetch'
+import {ElMessage} from 'element-plus'
+import type {FetchOptions} from 'ofetch'
 
 type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
@@ -20,10 +20,11 @@ interface ErrorData {
     actions?: string[]
     data?: any
 }
+
 export async function request<R>(method: Method, url: string, option?: MyRequestConfig): Promise<R> {
     url = mapUrl(url)
     try {
-        const headers = { ...option?.headers } as Record<string, string>
+        const headers = {...option?.headers} as Record<string, string>
         if (!headers["X-ReCaptchaV2"] && option?.reCaptchaAction) {
             const token = await requestToken(option?.reCaptchaAction)
             headers["X-ReCaptcha"] = token
@@ -40,8 +41,8 @@ export async function request<R>(method: Method, url: string, option?: MyRequest
         if (data && data.errorMessage) {
             if (data.actions?.includes('ReCaptchaV2')) {
                 const token = await requestTokenV2()
-                const headers = { ...option?.headers, "X-ReCaptcha": "", "X-ReCaptchaV2": token }
-                return await request(method, url, { ...option, headers })
+                const headers = {...option?.headers, "X-ReCaptcha": "", "X-ReCaptchaV2": token}
+                return await request(method, url, {...option, headers})
             }
             if (data.actions?.includes('Login')) {
                 const userStore = useUserStore()
@@ -60,7 +61,7 @@ export async function request<R>(method: Method, url: string, option?: MyRequest
             message = e.message ?? e.toString()
         }
 
-        ElMessage.error({ message, duration: 30_000, showClose: true })
+        ElMessage.error({message, duration: 30_000, showClose: true})
         throw e
     }
 }

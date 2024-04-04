@@ -10,8 +10,8 @@ function getRelease(repo: string, perPage: number) {
 }
 
 export default defineStore('game', () => {
-    const { data: releases } = asyncData(() => getRelease('Anuken/Mindustry', 5), [], { server: false })
-    const { data: beReleases } = asyncData(() => getRelease('Anuken/MindustryBuilds', 15), [], { server: false })
+    const {data: releases} = asyncData(() => getRelease('Anuken/Mindustry', 5), [], {server: false})
+    const {data: beReleases} = asyncData(() => getRelease('Anuken/MindustryBuilds', 15), [], {server: false})
     const useMirror = ref(true)
     return {
         releases, beReleases, useMirror,

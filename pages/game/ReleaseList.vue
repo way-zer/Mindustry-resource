@@ -15,7 +15,7 @@
       </el-col>
     </el-collapse-item>
   </el-collapse>
-  <el-empty v-if="list.length === 0" />
+  <el-empty v-if="list.length === 0"/>
 </template>
 
 <script lang="ts" setup>

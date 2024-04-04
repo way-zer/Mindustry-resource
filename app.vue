@@ -1,15 +1,15 @@
 <template>
   <Head>
-    <Link rel="icon" href="/icons-192.20210425.png" />
+    <Link rel="icon" href="/icons-192.20210425.png"/>
     <VitePwaManifest/>
   </Head>
   <el-container>
     <el-header>
-      <the-header />
+      <the-header/>
     </el-header>
     <el-main>
-      <NuxtLoadingIndicator />
-      <NuxtPage />
+      <NuxtLoadingIndicator/>
+      <NuxtPage/>
     </el-main>
     <el-footer class="text-center">WayZer ©{{ year }}</el-footer>
   </el-container>
@@ -27,5 +27,7 @@ body
 <style lang="stylus" scoped>
 .el-main
   @media (max-width 756px)
-    padding 12px 4px 12px 8px //let right less space due to scrollbar
+    padding 12px 4px 12px 8px
+
+//let right less space due to scrollbar
 </style>

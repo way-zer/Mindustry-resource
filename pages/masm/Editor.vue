@@ -1,12 +1,12 @@
 <template>
-  <div ref="container" />
+  <div ref="container"/>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeUnmount, ref, watch } from "vue";
-import { loadMonaco } from "./_myUtil";
-import type { editor as Editor } from "monaco-editor";
-import type { Monaco } from "@monaco-editor/loader";
+import {onBeforeUnmount, ref, watch} from "vue";
+import {loadMonaco} from "./_myUtil";
+import type {editor as Editor} from "monaco-editor";
+import type {Monaco} from "@monaco-editor/loader";
 
 const props = defineProps({
   modelValue: {
@@ -48,7 +48,7 @@ onBeforeMount(() => {
   loadMonaco().then((monaco) => {
     emit("editorWillMount", monaco)
     const model = monaco.editor.createModel(props.modelValue, props.language, monaco.Uri.parse(props.file))
-    const ed = editor = monaco.editor.create(container.value!!, Object.assign({ model }), props.options)
+    const ed = editor = monaco.editor.create(container.value!!, Object.assign({model}), props.options)
     ed.onDidChangeModelContent((event) => {
       const newValue = ed.getValue()
       if (props.modelValue !== newValue) {

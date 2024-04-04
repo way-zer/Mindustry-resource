@@ -1,7 +1,7 @@
-import { ServerApi } from "~/backendApi/server";
+import {ServerApi} from "~/backendApi/server";
 
 export default defineStore("server", () => {
-    const { data, refresh, pending } = asyncData(ServerApi.list, [], { swr: true })
+    const {data, refresh, pending} = asyncData(ServerApi.list, [], {swr: true})
     const autoRefresh = ref(true)
     return {
         pending, data,

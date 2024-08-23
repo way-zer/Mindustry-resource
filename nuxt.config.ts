@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     routeRules: {
         "/": {redirect: "/map"},
         "/pwa-fallback": {ssr: false, prerender: true},
-        '/**': {isr: 60, cache: {maxAge: 60, swr: true}},
+        '/**': {swr: 60, isr: false}, // isr false to avoid https://github.com/unjs/nitro/issues/2515
     },
     ignoreOptions: {ignorecase: false},
     ignore: [

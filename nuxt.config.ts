@@ -8,7 +8,7 @@ export default defineNuxtConfig({
         "@vite-pwa/nuxt",
         "@unocss/nuxt",
         "@element-plus/nuxt",
-        "nuxt-icon",
+        "@nuxt/icon",
         "@pinia/nuxt",
         "nuxt-typed-router",
     ],

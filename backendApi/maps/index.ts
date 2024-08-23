@@ -1,5 +1,4 @@
 import type {MapDetail, MapInfo} from "./type";
-import {saveAs} from "file-saver";
 
 export const MapApi = {
     async list(begin: number, search: string): Promise<MapInfo[]> {
@@ -31,14 +30,7 @@ export const MapApi = {
         form.append('file', file)
         return request('POST', "/api/maps/upload", {body: form, reCaptchaAction: 'mapUpload'})
     },
-    async download(hash: string, name?: string) {
-        name = `${name ?? hash}.msav`
-        const file = await request<Blob>('GET', `/api/maps/${hash}/download`, {
-            responseType: 'blob', reCaptchaAction: 'mapDownload', onResponse: ({response}) => {
-                const fromHeader = response.headers.get('Content-Disposition')?.match(/filename=(.+)/)?.[1]
-                if (fromHeader) name = decodeURI(fromHeader)
-            }
-        })
-        saveAs(file, name)
+    async download(hash: string) {
+        window.open(mapUrl(`/api/maps/${hash}.msav`), "_blank")
     },
 }

@@ -35,6 +35,7 @@ async function loadRecaptcha() {
     } catch (e) {
         console.error(e)
         ElMessage.error({message: "加载reCaptcha组件失败,可能网络不佳", duration: 30_000, showClose: true})
+        throw new Error("加载reCaptcha组件失败")
     } finally {
         msg.close()
     }

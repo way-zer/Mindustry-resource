@@ -17,6 +17,6 @@ const props = withDefaults(defineProps<{
 
 async function download() {
   if (!props.hash) return
-  await MapApi.download(props.hash, props.mapName)
+  await MapApi.download(props.hash)
 }
 </script>

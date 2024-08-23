@@ -1,6 +1,7 @@
 import pwaManifest from './assets/manifest.json';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    compatibilityDate: "2024-04-03",
     devtools: {enabled: true},
     modules: [
         "@vueuse/nuxt",
@@ -11,6 +12,7 @@ export default defineNuxtConfig({
         "@pinia/nuxt",
         "nuxt-typed-router",
     ],
+    css: ['@unocss/reset/tailwind.css'],
     nitro: {
         devProxy: {
             "/api": {

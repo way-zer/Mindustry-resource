@@ -45,5 +45,8 @@
         "webpack"
       ]
     }
+  },
+  "patchedDependencies": {
+    "element-plus@2.8.0": "patches/element-plus@2.8.0.patch"
   }
 }

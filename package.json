@@ -17,7 +17,7 @@
     "@vite-pwa/nuxt": "^0.10.0",
     "@vueuse/nuxt": "^11.0.1",
     "monaco-editor": "^0.47.0",
-    "nuxt": "^3.13.0",
+    "nuxt": "^3.13.2",
     "nuxt-typed-router": "^3.6.5",
     "stylus": "^0.63.0",
     "unocss": "0.62.2",

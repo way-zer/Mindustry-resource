@@ -18,7 +18,8 @@
         <el-radio-button value="3">v5(104)</el-radio-button>
         <el-radio-button value="4">v6(126)</el-radio-button>
         <el-radio-button value="5">v7(135)</el-radio-button>
-        <el-radio-button value="7">v7.5(136/be)</el-radio-button>
+        <el-radio-button value="7">v7.5(136-146)</el-radio-button>
+        <el-radio-button value="8">v8(147-BE)</el-radio-button>
         <el-radio-button :value="false">X</el-radio-button>
       </el-radio-group>
     </div>

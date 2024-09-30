@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <dialog class="modal modal-open" @click.self="props.onClose">
+  <div role="dialog" class="modal modal-open">
     <PageHeader class="modal-box w-full" style="overflow-y: auto;" :title="props.title" :class="props.contentClass"
                 :style="{ maxWidth: props.maxWidth ?? '600' }">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" @click="props.onClose">
@@ -16,7 +16,7 @@ const props = defineProps<{
       </button>
       <slot/>
     </PageHeader>
-  </dialog>
+  </div>
 </template>
 
 <style lang="stylus" scoped>

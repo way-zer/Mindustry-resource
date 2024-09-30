@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         "@unocss/nuxt",
         "@element-plus/nuxt",
         "@nuxt/icon",
-        "@pinia/nuxt",
+        "@pinia/nuxt", 'pinia-plugin-persistedstate/nuxt',
         "nuxt-typed-router",
     ],
     css: ['@unocss/reset/tailwind.css'],

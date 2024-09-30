@@ -26,4 +26,8 @@ export default defineStore("user", () => {
             data.value = defaultUser
         }
     }
+}, {
+    persist: {
+        storage: piniaPluginPersistedstate.sessionStorage(),
+    }
 })

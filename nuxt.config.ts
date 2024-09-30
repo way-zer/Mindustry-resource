@@ -1,6 +1,9 @@
-import pwaManifest from './assets/manifest.json';
+import pwaManifest from './app/assets/manifest.json';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    future: {
+        compatibilityVersion: 4,
+    },
     compatibilityDate: "2024-04-03",
     devtools: {enabled: true},
     modules: [
@@ -29,8 +32,8 @@ export default defineNuxtConfig({
     },
     ignoreOptions: {ignorecase: false},
     ignore: [
-        "pages/**/[A-Z_]*.*",
-        "pages/**/res/**",
+        "app/pages/**/[A-Z_]*.*",
+        "app/pages/**/res/**",
     ],
     // build config
     app: {

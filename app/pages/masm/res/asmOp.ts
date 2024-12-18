@@ -32,7 +32,7 @@ type OpType = "add" | "sub" | "mul" | "div" | "idiv" | "mod" | "pow" | "equal" |
     | "shl" | "shr" | "or" | "and" | "xor" | "not" | "max" | "min" | "angle" | "len" | "noise" | "abs"
     | "log" | "log10" | "floor" | "ceil" | "sqrt" | "rand" | "sin" | "cos" | "tan" | "asin" | "acos" | "atan"
 
-function op(out: Var, a: Var, op: OpType, b?: AnyVar) {
+function op(out: Var, a: AnyVar, op: OpType, b?: AnyVar) {
     builder.line(`op ${op} ${out} ${a} ${b || null}`);
 }
 

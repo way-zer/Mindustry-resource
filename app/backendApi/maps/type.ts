@@ -11,7 +11,10 @@ export interface MapDetail {
     hash: string;
     thread: number;
     mode: string;
-    user?: string;
+    user: {
+        name: string,
+        gid: string,
+    };
     preview: string;
     tags: Tags
 }

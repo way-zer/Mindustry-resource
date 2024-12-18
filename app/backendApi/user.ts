@@ -1,5 +1,6 @@
 export interface UserInfo {
     name: string
+    gid: string
     role: string
 }
 

@@ -1,6 +1,6 @@
 import {UserApi, type UserInfo} from "~/backendApi/user"
 
-const defaultUser: UserInfo = {name: "NOT_LOG", role: "NOT_LOG"}
+const defaultUser: UserInfo = {name: "NOT_LOG", gid: "", role: "NOT_LOG"}
 export default defineStore("user", () => {
     const {data} = asyncData(UserApi.info, defaultUser, {server: false})
     const showDialog = ref(false)

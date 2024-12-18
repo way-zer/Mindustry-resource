@@ -29,8 +29,8 @@
         </h4>
         <h4><b>地图编号:</b> {{ detail.thread }} <b>游戏模式:</b> {{ detail.mode }} <b>上传者:</b>
           <el-tooltip content="点击查看该用户更多地图">
-            <router-link to="/map" @click="mapStore.search('@user:' + detail.user).then()">
-              {{ detail.user }}
+            <router-link to="/map" @click="mapStore.search('@user:' + detail.user.gid).then()">
+              {{ detail.user.name }}
             </router-link>
           </el-tooltip>
         </h4>
@@ -141,7 +141,7 @@ const version = computed(() => {
 })
 const admin = computed(() => {
   if (!userStore.logged) return false
-  return userStore.admin || userStore.info.name == detail.value.user
+  return userStore.admin || userStore.info.gid == detail.value.user.gid
 })
 
 useHead({

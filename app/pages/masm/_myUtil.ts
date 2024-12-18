@@ -54,10 +54,10 @@ export async function runCodes(codes: string[]) {
     let error = ""
     let outputs = [] as string[]
     const c = new Compartment({
-        error: (err) => {
+        error: (err: string) => {
             error += err + "\n"
         },
-        output: (out) => {
+        output: (out: string) => {
             outputs.push(out)
         }
     })

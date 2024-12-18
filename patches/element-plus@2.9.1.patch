@@ -1,8 +1,8 @@
 diff --git a/es/components/menu/src/menu.mjs b/es/components/menu/src/menu.mjs
-index 727663900176698325a66b549fab060b101237c3..612034858b11c7ca86b25bdcee0ae97517742193 100644
+index 0383ccef61529a2264ec306691e624b8a3640fab..591dcb3a92a86d3b434eaf1d5d8c01afb2b1ee0c 100644
 --- a/es/components/menu/src/menu.mjs
 +++ b/es/components/menu/src/menu.mjs
-@@ -168,6 +168,7 @@ var Menu = defineComponent({
+@@ -165,6 +165,7 @@ var Menu = defineComponent({
        }
      };
      const calcMenuItemWidth = (menuItem) => {
@@ -10,7 +10,7 @@ index 727663900176698325a66b549fab060b101237c3..612034858b11c7ca86b25bdcee0ae975
        const computedStyle = getComputedStyle(menuItem);
        const marginLeft = Number.parseInt(computedStyle.marginLeft, 10);
        const marginRight = Number.parseInt(computedStyle.marginRight, 10);
-@@ -177,7 +178,7 @@ var Menu = defineComponent({
+@@ -174,7 +175,7 @@ var Menu = defineComponent({
        var _a, _b;
        if (!menu.value)
          return -1;
@@ -19,7 +19,7 @@ index 727663900176698325a66b549fab060b101237c3..612034858b11c7ca86b25bdcee0ae975
        const moreItemWidth = 64;
        const computedMenuStyle = getComputedStyle(menu.value);
        const paddingLeft = Number.parseInt(computedMenuStyle.paddingLeft, 10);
-@@ -191,7 +192,7 @@ var Menu = defineComponent({
+@@ -188,7 +189,7 @@ var Menu = defineComponent({
            sliceIndex2 = index + 1;
          }
        });

@@ -8,9 +8,10 @@
     </template>
   </PageHeader>
   <el-dialog v-model="showDialog" title="MASM代码" center>
+    <el-alert type="warning" v-if="error">{{ error }}</el-alert>
     <el-tabs>
-      <el-tab-pane v-for="(output,i) of outputs" :label="'Output #'+(i+1)">
-        <pre>{{ output }}</pre>
+      <el-tab-pane v-for="(output,i) of outputs" :label="output.name??'Output #'+(i+1)">
+        <pre>{{ output.content }}</pre>
       </el-tab-pane>
     </el-tabs>
   </el-dialog>
@@ -35,13 +36,16 @@ const KEY = "masmSave"
 const file = "inmemory:/index.ts"
 
 const code = useLocalStorage(KEY, IndexTs)
-const outputs = ref([] as string[])
+const outputs = ref([] as { name?: string, content: string }[])
+const error = ref("")
 const showDialog = ref(false)
 
 async function showOutput() {
-  outputs.value = ["正在编译中"]
+  outputs.value = [{content: "正在编译中"}]
   const codes = await compile(file)
-  outputs.value = (await runCodes(codes)).outputs
+  const res = await runCodes(codes)
+  error.value = res.error
+  outputs.value = res.outputs
   showDialog.value = true
 }
 </script>

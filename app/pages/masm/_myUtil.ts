@@ -52,12 +52,12 @@ export async function compile(file: string): Promise<string[]> {
 
 export async function runCodes(codes: string[]) {
     let error = ""
-    let outputs = [] as string[]
+    let outputs = [] as { name?: string, content: string }[]
     const c = new Compartment({
         error: (err: string) => {
             error += err + "\n"
         },
-        output: (out: string) => {
+        output: (out: { name?: string, content: string }) => {
             outputs.push(out)
         }
     })

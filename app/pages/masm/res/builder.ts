@@ -29,8 +29,8 @@ class Builder {
         this.tempVarId = 0;
     }
 
-    output() {
-        output(this.toString())
+    output(name?: string) {
+        output({name, content: this.toString()})
     }
 
     anchor(): Int {
@@ -75,4 +75,4 @@ const builder = new Builder();
 
 declare function error(err: string)
 
-declare function output(out: string)
+declare function output(out: { name?: string, content: string })

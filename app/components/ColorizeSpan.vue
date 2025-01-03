@@ -2,7 +2,7 @@
 import {colorize} from '~/utils/mindustry';
 
 const props = defineProps<{ text?: string, noColor?: boolean }>()
-const colorized = computed(() => colorize(props.text))
+const colorized = computed(() => colorize(props.text ?? ""))
 </script>
 
 <template>

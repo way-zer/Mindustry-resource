@@ -33,6 +33,7 @@
     "@nuxt/icon": "^1.10.3",
     "@vueuse/core": "^12.3.0",
     "daisyui": "^3.9.4",
+    "dayjs": "^1.11.13",
     "element-plus": "^2.9.1",
     "ofetch": "^1.4.1",
     "pinia-plugin-persistedstate": "^4.2.0",

@@ -13,6 +13,7 @@ export function mapUrl(raw: string) {
 export interface MyRequestConfig extends Omit<FetchOptions, "method"> {
     reCaptchaAction?: string
     skipErrorHandler?: boolean
+    onAction?: (actions: string[]) => boolean
 }
 
 interface ErrorData {
@@ -39,16 +40,19 @@ export async function request<R>(method: Method, url: string, option?: MyRequest
         const data = e.data as ErrorData
         let message
         if (data && data.errorMessage) {
-            if (data.actions?.includes('ReCaptchaV2')) {
-                const token = await requestTokenV2()
-                const headers = {...option?.headers, "X-ReCaptcha": "", "X-ReCaptchaV2": token}
-                return await request(method, url, {...option, headers})
-            }
-            if (data.actions?.includes('Login')) {
-                const userStore = useUserStore()
-                if (!userStore.logged) {
-                    userStore.showDialog = true
+            if (data.actions) {
+                if (data.actions?.includes('ReCaptchaV2')) {
+                    const token = await requestTokenV2()
+                    const headers = {...option?.headers, "X-ReCaptcha": "", "X-ReCaptchaV2": token}
+                    return await request(method, url, {...option, headers})
                 }
+                if (data.actions?.includes('LOGIN')) {
+                    await useUserStore().redirectToLogin()
+                }
+                if (data.actions?.includes('REGISTER')) {
+                    await useUserStore().redirectToLogin(true)
+                }
+                if (option?.onAction?.(data.actions)) throw e
             }
             message = h("div", {}, [
                 `请求失败(${e.status}): ${data.errorMessage}`,

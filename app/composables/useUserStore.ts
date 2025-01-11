@@ -2,23 +2,40 @@ import {UserApi, type UserInfo} from "~/backendApi/user"
 
 const defaultUser: UserInfo = {name: "NOT_LOG", gid: "", role: "NOT_LOG"}
 export default defineStore("user", () => {
-    const {data} = asyncData(UserApi.info, defaultUser, {server: false})
-    const showDialog = ref(false)
+    const {data, refresh} = asyncData(UserApi.info, defaultUser, {server: false})
     const logged = computed(() => data.value.role !== defaultUser.role)
+
+    //login data
+    const query = useUrlSearchParams('history')
+    const redirectPath = computed(() => query['redirect_path']?.toString() ?? '/')
+
     return {
-        info: data, showDialog,
+        info: data,
 
         logged,
         admin: computed(() => data.value.role == 'Admin' || data.value.role == 'SuperAdmin'),
-        async login({user, password}: { user: string, password: string }) {
-            if (logged.value) return
-            data.value = await UserApi.login(user, password)
-            showDialog.value = false
+        async redirectToLogin(register = false) {
+            navigateTo(`/user/${register ? 'register' : 'login'}?redirect_path=${encodeURIComponent(redirectPath.value)}`)
         },
-        async register({user, password, code}: { user: string, password: string, code: string }) {
+        async login(...args: Parameters<typeof UserApi.login> | ['oauth', { provider: 'discord' }]) {
             if (logged.value) return
-            data.value = await UserApi.register(user, password, code)
-            showDialog.value = false
+            if (args[0] === 'oauth') {
+                UserApi.oauthLogin(args[1].provider, redirectPath.value)
+                return
+            }
+            await UserApi.login(...args)
+            await refresh()
+            if (logged.value) {
+                navigateTo(redirectPath.value)
+            }
+        },
+        async register({name}: { name: string }) {
+            if (logged.value) return
+            await UserApi.register(name)
+            await refresh()
+            if (logged.value) {
+                navigateTo(redirectPath.value)
+            }
         },
         async logout() {
             if (!logged.value) return

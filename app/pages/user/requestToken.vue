@@ -20,7 +20,7 @@ const clientName = computed(() => {
 const success = ref(false)
 
 async function submit(op: 'confirm' | 'reject') {
-  if (!user.logged) return user.showDialog = true
+  if (!user.logged) return user.redirectToLogin()
   await UserApi.tokenConfirm(code, op)
   success.value = true
 }
@@ -38,8 +38,8 @@ async function submit(op: 'confirm' | 'reject') {
     <el-row class="relative mt-4 p-4 justify-evenly">
       <el-button type="warning" @click="() => submit('confirm')">同意</el-button>
       <el-button type="info" @click="() => submit('reject')">拒绝</el-button>
-      <div v-if="!user.logged" class="mask flex items-center justify-center rounded">
-        <el-button type="primary" @click="user.showDialog = true">请先登录</el-button>
+      <div v-if="!user.logged" class="mask flex items-center justify-center rounded-4">
+        <el-button type="primary" @click="user.redirectToLogin()">请先登录</el-button>
       </div>
     </el-row>
   </div>

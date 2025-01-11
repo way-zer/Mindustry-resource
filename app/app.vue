@@ -27,7 +27,7 @@ body
 <style lang="stylus" scoped>
 .el-main
   @media (max-width 756px)
-    padding 12px 4px 12px 8px
+    padding 0 0 8px 0
 
 //let right less space due to scrollbar
 </style>

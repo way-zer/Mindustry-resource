@@ -3,8 +3,27 @@
     <template #actions>
       <el-switch active-text="使用镜像加速" inactive-text="不使用镜像加速" v-model="store.useMirror"/>
     </template>
+    <ReleaseList.define v-slot="{list}">
+      <el-collapse accordion v-if="list.length>0">
+        <el-collapse-item v-for="item in list" :name="item.tag_name" :key="item.tag_name">
+          <template #title>
+            <a :href="item.html_url" target="_blank" rel="nofollow">{{ item.tag_name }}</a>
+          </template>
+          <el-col style="width: 100%">
+            <el-row v-for="asset in item.assets" :key="asset.name" type="flex" justify="space-between">
+              <el-space>
+                <strong>{{ asset.name }}</strong>
+                <small>{{ (asset.size / 1024 / 1024).toFixed(2) }} MB</small>
+              </el-space>
+              <a :href="store.getDownloadUrl(asset.browser_download_url)" rel="nofollow">下载</a>
+            </el-row>
+          </el-col>
+        </el-collapse-item>
+      </el-collapse>
+      <el-empty v-else/>
+    </ReleaseList.define>
     <el-card header="正式版">
-      <ReleaseList :list="store.releases" :get-download-url="store.getDownloadUrl"/>
+      <ReleaseList.reuse :list="store.releases"/>
       <details>
         <summary>
           apk等版本请前往
@@ -20,13 +39,13 @@
       </details>
     </el-card>
     <el-card header="BE 测试版">
-      <ReleaseList :list="store.beReleases" :get-download-url="store.getDownloadUrl"/>
+      <ReleaseList.reuse :list="store.beReleases"/>
     </el-card>
   </PageHeader>
 </template>
 
 <script lang="ts" setup>
-import ReleaseList from './ReleaseList.vue'
+const ReleaseList = createReusableTemplate<{ list: ReleaseType[] }>()
 
 const store = useGameStore()
 useHead({

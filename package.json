@@ -22,6 +22,7 @@
     "nuxt": "^3.15.0",
     "nuxt-typed-router": "^3.7.2",
     "stylus": "^0.64.0",
+    "typescript": "^5.7.3",
     "unocss": "0.65.3",
     "unocss-preset-daisy": "^7.0.0",
     "vue-tsc": "^2.2.0",

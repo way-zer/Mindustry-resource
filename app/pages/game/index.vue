@@ -23,7 +23,7 @@
       <el-empty v-else/>
     </ReleaseList.define>
     <el-card header="正式版">
-      <ReleaseList.reuse :list="releases?.releases??[]"/>
+      <ReleaseList.reuse :list="releases.releases"/>
       <details>
         <summary>
           apk等版本请前往
@@ -39,7 +39,7 @@
       </details>
     </el-card>
     <el-card header="BE 测试版">
-      <ReleaseList.reuse :list="releases?.be??[]"/>
+      <ReleaseList.reuse :list="releases.be"/>
     </el-card>
   </PageHeader>
 </template>
@@ -83,7 +83,7 @@ const {data: releases} = await useAsyncData(async () => {
     be: await beReleases,
   }
 }, {
-  default: {releases: [], be: []},
+  default: () => ({releases: [], be: []}),
   getCachedData: (k) => useNuxtApp().payload.data[k],
 })
 </script>

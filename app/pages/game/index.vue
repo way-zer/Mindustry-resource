@@ -82,5 +82,8 @@ const {data: releases} = await useAsyncData(async () => {
     releases: await releases,
     be: await beReleases,
   }
+}, {
+  default: {releases: [], be: []},
+  getCachedData: (k) => useNuxtApp().payload.data[k],
 })
 </script>

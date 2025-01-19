@@ -83,7 +83,10 @@ useHead({
   ],
 })
 
-const {data, refresh, status} = await useAsyncData(ServerApi.list, {default: () => []})
+const {data, refresh, status} = await useAsyncData(ServerApi.list, {
+  default: () => [],
+  getCachedData: (k) => useNuxtApp().payload.data[k],
+})
 const state = reactive({
   autoRefresh: true,
   showModal: false,

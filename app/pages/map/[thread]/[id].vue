@@ -29,8 +29,8 @@
         </h4>
         <h4><b>地图编号:</b> {{ detail.thread }} <b>游戏模式:</b> {{ detail.mode }} <b>上传者:</b>
           <el-tooltip content="点击查看该用户更多地图">
-            <router-link to="/map" @click="mapStore.search('@user:' + detail.user.gid).then()">
-              {{ detail.user.name }}
+            <router-link to="/map" @click="mapStore.search('@user:' + detail.user?.gid).then()">
+              {{ detail.user?.name }}
             </router-link>
           </el-tooltip>
         </h4>
@@ -59,9 +59,9 @@
           <li>建筑拆除返还: {{ rules.deconstructRefundMultiplier || '0.5' }}倍</li>
           <li>建筑血量: {{ rules.blockHealthMultiplier || '1' }}倍</li>
           <li>炮塔伤害: {{ rules.blockDamageMultiplier || '1' }}倍</li>
-          <li>核心保护: {{ rules.enemyCoreBuildRadius / 8 || 50 }}格</li>
-          <li v-if="version === 5">重生时间: {{ rulesOld.respawnTime / 60 }}秒</li>
-          <li>每波间隔: {{ rules.waveSpacing / 60 || 120 }}秒</li>
+          <li>核心保护: {{ (rules.enemyCoreBuildRadius ?? 0) / 8 || 50 }}格</li>
+          <li v-if="version === 5">重生时间: {{ (rulesOld.respawnTime ?? 0) / 60 }}秒</li>
+          <li>每波间隔: {{ (rules.waveSpacing ?? 0) / 60 || 120 }}秒</li>
           <li>
             <details>
               <summary>禁用建筑:</summary>
@@ -128,20 +128,23 @@ const route = useRoute()
 const router = useRouter()
 const path = computed(() => import.meta.server ? useRequestURL() : location.toString())
 
-const {data, pending} = useMapDetail(route.params.thread as string, route.params.id as string || 'latest')
-const detail = computed(() => data.value || {} as MapDetail)
-const tags = computed(() => ((detail.value.tags || {}) as Tags))
-const rules = computed(() => ((detail.value.tags?.rules || {}) as Rules))
-const rulesOld = computed(() => ((detail.value.tags?.rules || {}) as RulesV5))
+const {data: detail, error} = await useAsyncData(() => {
+  const thread = route.params.thread as string
+  const version = route.params.id as string || 'latest'
+  return MapApi.detail(thread, version)
+}, {deep: false, default: () => ({} as Partial<MapDetail>)})
+const tags = computed(() => ((detail.value.tags || {}) as Partial<Tags>))
+const rules = computed(() => ((tags.value.rules || {}) as Partial<Rules>))
+const rulesOld = computed(() => ((tags.value.rules || {}) as Partial<RulesV5>))
 const version = computed(() => {
-  let build = (detail.value?.tags?.build || -1)
+  let build = (tags.value.build || -1)
   if (build > 104) return 6
   if (build > 0) return 5
   return 0
 })
 const admin = computed(() => {
   if (!userStore.logged) return false
-  return userStore.admin || userStore.info.gid == detail.value.user.gid
+  return userStore.admin || userStore.info.gid == detail.value.user?.gid
 })
 
 useHead({
@@ -157,10 +160,10 @@ async function doDelete() {
 
 <style scoped lang="stylus">
 h1, h2, h3, h4, h5, h6
-  margin-top: 0;
-  margin-bottom: .5em;
-  color: rgba(0, 0, 0, .85);
-  font-weight: 500;
+  margin-top 0;
+  margin-bottom .5em;
+  color rgba(0, 0, 0, .85);
+  font-weight 500;
 
 #footer
   text-align center

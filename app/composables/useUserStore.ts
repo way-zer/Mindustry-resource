@@ -2,7 +2,7 @@ import {UserApi, type UserInfo} from "~/backendApi/user"
 
 const defaultUser: UserInfo = {name: "NOT_LOG", gid: "", role: "NOT_LOG"}
 export default defineStore("user", () => {
-    const {data, refresh} = asyncData(UserApi.info, defaultUser, {server: false})
+    const {data, refresh} = useAsyncData(UserApi.info, {server: false, default: () => defaultUser})
     const logged = computed(() => data.value.role !== defaultUser.role)
 
     //login data

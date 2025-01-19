@@ -1,5 +1,5 @@
-import type {MapDetail} from '~/backendApi/maps/type'
 import {MapApi} from '~/backendApi/maps'
+import type {MapInfo} from "~/backendApi/maps/type";
 
 function initialSearchKey() {
     if (import.meta.server) {
@@ -12,7 +12,7 @@ function initialSearchKey() {
 
 export default defineStore("map", () => {
     const searchKey = ref(initialSearchKey())
-    const {data} = asyncData(() => MapApi.list(0, searchKey.value), [])
+    const {data} = useAsyncData(() => MapApi.list(0, searchKey.value), {default: () => [] as MapInfo[]})
     const loading = ref(false)
     const noMore = ref(false)
 
@@ -25,7 +25,7 @@ export default defineStore("map", () => {
             if (loading.value) return
             loading.value = true
             const newMaps = await MapApi.list(data.value.length, searchKey.value)
-            if (newMaps.length) data.value = data.value.concat(...newMaps)
+            if (newMaps.length) data.value = data.value.concat(newMaps)
             else noMore.value = true
             loading.value = false
         },
@@ -43,8 +43,3 @@ export default defineStore("map", () => {
         }
     }
 })
-
-export function useMapDetail(thread: string, version: string) {
-    const key = `${thread}/${version}`
-    return useAsyncData<MapDetail>('map-detail/' + key, () => MapApi.detail(thread, version))
-}

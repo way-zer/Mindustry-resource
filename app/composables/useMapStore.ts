@@ -1,22 +1,13 @@
 import {MapApi} from '~/backendApi/maps'
 import type {MapInfo} from "~/backendApi/maps/type";
 
-function initialSearchKey() {
-    if (import.meta.server) {
-        return useRequestURL().searchParams.get('q') || ''
-    } else if (location) {
-        return new URL(location.href).searchParams.get('q') || ''
-    }
-    return ''
-}
-
 export default defineStore("map", () => {
-    const searchKey = ref(initialSearchKey())
+    const searchKey = useRouteQuery<string | string[], string>("q", [], {
+        transform: {get: (it) => (it?.toString() ?? ''), set: (v) => (v || [])}
+    })
     const {data} = useAsyncData(() => MapApi.list(0, searchKey.value), {default: () => [] as MapInfo[]})
     const loading = ref(false)
     const noMore = ref(false)
-
-    const query = useUrlSearchParams('history')
 
     return {
         searchKey, data, loading, noMore,
@@ -34,8 +25,7 @@ export default defineStore("map", () => {
                 key = key.replace('  ', ' ').trim()//reduce space
             if (key == searchKey.value) return
             loading.value = true
-            searchKey.value = query.q = key
-            if (!key.length) query.q = []
+            searchKey.value = key
             const newMaps = await MapApi.list(0, key)
             data.value = newMaps
             noMore.value = newMaps.length === 0

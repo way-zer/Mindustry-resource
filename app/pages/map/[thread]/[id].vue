@@ -125,7 +125,6 @@ import ActionChangeMode from '../components/ActionChangeMode.vue'
 const userStore = useUserStore()
 const mapStore = useMapStore()
 const route = useRoute()
-const router = useRouter()
 const path = computed(() => import.meta.server ? useRequestURL() : location.toString())
 
 const {data: detail, error} = await useAsyncData(() => {
@@ -154,7 +153,7 @@ useHead({
 async function doDelete() {
   await MapApi.edit('' + detail.value.thread, "delete", "")
   mapStore.data = mapStore.data.filter(it => it.id != detail.value.thread)
-  await router.replace({path: '/map'})
+  navigateTo({path: '/map'}, {replace: true})
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <PageHeader title="地图分享">
     <template #actions>
-      <el-input v-model="tmpSearch" placeholder="查找地图" clearable @change="onSearch"/>
+      <el-input v-model="tmpSearch" placeholder="查找地图" clearable @change="store.search"/>
       <ActionUpload/>
     </template>
     <el-alert type="info">你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert>
@@ -54,30 +54,25 @@ useHead({
 const store = useMapStore()
 const tmpSearch = ref(store.searchKey)
 watchEffect(() => tmpSearch.value = store.searchKey)
-const onSearch = async (v: string) => {
-  tmpSearch.value = v.replace('  ', ' ')//reduce space
-  if (v.match(/^\d{5}$/))
-    return navigateTo(`/map/${v}/latest`);
-  return store.search(v)
-}
+await callOnce(() => store.pullMore())
 
 function regexForTag(tag: string) {
   return new RegExp('@' + tag + ':(\\w+)')
 }
 
 function getTag(tag: string) {
-  const match = tmpSearch.value.match(regexForTag(tag))
-  return match ? match[1] : undefined
+  return store.searchKey.match(regexForTag(tag))?.[1]
 }
 
 function replaceTag(tag: string, value: string | number | boolean | undefined) {
   const regex = regexForTag(tag)
-  const search = tmpSearch.value
-  if (!search.match(regex))
-    onSearch(search + ` @${tag}:${value} `)
-  else {
+  const search = store.searchKey
+  if (!search.match(regex)) {
+    if (!value) return
+    store.search(search + ` @${tag}:${value} `)
+  } else {
     const v = !value ? '' : `@${tag}:${value}`
-    onSearch(search.replace(regex, v))
+    store.search(search.replace(regex, v))
   }
 }
 

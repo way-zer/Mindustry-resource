@@ -12,7 +12,10 @@ export default defineStore("user", () => {
         logged,
         admin: computed(() => data.value.role == 'Admin' || data.value.role == 'SuperAdmin'),
         async redirectToLogin(register = false) {
-            navigateTo(`/user/${register ? 'register' : 'login'}?redirect_path=${encodeURIComponent(redirectPath.value)}`)
+            navigateTo({
+                path: register ? '/user/register' : '/user/login',
+                query: {redirect_path: redirectPath.value}
+            })
         },
         async login(...args: Parameters<typeof UserApi.login> | ['oauth', { provider: 'discord' }]) {
             if (logged.value) return

@@ -5,7 +5,8 @@ export default defineStore("map", () => {
     const searchKey = useRouteQuery<string | string[], string>("q", [], {
         transform: {get: (it) => (it?.toString() ?? ''), set: (v) => (v || [])}
     })
-    const {data} = useAsyncData(() => MapApi.list(0, searchKey.value), {default: () => [] as MapInfo[]})
+    const data = ref([] as MapInfo[])
+
     const loading = ref(false)
     const noMore = ref(false)
 
@@ -13,7 +14,7 @@ export default defineStore("map", () => {
         searchKey, data, loading, noMore,
 
         async pullMore() {
-            if (loading.value) return
+            if (loading.value || noMore.value) return
             loading.value = true
             const newMaps = await MapApi.list(data.value.length, searchKey.value)
             if (newMaps.length) data.value = data.value.concat(newMaps)
@@ -22,14 +23,18 @@ export default defineStore("map", () => {
         },
         async search(key: string) {
             while (key.includes('  '))
-                key = key.replace('  ', ' ').trim()//reduce space
-            if (key == searchKey.value) return
+                key = key.replace('  ', ' ')
+            key = key.trim()//reduce space
+            if (key.match(/^\d{5}$/)) {
+                navigateTo(`/map/${key}/latest`)
+                return
+            }
             loading.value = true
             searchKey.value = key
             const newMaps = await MapApi.list(0, key)
             data.value = newMaps
-            noMore.value = newMaps.length === 0
+            noMore.value = (newMaps.length === 0)
             loading.value = false
-        }
+        },
     }
 })

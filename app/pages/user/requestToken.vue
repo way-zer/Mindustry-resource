@@ -2,8 +2,8 @@
 import {UserApi} from '~/backendApi/user';
 
 const user = useUserStore()
-const code = useRoute().query.code as string
-const {data} = useAsyncData(() => UserApi.tokenInfo(code), {immediate: Boolean(code)})
+const code = useRouteQuery("code", null, {transform: String})
+const {data} = useAsyncData(() => UserApi.tokenInfo(code.value), {immediate: Boolean(code.value)})
 const clientName = computed(() => {
   switch (data.value?.type) {
     case 'CLIENT':
@@ -21,7 +21,7 @@ const success = ref(false)
 
 async function submit(op: 'confirm' | 'reject') {
   if (!user.logged) return user.redirectToLogin()
-  await UserApi.tokenConfirm(code, op)
+  await UserApi.tokenConfirm(code.value, op)
   success.value = true
 }
 

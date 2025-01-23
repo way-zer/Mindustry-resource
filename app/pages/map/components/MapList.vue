@@ -43,7 +43,6 @@
 </template>
 
 <script lang="tsx" setup>
-import type {ElButton} from "#build/components";
 import ActionCopy from "./ActionCopy.vue";
 import ActionDownload from "./ActionDownload.vue";
 

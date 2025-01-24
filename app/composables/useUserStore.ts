@@ -2,15 +2,22 @@ import {UserApi, type UserInfo} from "~/backendApi/user"
 
 const defaultUser: UserInfo = {name: "NOT_LOG", gid: "", role: "NOT_LOG"}
 export default defineStore("user", () => {
-    const {data, refresh} = useAsyncData(UserApi.info, {server: false, default: () => defaultUser})
-    const logged = computed(() => data.value.role !== defaultUser.role)
+    const info = ref<UserInfo>(defaultUser)
+    const logged = computed(() => info.value.role !== defaultUser.role)
     const redirectPath = useRouteQuery<string>('redirect_path', '/')
 
+    async function refresh() {
+        info.value = await UserApi.info()
+    }
+
+    if (import.meta.client)
+        refresh().then()
+
     return {
-        info: data,
+        info,
 
         logged,
-        admin: computed(() => data.value.role == 'Admin' || data.value.role == 'SuperAdmin'),
+        admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         async redirectToLogin(register = false) {
             navigateTo({
                 path: register ? '/user/register' : '/user/login',
@@ -40,7 +47,7 @@ export default defineStore("user", () => {
         async logout() {
             if (!logged.value) return
             await UserApi.logout()
-            data.value = defaultUser
+            info.value = defaultUser
         }
     }
 }, {

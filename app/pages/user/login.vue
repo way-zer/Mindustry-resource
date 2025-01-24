@@ -53,7 +53,7 @@ import {UserApi} from "~/backendApi/user";
 
 const store = useUserStore()
 
-const method = ref<'username' | 'email'>("email")
+const method = ref<'username' | 'email'>("username")
 const formRef = useTemplateRef("formRef")
 const form1 = reactive({
   login: '',

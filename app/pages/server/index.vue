@@ -3,7 +3,7 @@
     <template #actions>
       <el-switch active-text="自动刷新" inactive-text="手动刷新" v-model="state.autoRefresh"/>
       <el-button size="small" round type="primary" @click="state.showModal = true">
-        <el-icon-plus/>
+        <Icon name="ep:plus"/>
         添加服务器
       </el-button>
       <client-only>
@@ -37,7 +37,7 @@
               </template>
               {{ i(scope).address }}
               <br/>
-              <el-icon-orange class="inline h-4 text-error" :class="{ 'text-success': i(scope).online }"/>
+              <Icon name="ep:info-filled" class="text-error" :class="{ 'text-success': i(scope).online }"/>
               版本 {{ i(scope).version }}
             </div>
           </tooltip>
@@ -55,7 +55,7 @@
           <b>{{ i(scope).players }}</b>/{{ i(scope).limit || '无限制' }}
           <template v-if="i(scope).ext.isHub">
             <br/>
-            <el-icon-warning style="color: orangered;height: 16px;"/>
+            <Icon name="ep:warning" class="text-warning"/>
             本服为大厅服,人数非真实
           </template>
         </template>

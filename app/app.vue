@@ -18,11 +18,6 @@
 <script lang="ts" setup>
 import "./app.css"
 
-if (import.meta.client) {
-  const checkcss = new (await import("checkcss")).CheckCSS();
-  checkcss.scan().watch();
-}
-
 const year = computed(() => new Date().getFullYear())
 </script>
 

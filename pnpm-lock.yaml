@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@element-plus/icons-vue':
-        specifier: ^2.3.1
-        version: 2.3.1(vue@3.5.13(typescript@5.7.3))
       '@monaco-editor/loader':
         specifier: ^1.4.0
         version: 1.4.0(monaco-editor@0.52.2)
@@ -29,9 +26,6 @@ importers:
       '@vueuse/router':
         specifier: ^12.5.0
         version: 12.5.0(typescript@5.7.3)(vue-router@4.5.0(vue@3.5.13(typescript@5.7.3)))
-      checkcss:
-        specifier: ^2.0.9
-        version: 2.0.9
       daisyui:
         specifier: 5.0.0-beta.2
         version: 5.0.0-beta.2
@@ -2088,9 +2082,6 @@ packages:
 
   change-case@5.4.4:
     resolution: {integrity: sha512-HRQyTk2/YPEkt9TnUPbOpr64Uw3KOicFWPVBb+xiHvd6eBx/qPr9xqfBFDT8P2vWsvvz4jbEkfDe71W3VyNu2w==}
-
-  checkcss@2.0.9:
-    resolution: {integrity: sha512-n1g0IznUpNz7ClPWL9G9zOmVCMUgZ4j2qnnerDz5X/Vg2tP6vRWdEdTtjhic4Ig35weORNXxg7oh2KYIrzpSEw==}
 
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
@@ -4876,9 +4867,6 @@ packages:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
 
-ignoredOptionalDependencies:
-  - '@unocss/webpack'
-
 snapshots:
 
   '@adobe/css-tools@4.3.3': {}
@@ -7113,8 +7101,6 @@ snapshots:
   chalk@5.4.1: {}
 
   change-case@5.4.4: {}
-
-  checkcss@2.0.9: {}
 
   chokidar@3.6.0:
     dependencies:

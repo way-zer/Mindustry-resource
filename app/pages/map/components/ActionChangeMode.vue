@@ -10,7 +10,7 @@
   </el-dialog>
   <tooltip content="设置游戏模式">
     <el-button circle @click="selectMode = now;show = true">
-      <el-icon-edit class="h-4"/>
+      <Icon name="ep:edit"/>
     </el-button>
   </tooltip>
 </template>

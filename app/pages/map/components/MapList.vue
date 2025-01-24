@@ -27,7 +27,7 @@
             <NuxtLink :to="`/map/${map.id}/latest`" custom v-slot="{ href, navigate }">
               <tooltip content="地图详情">
                 <el-button link tag="a" :href="href" @click="navigate">
-                  <el-icon-more class="h-4"/>
+                  <Icon name="ep:more"/>
                 </el-button>
               </tooltip>
             </NuxtLink>

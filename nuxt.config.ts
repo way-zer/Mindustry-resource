@@ -14,6 +14,10 @@ export default defineNuxtConfig({
         "@pinia/nuxt", 'pinia-plugin-persistedstate/nuxt',
         "nuxt-typed-router",
     ],
+    icon: {
+        provider: 'iconify',
+        serverBundle: false,
+    },
     postcss: {
         plugins: {
             "@tailwindcss/postcss": {},

@@ -14,7 +14,7 @@
           <el-popconfirm title="确认删除地图？该操作不可恢复" @confirm="doDelete">
             <template #reference>
               <el-button circle>
-                <el-icon-delete class="h-4"/>
+                <Icon name="ep:delete"/>
               </el-button>
             </template>
           </el-popconfirm>

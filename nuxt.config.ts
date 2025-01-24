@@ -16,10 +16,9 @@ export default defineNuxtConfig({
     ],
     postcss: {
         plugins: {
-            "@unocss/postcss": {},
+            "@tailwindcss/postcss": {},
         },
     },
-    css: ['@unocss/reset/tailwind.css'],
     nitro: {
         devProxy: {
             "/api": {

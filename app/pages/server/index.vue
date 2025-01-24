@@ -37,7 +37,7 @@
               </template>
               {{ i(scope).address }}
               <br/>
-              <el-icon-orange class="inline h-4 color-error" :class="{ 'color-success': i(scope).online }"/>
+              <el-icon-orange class="inline h-4 text-error" :class="{ 'text-success': i(scope).online }"/>
               版本 {{ i(scope).version }}
             </div>
           </tooltip>

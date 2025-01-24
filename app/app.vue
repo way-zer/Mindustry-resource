@@ -19,9 +19,11 @@
 const year = computed(() => new Date().getFullYear())
 </script>
 
-<style lang="stylus">
-body
-  margin 0
+<style lang="postcss">
+@unocss;
+body {
+  margin: 0;
+}
 </style>
 
 <style lang="stylus" scoped>

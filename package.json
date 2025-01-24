@@ -11,11 +11,10 @@
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.1.1",
-    "@nuxt/devtools": "2.0.0-beta.3",
     "@pinia/nuxt": "^0.9.0",
     "@types/select": "^1.1.0",
     "@types/vue3-json-viewer": "^2.2.0",
-    "@unocss/nuxt": "65.4.3",
+    "@unocss/postcss": "^65.4.3",
     "@vite-pwa/nuxt": "^0.10.6",
     "@vueuse/nuxt": "^12.5.0",
     "monaco-editor": "^0.52.2",
@@ -38,6 +37,7 @@
     "dayjs": "^1.11.13",
     "element-plus": "^2.9.3",
     "ofetch": "^1.4.1",
+    "pinia": "^2.3.1",
     "pinia-plugin-persistedstate": "^4.2.0",
     "select": "^1.1.2",
     "ses": "^1.10.0",
@@ -47,13 +47,18 @@
     "workbox-window": "^7.3.0"
   },
   "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "webpack"
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "vue-demi"
+    ],
+    "ignoredOptionalDependencies": [
+      "@unocss/webpack"
+    ],
+    "updateConfig": {
+      "ignoreDependencies": [
+        "daisyui"
       ]
     }
-  },
-  "patchedDependencies": {
-    "element-plus@2.9.1": "patches/element-plus@2.9.1.patch"
   }
 }

@@ -9,12 +9,16 @@ export default defineNuxtConfig({
     modules: [
         "@vueuse/nuxt",
         "@vite-pwa/nuxt",
-        "@unocss/nuxt",
         "@element-plus/nuxt",
         "@nuxt/icon",
         "@pinia/nuxt", 'pinia-plugin-persistedstate/nuxt',
         "nuxt-typed-router",
     ],
+    postcss: {
+        plugins: {
+            "@unocss/postcss": {},
+        },
+    },
     css: ['@unocss/reset/tailwind.css'],
     nitro: {
         devProxy: {

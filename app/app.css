@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 @plugin "@tailwindcss/typography";
+/*noinspection CssUnknownProperty*/
 @plugin "daisyui" {
-    themes: 'corporate';
+    themes: corporate --default;
 }
 
 

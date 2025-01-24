@@ -37,7 +37,8 @@
               </template>
               {{ i(scope).address }}
               <br/>
-              <Icon name="ep:info-filled" class="text-error" :class="{ 'text-success': i(scope).online }"/>
+              <Icon v-if="i(scope).online" name="ep:success-filled" class="text-success"/>
+              <Icon v-else name="ep:remove-filled" class="text-error"/>
               版本 {{ i(scope).version }}
             </div>
           </tooltip>

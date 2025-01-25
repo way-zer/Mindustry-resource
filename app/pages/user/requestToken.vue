@@ -28,7 +28,7 @@ async function submit(op: 'confirm' | 'reject') {
 </script>
 <template>
   <el-result v-if="success" icon="success" title="操作成功" sub-title="你可以关闭当前页面，返回应用继续操作"/>
-  <div v-else-if="data" class="w-full max-w-400px m-auto p-4 text-center">
+  <div v-else-if="data" class="w-full max-w-[400px] m-auto p-4 text-center">
     <h2 class="text-center w-full">API登录授权</h2>
     <el-descriptions :column="1" border>
       <el-descriptions-item label="请求ID">{{ code }}</el-descriptions-item>

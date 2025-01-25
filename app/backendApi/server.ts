@@ -5,6 +5,10 @@ export const ServerApi = {
     async add(address: string) {
         return request('GET', '/api/servers/add?address=' + address)
     },
+
+    async auth(info: AuthInfo) {
+        return request('POST', '/api/servers/auth?' + new URLSearchParams(info as any).toString())
+    }
 }
 
 export interface ServerInfo {
@@ -35,4 +39,10 @@ export enum Mode {
     Pvp = 'Pvp',
     Sandbox = 'Sandbox',
     Survival = 'Survival',
+}
+
+export interface AuthInfo {
+    uid: string
+    clientIp: string
+    state: string
 }

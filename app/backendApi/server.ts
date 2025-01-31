@@ -6,8 +6,11 @@ export const ServerApi = {
         return request('GET', '/api/servers/add?address=' + address)
     },
 
-    async auth(info: AuthInfo) {
-        return request('POST', '/api/servers/auth?' + new URLSearchParams(info as any).toString())
+    async authInfo(code: string) {
+        return request<AuthInfo>('GET', '/api/servers/auth/' + code)
+    },
+    async auth(code: string) {
+        return request('POST', '/api/servers/auth/' + code)
     }
 }
 

@@ -1,13 +1,14 @@
 <script lang="ts" setup>
-import {type AuthInfo, ServerApi} from "~/backendApi/server";
+import {ServerApi} from "~/backendApi/server";
 
 const user = useUserStore()
-const query = useRoute().query as AuthInfo
+const code = useRouteQuery<string>("code")
+const {data: info} = await useAsyncData(() => ServerApi.authInfo(code.value), {immediate: Boolean(code)})
 const success = ref(false)
 
 async function submit() {
   if (!user.logged) return user.redirectToLogin()
-  await ServerApi.auth(query)
+  await ServerApi.auth(code.value)
   success.value = true
 }
 
@@ -18,11 +19,11 @@ function exit() {
 </script>
 <template>
   <el-result v-if="success" icon="success" title="操作成功" sub-title="你可以关闭当前页面，返回服务器继续操作"/>
-  <div v-else-if="query" class="w-full max-w-[400px] m-auto p-4 text-center">
+  <div v-else-if="info" class="w-full max-w-[400px] m-auto p-4 text-center">
     <h2 class="text-center w-full">资源站统一登录</h2>
     <el-descriptions :column="1" border>
-      <el-descriptions-item label="UUID">{{ query.uid }}</el-descriptions-item>
-      <el-descriptions-item label="客户端IP">{{ query.clientIp }}</el-descriptions-item>
+      <el-descriptions-item label="UUID">{{ info.uid }}</el-descriptions-item>
+      <el-descriptions-item label="客户端IP">{{ info.clientIp }}</el-descriptions-item>
     </el-descriptions>
     <el-row class="relative mt-4 p-4 justify-evenly">
       <el-button type="warning" @click="() => submit()">登录</el-button>

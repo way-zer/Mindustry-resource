@@ -1,15 +1,23 @@
 <template>
-  <el-card>
-    <template #header v-if="props.title">
-      <el-row id="header" type="flex" justify="space-between" align="middle">
-        <b style="font-size: large">{{ props.title }}</b>
-        <el-space>
-          <slot name="actions"/>
-        </el-space>
-      </el-row>
+  <div class="card bg-base-100 card-md shadow-sm card-border">
+    <template v-if="props.title">
+      <div class="card-body pb-0">
+        <div class="flex flex-row justify-between">
+          <h2 class="card-title">{{ props.title }}</h2>
+          <el-space>
+            <slot name="actions"/>
+          </el-space>
+        </div>
+      </div>
+      <div class="divider"/>
+      <div class="card-body pt-0">
+        <slot/>
+      </div>
     </template>
-    <slot/>
-  </el-card>
+    <div v-else class="card-body">
+      <slot/>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>

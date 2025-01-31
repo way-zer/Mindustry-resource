@@ -1,5 +1,7 @@
 <template>
-  <Dialog @close="() => navigateTo('/map')" maxWidth="800px" :title="update ? '更新地图' : '上传地图'">
+  <Dialog @close="() => navigateTo('/map')" maxWidth="800px">
+    <h2>{{ update ? '更新地图' : '上传地图' }}</h2>
+    <div class="divider"/>
     <el-alert v-if="!update" type="warning" :closable="false" show-icon center id="alert">
       <ol>
         <li class="important" style="font-size: 6em">更新地图请在地图详情页进行上传</li>

@@ -2,24 +2,16 @@
 const props = defineProps<{
   onClose: () => void,
   maxWidth?: number | string,
-  title?: string,
-  contentClass?: string,
 }>()
 </script>
 
 <template>
   <div role="dialog" class="modal modal-open">
-    <PageHeader class="modal-box w-full" style="overflow-y: auto;" :title="props.title" :class="props.contentClass"
-                :style="{ maxWidth: props.maxWidth ?? '600' }">
+    <div class="modal-box w-full max-h-full overflow-y-auto" :style="{ maxWidth: props.maxWidth ?? '600px' }">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" @click="props.onClose">
         <Icon name="ep:close-bold" size="1.5em"/>
       </button>
       <slot/>
-    </PageHeader>
+    </div>
   </div>
 </template>
-
-<style lang="stylus" scoped>
-.modal-box
-  padding 0
-</style>

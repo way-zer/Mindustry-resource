@@ -45,6 +45,7 @@ export enum Mode {
 }
 
 export interface AuthInfo {
+    name: string
     uid: string
     clientIp: string
     state: string

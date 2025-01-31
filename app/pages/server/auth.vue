@@ -22,6 +22,8 @@ function exit() {
   <div v-else-if="info" class="w-full max-w-[400px] m-auto p-4 text-center">
     <h2 class="text-center w-full">资源站统一登录</h2>
     <el-descriptions :column="1" border>
+      <el-descriptions-item label="资源站账号">{{ user.info.name }}</el-descriptions-item>
+      <el-descriptions-item label="游戏ID">{{ info.name }}</el-descriptions-item>
       <el-descriptions-item label="UUID">{{ info.uid }}</el-descriptions-item>
       <el-descriptions-item label="客户端IP">{{ info.clientIp }}</el-descriptions-item>
     </el-descriptions>

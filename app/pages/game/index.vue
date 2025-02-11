@@ -66,7 +66,7 @@ const useMirror = ref(true)
 
 function getDownloadUrl(url: string) {
   if (!useMirror.value) return url
-  return 'https://gh.tinylake.tech/' + url
+  return 'https://gh.tinylake.top/' + url
 }
 
 

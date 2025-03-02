@@ -16,6 +16,6 @@ const props = withDefaults(defineProps<{
 }>(), {circle: false})
 
 async function download() {
-  await MapApi.download(props.thread)
+  await MapApi.download("" + props.thread)
 }
 </script>

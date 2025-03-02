@@ -8,7 +8,7 @@
         <SquaredImage :src="detail.preview"/>
         <el-row :gutter="24" justify="center" type="flex">
           <ActionCopy :thread="detail.thread" circle/>
-          <ActionDownload :thread="detail.thread" circle :map-name="tags.name"/>
+          <ActionDownload :thread="thread" circle :map-name="tags.name"/>
           <ActionChangeMode v-if="admin" :thread="detail.thread" :now="detail.mode"/>
           <ActionUpload v-if="admin" :thread="detail.thread" circle/>
           <el-popconfirm title="确认删除地图？该操作不可恢复" @confirm="doDelete">
@@ -125,10 +125,10 @@ const userStore = useUserStore()
 const mapStore = useMapStore()
 const route = useRoute()
 const path = computed(() => import.meta.server ? useRequestURL() : location.toString())
+const thread = computed(() => +route.params.thread)
 
 const {data: detail, error} = await useAsyncData(() => {
-  const thread = route.params.thread as string
-  return MapApi.detail(thread)
+  return MapApi.detail('' + thread.value)
 }, {deep: false, default: () => ({} as Partial<MapDetail>)})
 const tags = computed(() => ((detail.value.tags || {}) as Partial<Tags>))
 const rules = computed(() => ((tags.value.rules || {}) as Partial<Rules>))

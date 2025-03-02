@@ -7,7 +7,7 @@ export default function copyContent(getNode: () => Node, time = 3) {
         const node = getNode()
         if (node) {
             try {
-                select(node)
+                select(node)//@ts-ignore
                 document.execCommand('copy')
                 ElMessage.success('拷贝到剪切板成功')
             } catch (err) {

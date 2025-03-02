@@ -10,14 +10,12 @@ export default defineStore("user", () => {
         info.value = await UserApi.info()
     }
 
-    if (import.meta.client)
-        refresh().then()
-
     return {
         info,
 
         logged,
         admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
+        refresh,
         async redirectToLogin(register = false) {
             navigateTo({
                 path: register ? '/user/register' : '/user/login',

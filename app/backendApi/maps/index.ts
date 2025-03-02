@@ -9,28 +9,30 @@ export const MapApi = {
             return data
         })
     },
-    async detail(thread: string, version: string): Promise<MapDetail> {
-        return request<MapDetail>("GET", `/api/maps/thread/${thread}/${version}`)
+    async detail(thread: string): Promise<MapDetail> {
+        return request<MapDetail>("GET", `/api/maps/${thread}.json`)
             .then((data) => {
                 data.preview = mapUrl(data.preview)
                 return data
             })
     },
-    async edit(thread: string, action: string, extra: string): Promise<void> {
-        return request('POST', `/api/maps/thread/${thread}/edit`, {body: {action, extra}})
+    async editMode(thread: string, mode: string): Promise<void> {
+        return request('PUT', `/api/maps/${thread}/mode`, {body: mode})
     },
-    async updateThread(thread: string, hash: string) {
-        return request('POST', `/api/maps/thread/${thread}/update?map=` + hash)
+    async deleteThread(thread: string): Promise<void> {
+        return request('DELETE', `/api/maps/${thread}`)
     },
-    async newThread(hash: string): Promise<number> {
-        return +await request<string>('POST', `/api/maps/thread/new?map=` + hash)
-    },
-    async upload(file: File): Promise<string> {
+    async uploadNew(file: File, updateThread?: string): Promise<string> {
         const form = new FormData()
         form.append('file', file)
-        return request('POST', "/api/maps/upload", {body: form, reCaptchaAction: 'mapUpload'})
+        return request('POST', "/api/maps", {body: form, reCaptchaAction: 'mapUpload'})
     },
-    async download(hash: string) {
-        window.open(mapUrl(`/api/maps/${hash}.msav`), "_blank")
+    async updateMap(thread: number, file: File): Promise<void> {
+        const form = new FormData()
+        form.append('file', file)
+        return request('PUT', "/api/maps/" + thread, {body: form, reCaptchaAction: 'mapUpload'})
+    },
+    async download(thread: string) {
+        window.open(mapUrl(`/api/maps/${thread}.msav`), "_blank")
     },
 }

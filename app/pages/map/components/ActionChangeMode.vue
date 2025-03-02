@@ -32,7 +32,7 @@ const show = ref(false)
 const selectMode = ref('')
 
 async function submit() {
-  await MapApi.edit('' + props.thread, 'mode', selectMode.value);
+  await MapApi.editMode(selectMode.value);
   history.back()
 }
 </script>

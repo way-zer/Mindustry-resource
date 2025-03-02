@@ -37,12 +37,10 @@ async function upload(info: { file: File }) {
     await userStore.redirectToLogin()
     return Promise.reject()
   }
-  const hash = await MapApi.upload(info.file)
   if (update) {
-    await MapApi.updateThread(update, hash)
-    router.back()
+    await MapApi.updateMap(+update, info.file)
   } else {
-    const thread = await MapApi.newThread(hash)
+    const thread = await MapApi.uploadNew(info.file)
     await router.replace({path: `/map/${thread}/latest`})
   }
 }

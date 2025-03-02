@@ -7,8 +7,8 @@
       <el-col :md="10" :xs="18">
         <SquaredImage :src="detail.preview"/>
         <el-row :gutter="24" justify="center" type="flex">
-          <ActionCopy :thread="detail.thread" :hash="detail.hash" circle/>
-          <ActionDownload :hash="detail.hash" circle :map-name="tags.name"/>
+          <ActionCopy :thread="detail.thread" circle/>
+          <ActionDownload :thread="detail.thread" circle :map-name="tags.name"/>
           <ActionChangeMode v-if="admin" :thread="detail.thread" :now="detail.mode"/>
           <ActionUpload v-if="admin" :thread="detail.thread" circle/>
           <el-popconfirm title="确认删除地图？该操作不可恢复" @confirm="doDelete">
@@ -37,7 +37,6 @@
         <h4><b>描述:</b>
           <ColorizeSpan :text="tags.description" no-color/>
         </h4>
-        <h5><b>识别码:</b> {{ detail.hash }}</h5>
         <h5><b>所需Mod:</b> {{ tags.mods }}</h5>
         <h4><b>规则:</b></h4>
         <ul>
@@ -129,8 +128,7 @@ const path = computed(() => import.meta.server ? useRequestURL() : location.toSt
 
 const {data: detail, error} = await useAsyncData(() => {
   const thread = route.params.thread as string
-  const version = route.params.id as string || 'latest'
-  return MapApi.detail(thread, version)
+  return MapApi.detail(thread)
 }, {deep: false, default: () => ({} as Partial<MapDetail>)})
 const tags = computed(() => ((detail.value.tags || {}) as Partial<Tags>))
 const rules = computed(() => ((tags.value.rules || {}) as Partial<Rules>))
@@ -151,7 +149,7 @@ useHead({
 })
 
 async function doDelete() {
-  await MapApi.edit('' + detail.value.thread, "delete", "")
+  await MapApi.deleteThread('' + detail.value.thread)
   mapStore.data = mapStore.data.filter(it => it.id != detail.value.thread)
   navigateTo({path: '/map'}, {replace: true})
 }

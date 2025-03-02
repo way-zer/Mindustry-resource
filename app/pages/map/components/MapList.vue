@@ -1,6 +1,6 @@
 <template>
   <el-row type="flex" :gutter=16>
-    <el-col :xs=24 :sm=12 :lg=6 v-for="map in store.data" :key="map.latest">
+    <el-col :xs=24 :sm=12 :lg=6 v-for="map in store.data" :key="map.id">
       <el-card>
         <SquaredImage :src="map.preview" alt="preview"/>
         <div>
@@ -20,9 +20,9 @@
           </p>
           <el-divider/>
           <el-row justify="space-around" type="flex">
-            <ActionCopy :thread="map.id" :hash="map.latest"/>
+            <ActionCopy :thread="map.id"/>
             <el-divider direction="vertical"/>
-            <ActionDownload :hash="map.latest" :map-name="map.name"/>
+            <ActionDownload :thread="map.id" :map-name="map.name"/>
             <el-divider direction="vertical"/>
             <NuxtLink :to="`/map/${map.id}/latest`" custom v-slot="{ href, navigate }">
               <tooltip content="地图详情">

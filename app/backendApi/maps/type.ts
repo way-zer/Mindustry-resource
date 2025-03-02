@@ -1,6 +1,5 @@
 export interface MapInfo {
     id: number;
-    latest: string;
     name: string;
     desc: string;
     preview: string;
@@ -8,7 +7,6 @@ export interface MapInfo {
 }
 
 export interface MapDetail {
-    hash: string;
     thread: number;
     mode: string;
     user: {

@@ -7,13 +7,15 @@
     <el-menu-item v-for="route in navRoutes" :key="route.path" :index="route.path">
       {{ route.name }}
     </el-menu-item>
-    <el-menu-item disabled style="margin-left: auto">
-      <div v-if="userStore.logged">
-        Hi {{ userStore.info.name }}
-        <el-link :underline="false" @click="userStore.logout">登出</el-link>
-      </div>
-      <el-link v-else :underline="false" href="/user/login">登录</el-link>
-    </el-menu-item>
+    <ClientOnly>
+      <el-menu-item disabled style="margin-left: auto">
+        <div v-if="userStore.logged">
+          Hi {{ userStore.info.name }}
+          <el-link :underline="false" @click="userStore.logout">登出</el-link>
+        </div>
+        <el-link v-else :underline="false" href="/user/login">登录</el-link>
+      </el-menu-item>
+    </ClientOnly>
   </el-menu>
 </template>
 

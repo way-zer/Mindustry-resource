@@ -39,6 +39,7 @@ async function upload(info: { file: File }) {
   }
   if (update) {
     await MapApi.updateMap(+update, info.file)
+    await router.replace({path: `/map/${update}/latest`})
   } else {
     const thread = await MapApi.uploadNew(info.file)
     await router.replace({path: `/map/${thread}/latest`})

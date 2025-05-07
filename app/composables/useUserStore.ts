@@ -19,7 +19,7 @@ export default defineStore("user", () => {
         refresh,
         async redirectBack() {
             await navigateTo(decodeURIComponent(redirectPath.value))
-            redirectPath.value = []
+            if (redirectPath.value != '/') redirectPath.value = "/"
         },
         async redirectToLogin(register = false) {
             navigateTo({

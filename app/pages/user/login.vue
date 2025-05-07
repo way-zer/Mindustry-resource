@@ -64,10 +64,12 @@ const form2 = reactive({
   code: ''
 })
 
-watchPostEffect(() => {
-  if (store.logged) {
+const hasRedirected = ref(false)
+watchPostEffect(async () => {
+  if (store.logged && !hasRedirected.value) {
+    hasRedirected.value = true
     ElMessage.success("登录成功")
-    store.redirectBack()
+    await store.redirectBack()
   }
 })
 

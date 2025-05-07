@@ -17,9 +17,9 @@ export default defineStore("user", () => {
         logged,
         admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         refresh,
-        async redirectBack(){
+        async redirectBack() {
             await navigateTo(decodeURIComponent(redirectPath.value))
-            redirectPath.value = [] //@ts-ignore
+            redirectPath.value = []
         },
         async redirectToLogin(register = false) {
             navigateTo({

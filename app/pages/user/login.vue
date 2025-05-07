@@ -64,8 +64,8 @@ const form2 = reactive({
   code: ''
 })
 
-if(store.logged){
-  store.redirectBack()
+if (store.logged) {
+  nextTick(() => store.redirectBack())
 }
 
 const sendEmailCoolDown = ref(0)

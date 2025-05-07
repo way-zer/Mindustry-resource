@@ -5,6 +5,7 @@ export default defineStore("user", () => {
     const info = ref<UserInfo>(defaultUser)
     const logged = computed(() => info.value.role !== defaultUser.role)
     const redirectPath = useRouteQuery<string>('redirect_path', '/')
+    const route = useRoute()
 
     async function refresh() {
         info.value = await UserApi.info()
@@ -16,10 +17,14 @@ export default defineStore("user", () => {
         logged,
         admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         refresh,
+        async redirectBack(){
+            await navigateTo(decodeURIComponent(redirectPath.value))
+            redirectPath.value = [] //@ts-ignore
+        },
         async redirectToLogin(register = false) {
             navigateTo({
                 path: register ? '/user/register' : '/user/login',
-                query: {redirect_path: redirectPath.value}
+                query: {redirect_path: encodeURIComponent(route.fullPath)}
             })
         },
         async login(...args: Parameters<typeof UserApi.login> | ['oauth', { provider: 'discord' }]) {
@@ -31,14 +36,14 @@ export default defineStore("user", () => {
                 await UserApi.login(...args)
                 await refresh()
             }
-            navigateTo(redirectPath.value)
+            await this.redirectBack()
         },
         async register({name}: { name: string }) {
             if (!logged.value) {
                 await UserApi.register(name)
                 await refresh()
             }
-            navigateTo(redirectPath.value)
+            await this.redirectBack()
         },
         async logout() {
             if (!logged.value) return

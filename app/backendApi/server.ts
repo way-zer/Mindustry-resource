@@ -7,6 +7,7 @@ export const ServerApi = {
     },
 
     async authInfo(code: string) {
+        if (code == "MOCK") return {name: "MOCK", uid: "MOCK", clientIp: "*"}
         return request<AuthInfo>('GET', '/api/servers/auth/' + code)
     },
     async auth(code: string) {

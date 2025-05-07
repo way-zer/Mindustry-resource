@@ -64,6 +64,10 @@ const form2 = reactive({
   code: ''
 })
 
+if(store.logged){
+  store.redirectBack()
+}
+
 const sendEmailCoolDown = ref(0)
 
 async function SendEmailCode() {

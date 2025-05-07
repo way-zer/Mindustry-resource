@@ -13,16 +13,16 @@ export default defineStore("user", () => {
     }
 
     return {
-        info,
+        info, hasRedirected,
 
         logged,
         admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         refresh,
         async redirectBack() {
             if (hasRedirected.value) return
+            hasRedirected.value = true
             await navigateTo(decodeURIComponent(redirectPath.value))
             if (redirectPath.value != '/') redirectPath.value = "/"
-            hasRedirected.value = true
         },
         async redirectToLogin(register = false) {
             navigateTo({

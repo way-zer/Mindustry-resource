@@ -64,9 +64,12 @@ const form2 = reactive({
   code: ''
 })
 
-if (store.logged) {
-  nextTick(() => store.redirectBack())
-}
+watchPostEffect(() => {
+  if (store.logged) {
+    ElMessage.success("登录成功")
+    store.redirectBack()
+  }
+})
 
 const sendEmailCoolDown = ref(0)
 

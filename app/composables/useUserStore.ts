@@ -6,6 +6,7 @@ export default defineStore("user", () => {
     const logged = computed(() => info.value.role !== defaultUser.role)
     const redirectPath = useRouteQuery<string>('redirect_path', '/')
     const route = useRoute()
+    const hasRedirected = ref(false)
 
     async function refresh() {
         info.value = await UserApi.info()
@@ -18,8 +19,10 @@ export default defineStore("user", () => {
         admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         refresh,
         async redirectBack() {
+            if (hasRedirected.value) return
             await navigateTo(decodeURIComponent(redirectPath.value))
             if (redirectPath.value != '/') redirectPath.value = "/"
+            hasRedirected.value = true
         },
         async redirectToLogin(register = false) {
             navigateTo({
@@ -49,6 +52,7 @@ export default defineStore("user", () => {
             if (!logged.value) return
             await UserApi.logout()
             info.value = defaultUser
+            hasRedirected.value = false
         }
     }
 })

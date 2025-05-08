@@ -18,7 +18,7 @@ export default defineStore("user", () => {
         admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         refresh,
         registerAutoRedirect(){
-            watch(() => this.logged, async (val) => {
+            watch(() => logged.value, async (val) => {
                 if (val) {
                     ElMessage.success("登录成功")
                     await navigateTo(decodeURIComponent(redirectPath.value))

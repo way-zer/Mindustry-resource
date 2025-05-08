@@ -17,13 +17,13 @@ export default defineStore("user", () => {
         logged,
         admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         refresh,
-        registerAutoRedirect(){
+        registerAutoRedirect() {
             watch(() => logged.value, async (val) => {
                 if (val) {
                     ElMessage.success("登录成功")
                     await navigateTo(decodeURIComponent(redirectPath.value))
                 }
-            })
+            }, {immediate: true})
         },
         async redirectToLogin(register = false) {
             navigateTo({

@@ -6,23 +6,24 @@ export default defineStore("user", () => {
     const logged = computed(() => info.value.role !== defaultUser.role)
     const redirectPath = useRouteQuery<string>('redirect_path', '/')
     const route = useRoute()
-    const hasRedirected = ref(false)
 
     async function refresh() {
         info.value = await UserApi.info()
     }
 
     return {
-        info, hasRedirected,
+        info,
 
         logged,
         admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         refresh,
-        async redirectBack() {
-            if (hasRedirected.value) return
-            hasRedirected.value = true
-            await navigateTo(decodeURIComponent(redirectPath.value))
-            if (redirectPath.value != '/') redirectPath.value = "/"
+        registerAutoRedirect(){
+            watch(() => this.logged, async (val) => {
+                if (val) {
+                    ElMessage.success("登录成功")
+                    await navigateTo(decodeURIComponent(redirectPath.value))
+                }
+            })
         },
         async redirectToLogin(register = false) {
             navigateTo({
@@ -39,20 +40,17 @@ export default defineStore("user", () => {
                 await UserApi.login(...args)
                 await refresh()
             }
-            await this.redirectBack()
         },
         async register({name}: { name: string }) {
             if (!logged.value) {
                 await UserApi.register(name)
                 await refresh()
             }
-            await this.redirectBack()
         },
         async logout() {
             if (!logged.value) return
             await UserApi.logout()
             info.value = defaultUser
-            hasRedirected.value = false
         }
     }
 })

@@ -64,12 +64,7 @@ const form2 = reactive({
   code: ''
 })
 
-watchPostEffect(async () => {
-  if (store.logged) {
-    await store.redirectBack()
-    ElMessage.success("登录成功")
-  }
-})
+store.registerAutoRedirect()
 
 const sendEmailCoolDown = ref(0)
 

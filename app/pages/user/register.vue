@@ -35,6 +35,8 @@ const form = reactive({
   name: '',
 })
 
+store.registerAutoRedirect()
+
 async function onSubmit() {
   if (!formRef.value || !await formRef.value.validate()) return;
   await store.register({name: form.name})

@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     future: {
         compatibilityVersion: 4,
     },
-    compatibilityDate: "2024-04-03",
+    compatibilityDate: "2025-04-03",
     devtools: {enabled: true},
     modules: [
         "@vueuse/nuxt",
@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     routeRules: {
         "/": {redirect: "/map"},
         "/pwa-fallback": {ssr: false, prerender: true},
-        '/**': {swr: 60, isr: false}, // isr false to avoid https://github.com/unjs/nitro/issues/2515
+        '/**': {swr: 60}, // isr false to avoid https://github.com/unjs/nitro/issues/2515
     },
     ignoreOptions: {ignorecase: false},
     ignore: [

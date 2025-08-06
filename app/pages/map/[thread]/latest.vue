@@ -113,7 +113,7 @@
 
 <script lang="tsx" setup>
 import {JsonViewer} from 'vue3-json-viewer'
-import "vue3-json-viewer/dist/index.css";
+import "vue3-json-viewer/dist/vue3-json-viewer.css";
 import {MapApi} from '@/backendApi/maps'
 import type {MapDetail, Rules, RulesV5, Tags} from '@/backendApi/maps/type'
 import ActionCopy from '../components/ActionCopy.vue'

@@ -36,5 +36,13 @@ export default defineStore("map", () => {
             noMore.value = (newMaps.length === 0)
             loading.value = false
         },
+        async navigateToMaps(searchKey: string) {
+            navigateTo({
+                path: "/map",
+                query: {
+                    q: searchKey
+                }
+            })
+        }
     }
 })

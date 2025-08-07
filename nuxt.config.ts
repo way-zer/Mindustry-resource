@@ -86,12 +86,12 @@ export default defineNuxtConfig({
         registerType: "autoUpdate",
         manifest: (pwaManifest as any),
         workbox: {
+            globPatterns: ["**/index.html"],
             navigateFallback: "/pwa-fallback",
             navigateFallbackDenylist: [/api\/.*/],
             skipWaiting: true,
             clientsClaim: true,
             runtimeCaching: [
-                {urlPattern: /\/pwa-fallback/, handler: 'NetworkFirst'},
                 {urlPattern: /\/_nuxt\//, handler: 'CacheFirst', options: {cacheName: "assets"}},
                 {urlPattern: /\.(css|js|svg|png|ico)$/, handler: 'CacheFirst', options: {cacheName: "static"}},
                 {

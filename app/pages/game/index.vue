@@ -22,23 +22,33 @@
       </el-collapse>
       <el-empty v-else/>
     </ReleaseList.define>
-    <el-card header="正式版">
+    <el-card header="官方 正式版">
+      <div class="alert">
+        <div class="col-span-full">数据源为官方<a class="link" href="https://github.com/Anuken/Mindustry">Github</a>，只提供电脑版(需Java)和服务端</div>
+        <details class="col-span-full">
+          <summary>
+            apk等版本请前往
+            <a href="https://anuke.itch.io/mindustry" target="_blank" rel="nofollow">
+              官方itch下载站
+            </a>
+          </summary>
+          点击Download Now,然后在弹出的对话框内点击No,Thanks即可免费下载
+          <br/>
+          IOS版本仅可以在AppStore付费功能
+          <br/>
+          <b>支持作者,可以选择付费,或者在Steam购买正版</b>
+        </details>
+      </div>
       <ReleaseList.reuse :list="releases.releases"/>
-      <details>
-        <summary>
-          apk等版本请前往
-          <a href="https://anuke.itch.io/mindustry" target="_blank" rel="nofollow">
-            官方itch下载站
-          </a>
-        </summary>
-        点击Download Now,然后在弹出的对话框内点击No,Thanks即可免费下载
-        <br/>
-        IOS版本仅可以在AppStore付费功能
-        <br/>
-        <b>支持作者,可以选择付费,或者在Steam购买正版</b>
-      </details>
     </el-card>
-    <el-card header="BE 测试版">
+    <el-card header="国产第三方客户端 MindustryX">
+      <div class="alert">
+        <div class="col-span-full">其中APK为手机版，desktop为PC版(需java)，Loader为MOD(需原版)，server为服务端</div>
+        <div class="col-span-full">开源地址: <a class="link" href="https://github.com/TinyLake/MindustryX">Github</a></div>
+      </div>
+      <ReleaseList.reuse :list="releases.mdtxReleases"/>
+    </el-card>
+    <el-card header="官方 BE预览版">
       <ReleaseList.reuse :list="releases.be"/>
     </el-card>
   </PageHeader>
@@ -76,14 +86,16 @@ const {data: releases} = await useAsyncData(async () => {
   }
 
   const releases = fetchRelease('Anuken/Mindustry', 5)
+  const mdtxReleases = fetchRelease('TinyLake/MindustryX', 5)
   const beReleases = fetchRelease('Anuken/MindustryBuilds', 15)
 
   return {
     releases: await releases,
+    mdtxReleases: await mdtxReleases,
     be: await beReleases,
   }
 }, {
-  default: () => ({releases: [], be: []}),
+  default: () => ({releases: [], mdtxRelease: [], be: []}),
   getCachedData: (k) => useNuxtApp().payload.data[k],
 })
 </script>

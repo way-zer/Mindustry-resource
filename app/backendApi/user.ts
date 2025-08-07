@@ -1,7 +1,9 @@
 export interface UserInfo {
     name: string
     gid: string
-    role: string
+    role?: "SuperAdmin" | "Admin" | "User" //deprecated
+    isAdmin: boolean
+    authed: boolean
 }
 
 export interface LoginMethods {

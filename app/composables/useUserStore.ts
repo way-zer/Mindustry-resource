@@ -1,9 +1,9 @@
 import {UserApi, type UserInfo} from "~/backendApi/user"
 
-const defaultUser: UserInfo = {name: "NOT_LOG", gid: "", role: "NOT_LOG"}
+const defaultUser: UserInfo = {name: "NOT_LOG", gid: "", isAdmin: false, authed: false}
 export default defineStore("user", () => {
     const info = ref<UserInfo>(defaultUser)
-    const logged = computed(() => info.value.role !== defaultUser.role)
+    const logged = computed(() => info.value.authed || info.value.gid)
     const redirectPath = useRouteQuery<string>('redirect_path', '/')
     const route = useRoute()
 
@@ -15,7 +15,7 @@ export default defineStore("user", () => {
         info,
 
         logged,
-        admin: computed(() => info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
+        admin: computed(() => info.value.isAdmin || info.value.role == 'Admin' || info.value.role == 'SuperAdmin'),
         refresh,
         registerAutoRedirect() {
             watch(() => logged.value, async (val) => {

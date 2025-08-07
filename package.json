@@ -34,6 +34,7 @@
     "daisyui": "5.0.50",
     "dayjs": "^1.11.13",
     "element-plus": "^2.10.5",
+    "lodash-es": "^4.17.21",
     "ofetch": "^1.4.1",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.4.1",

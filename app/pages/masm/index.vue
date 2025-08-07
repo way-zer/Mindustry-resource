@@ -1,6 +1,10 @@
 <template>
   <PageHeader title="高级逻辑编辑器">
-    <el-alert type="warning" show-icon>编辑会自动保存，但注意定期备份，以免丢失</el-alert>
+    <el-alert type="warning" show-icon>
+      该编辑器已弃用，推荐使用
+      <a class="link" href="https://mlogjs.github.io/mlogjs/editor.html">MLogJS</a>
+    </el-alert>
+    <el-alert type="info" show-icon>编辑会自动保存，但注意定期备份，以免丢失</el-alert>
     <monaco-editor class="editor" v-model="code" language="typescript" @editorWillMount="configTS" :file="file"/>
     <template #actions>
       <el-button @click="code = IndexTs" type="danger">重置</el-button>

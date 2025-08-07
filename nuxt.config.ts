@@ -35,7 +35,10 @@ export default defineNuxtConfig({
     routeRules: {
         "/": {redirect: "/map"},
         "/pwa-fallback": {ssr: false, prerender: true},
-        '/**': {swr: 60}, // isr false to avoid https://github.com/unjs/nitro/issues/2515
+        '/map': {isr: {expiration: 60, allowQuery: ['q']}},
+        '/**': {
+            isr: {allowQuery: [], expiration: 120}
+        },
     },
     ignoreOptions: {ignorecase: false},
     ignore: [
@@ -83,12 +86,12 @@ export default defineNuxtConfig({
         registerType: "autoUpdate",
         manifest: (pwaManifest as any),
         workbox: {
-            globPatterns: [
-                "**/index.html",
-            ],
             navigateFallback: "/pwa-fallback",
             navigateFallbackDenylist: [/api\/.*/],
+            skipWaiting: true,
+            clientsClaim: true,
             runtimeCaching: [
+                {urlPattern: /\/pwa-fallback/, handler: 'NetworkFirst'},
                 {urlPattern: /\/_nuxt\//, handler: 'CacheFirst', options: {cacheName: "assets"}},
                 {urlPattern: /\.(css|js|svg|png|ico)$/, handler: 'CacheFirst', options: {cacheName: "static"}},
                 {

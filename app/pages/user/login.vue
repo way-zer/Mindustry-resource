@@ -44,7 +44,7 @@
     <el-button class="w-full my-1" v-if="method!='username'" @click="method='username'">使用密码登录</el-button>
     <el-button class="w-full my-1" v-if="method!='email'" @click="method='email'">使用QQ邮箱一键登录</el-button>
     <br/>
-    <el-button class="w-full my-1" @click="store.login('oauth',{provider:'discord'})">使用Discord一键登录</el-button>
+    <el-button class="w-full my-1" @click="store.oauthLogin('discord')">使用Discord一键登录</el-button>
   </el-card>
 </template>
 

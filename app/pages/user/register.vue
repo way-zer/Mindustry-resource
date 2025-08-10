@@ -25,7 +25,6 @@
 
 <script lang="ts" setup>
 import type {FormInstance} from "element-plus";
-import {UserApi} from "~/backendApi/user";
 
 const store = useUserStore()
 const route = useRoute()
@@ -44,7 +43,7 @@ async function onSubmit() {
 
 async function back(discard: boolean) {
   if (discard) {
-    await UserApi.discardBinds()
+    store.registerCode = null
   }
   navigateTo({path: '/user/login', query: route.query}, {replace: true})
 }

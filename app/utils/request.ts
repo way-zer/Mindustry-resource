@@ -4,7 +4,7 @@ import type {FetchOptions} from 'ofetch'
 type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
 export function mapUrl(raw: string) {
-    if (import.meta.env.DEV && !import.meta.env.SSR) return raw
+    // if (import.meta.env.DEV && !import.meta.env.SSR) return raw
     if (raw?.startsWith("/api/"))
         return API_BASE + raw?.substring(5)
     return raw
@@ -27,8 +27,7 @@ export async function request<R>(method: Method, url: string, option?: MyRequest
     try {
         const headers = {...option?.headers} as Record<string, string>
         if (!headers["X-ReCaptchaV2"] && option?.reCaptchaAction) {
-            const token = await requestToken(option?.reCaptchaAction)
-            headers["X-ReCaptcha"] = token
+            headers["X-ReCaptcha"] = await requestToken(option?.reCaptchaAction)
         }
         return await $fetch(url, {
             method, credentials: url!!.startsWith(API_BASE) ? "include" : undefined,

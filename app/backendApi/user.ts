@@ -40,8 +40,8 @@ export const UserApi = {
     async sendEmail(email: string): Promise<void> {
         return request("POST", `/api/users/sendEmail?email=${encodeURIComponent(email)}`, {reCaptchaAction: 'sendEmail'})
     },
-    async register(loginCode: string, name: string): Promise<void> {
-        return request("POST", "/api/users/register", {body: {loginCode, name}, reCaptchaAction: 'register'})
+    async register(loginCode: string, username: string): Promise<void> {
+        return request("POST", "/api/users/register", {body: {loginCode, username}, reCaptchaAction: 'register'})
     },
 
     async tokenRequest(): Promise<string/*Code*/> {//not used, for device

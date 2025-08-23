@@ -13,6 +13,7 @@
   "devDependencies": {
     "@element-plus/nuxt": "^1.1.4",
     "@pinia/nuxt": "^0.11.2",
+    "@tailwindcss/vite": "^4.1.12",
     "@types/select": "^1.1.0",
     "@vite-pwa/nuxt": "^1.0.4",
     "@vueuse/nuxt": "^13.6.0",

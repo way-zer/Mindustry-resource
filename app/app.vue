@@ -16,8 +16,6 @@
 </template>
 
 <script lang="ts" setup>
-import "./app.css"
-
 const year = computed(() => new Date().getFullYear())
 </script>
 

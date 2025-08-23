@@ -1,4 +1,6 @@
 import pwaManifest from './app/assets/manifest.json';
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     future: {
@@ -18,11 +20,7 @@ export default defineNuxtConfig({
         provider: 'iconify',
         serverBundle: false,
     },
-    postcss: {
-        plugins: {
-            "@tailwindcss/postcss": {},
-        },
-    },
+    css: ["~/app.css"],
     nitro: {
         devProxy: {
             "/api": {
@@ -72,6 +70,7 @@ export default defineNuxtConfig({
         }
     },
     vite: {
+        plugins: [tailwindcss()],
         build: {
             rollupOptions: {
                 output: {

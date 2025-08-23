@@ -1,0 +1,58 @@
+<template>
+  <el-card>
+    <SquaredImage :src="map.preview" alt="preview"/>
+    <div>
+      <div>
+        <el-space size="small">
+          <el-tag v-for="tag in map.tags" :key="tag" size="small" effect="plain"
+                  :color="tag.split('§')[1] || 'default'">
+            <ColorizeSpan :text="tag.split('§')[0]"/>
+          </el-tag>
+        </el-space>
+      </div>
+      <b>
+        <ColorizeSpan :text="map.name" no-color/>
+      </b>
+      <p class="desc">
+        <ColorizeSpan :text="map.desc" no-color/>
+      </p>
+      <div class="divider"/>
+      <el-row justify="space-around" type="flex">
+        <ActionCopy :thread="map.id"/>
+        <el-divider direction="vertical"/>
+        <ActionDownload :thread="map.id" :map-name="map.name"/>
+        <el-divider direction="vertical"/>
+        <NuxtLink :to="`/map/${map.id}/latest`" custom v-slot="{ href, navigate }">
+          <tooltip content="地图详情">
+            <el-button link tag="a" :href="href" @click="navigate">
+              <Icon name="ep:more"/>
+            </el-button>
+          </tooltip>
+        </NuxtLink>
+      </el-row>
+    </div>
+  </el-card>
+</template>
+
+<script lang="tsx" setup>
+import ActionCopy from "./ActionCopy.vue";
+import ActionDownload from "./ActionDownload.vue";
+import type {MapInfo} from "~/backendApi/maps/type";
+
+const {map} = defineProps<{
+  map: MapInfo
+}>()
+
+</script>
+
+<style lang="stylus" scoped>
+.desc
+  height 4rem
+  -webkit-line-clamp 3
+  display -webkit-box
+  -webkit-box-orient vertical
+  overflow hidden
+
+.divider
+  --divider-m 0
+</style>

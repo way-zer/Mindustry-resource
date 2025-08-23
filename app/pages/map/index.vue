@@ -6,14 +6,14 @@
     </template>
     <el-alert type="info">你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert>
     <div class="filter">
-      <b>按模式筛选: </b>
+      <b>游戏模式: </b>
       <el-radio-group size="small" :model-value="getTag('mode')" @change="(v) => { replaceTag('mode', v) }">
         <el-radio-button v-for="mode in gameModes" :key="mode" :value="mode">{{ mode }}</el-radio-button>
         <el-radio-button :value="false">X</el-radio-button>
       </el-radio-group>
     </div>
     <div class="filter">
-      <b>按游戏版本筛选: </b>
+      <b>游戏版本: </b>
       <el-radio-group size="small" :model-value="getTag('version')" @change="(v) => { replaceTag('version', v) }">
         <el-radio-button value="3">v5(104)</el-radio-button>
         <el-radio-button value="4">v6(126)</el-radio-button>
@@ -35,15 +35,26 @@
         <el-radio-button value="like">点赞数</el-radio-button>
       </el-radio-group>
     </div>
-    <MapList/>
+
+    <el-row type="flex" :gutter=16>
+      <el-col :xs=24 :sm=12 :lg=6 v-for="map in store.data" :key="map.id">
+        <MapCard :map="map"/>
+      </el-col>
+      <el-empty v-if="store.data.length === 0" style="width: 100%" description="暂无数据，尝试切换关键词试试"/>
+    </el-row>
+
+    <div class="text-center" v-if="store.noMore">没有更多了</div>
+    <div class="text-center" v-else-if="store.loading">内容加载中..</div>
+    <el-button v-else @click="store.pullMore">加载更多</el-button>
+    <el-backtop/>
   </PageHeader>
   <NuxtPage/>
 </template>
 
 <script lang="tsx" setup>
 import {gameModes} from '@/backendApi/maps/type'
-import MapList from './components/MapList.vue'
 import ActionUpload from './components/ActionUpload.vue'
+import MapCard from "~/pages/map/components/MapCard.vue";
 
 useHead({
   title: '地图分享',
@@ -56,6 +67,7 @@ const store = useMapStore()
 const tmpSearch = ref(store.searchKey)
 watchEffect(() => tmpSearch.value = store.searchKey)
 await callOnce(() => store.pullMore())
+infiniteScroll(200, 100, () => (store.loading || store.noMore), store.pullMore)
 
 function regexForTag(tag: string) {
   return new RegExp('@' + tag + ':(\\w+)')
@@ -80,24 +92,11 @@ function replaceTag(tag: string, value: string | number | boolean | undefined) {
 </script>
 
 <style lang="stylus" scoped>
-.floatRight
-  float right
-
-  div
-    width auto
-    display inline-block
-
 .filter
-  margin 8px
-
   b
     font-size 16px
-    line-height 32px
-
   .el-radio-group
     display inline-block
-    vertical-align top
-
   .el-radio-button :deep(span)
     @media only screen and (max-width: 768px)
       padding 9px 6px

@@ -1,6 +1,6 @@
 <template>
   <el-menu router mode="horizontal" :default-active="navRoutes.find(it => route.path.startsWith(it.path))?.path">
-    <el-menu-item disabled>
+    <el-menu-item disabled index="logo">
       <img src="~/assets/icons-64.png" alt="logo" class="h-12 hidden md:block">
       <span class="text-[22px] font-bold" style="color: dodgerblue">Mindustry 资源站</span>
     </el-menu-item>
@@ -8,7 +8,7 @@
       {{ route.name }}
     </el-menu-item>
     <ClientOnly>
-      <el-menu-item disabled style="margin-left: auto">
+      <el-menu-item disabled style="margin-left: auto" index="user">
         <div v-if="userStore.logged">
           Hi {{ userStore.info.name }}
           <el-link :underline="'hover'" @click="userStore.logout">登出</el-link>

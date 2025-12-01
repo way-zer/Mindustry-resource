@@ -1,8 +1,8 @@
 <template>
   <PageHeader title="地图分享">
     <template #actions>
-      <el-input v-model="tmpSearch" placeholder="查找地图" clearable @change="store.search"/>
-      <ActionUpload/>
+      <el-input v-model="tmpSearch" placeholder="查找地图" clearable @change="store.search" />
+      <ActionUpload />
     </template>
     <el-alert type="info">你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert>
     <div class="filter">
@@ -38,36 +38,39 @@
 
     <el-row type="flex" :gutter=16>
       <el-col :xs=24 :sm=12 :lg=6 v-for="map in store.data" :key="map.id">
-        <MapCard :map="map"/>
+        <MapCard :map="map" />
       </el-col>
-      <el-empty v-if="store.data.length === 0" style="width: 100%" description="暂无数据，尝试切换关键词试试"/>
+      <el-empty v-if="store.data.length === 0" style="width: 100%" description="暂无数据，尝试切换关键词试试" />
     </el-row>
 
     <div class="text-center" v-if="store.noMore">没有更多了</div>
-    <div class="text-center" v-else-if="store.loading">内容加载中..</div>
+    <div class="text-center" v-else-if="isLoading">内容加载中..</div>
     <el-button v-else @click="store.pullMore">加载更多</el-button>
-    <el-backtop/>
+    <el-backtop />
   </PageHeader>
-  <NuxtPage/>
+  <NuxtPage />
 </template>
 
 <script lang="tsx" setup>
-import {gameModes} from '@/backendApi/maps/type'
+import { gameModes } from '@/backendApi/maps/type'
 import ActionUpload from './components/ActionUpload.vue'
 import MapCard from "~/pages/map/components/MapCard.vue";
 
 useHead({
   title: '地图分享',
   meta: [
-    {name: 'description', content: '像素工厂资源站，丰富的地图资源下载'},
-    {name: 'keywords', content: 'Mindustry,像素工厂,资源站,地图,服务器,微泽'},
+    { name: 'description', content: '像素工厂资源站，丰富的地图资源下载' },
+    { name: 'keywords', content: 'Mindustry,像素工厂,资源站,地图,服务器,微泽' },
   ],
 })
 const store = useMapStore()
 const tmpSearch = ref(store.searchKey)
 watchEffect(() => tmpSearch.value = store.searchKey)
 await callOnce(() => store.pullMore())
-infiniteScroll(200, 100, () => (store.loading || store.noMore), store.pullMore)
+const { isLoading } = useInfiniteScroll(document, store.pullMore, {
+  canLoadMore: () => !store.loading && !store.noMore,
+  distance: 300,
+})
 
 function regexForTag(tag: string) {
   return new RegExp('@' + tag + ':(\\w+)')

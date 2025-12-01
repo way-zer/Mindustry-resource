@@ -41,9 +41,6 @@ importers:
       pinia-plugin-persistedstate:
         specifier: ^4.7.1
         version: 4.7.1(@nuxt/kit@4.2.1(magicast@0.5.1))(@pinia/nuxt@0.11.3(magicast@0.5.1)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.25(typescript@5.9.3))))(pinia@3.0.4(typescript@5.9.3)(vue@3.5.25(typescript@5.9.3)))
-      select:
-        specifier: ^1.1.2
-        version: 1.1.2
       ses:
         specifier: ^1.14.0
         version: 1.14.0
@@ -72,9 +69,6 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.17
         version: 4.1.17(vite@7.2.4(@types/node@22.15.17)(jiti@2.6.1)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(tsx@4.19.2)(yaml@2.8.2))
-      '@types/select':
-        specifier: ^1.1.0
-        version: 1.1.0
       '@vite-pwa/nuxt':
         specifier: ^1.1.0
         version: 1.1.0(magicast@0.5.1)(vite@7.2.4(@types/node@22.15.17)(jiti@2.6.1)(lightningcss@1.30.2)(stylus@0.64.0)(terser@5.44.1)(tsx@4.19.2)(yaml@2.8.2))(workbox-build@7.4.0)(workbox-window@7.4.0)
@@ -1928,9 +1922,6 @@ packages:
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
-
-  '@types/select@1.1.0':
-    resolution: {integrity: sha512-v8RqO5HbkWUo98w5hZnzn1F3inYiGwX671HC8LdYjaIm4GlXXpaOKTkWmXWnhHRp3lXtYEu40Qt39PaY/tQvLg==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -7023,8 +7014,6 @@ snapshots:
       parse-path: 7.1.0
 
   '@types/resolve@1.20.2': {}
-
-  '@types/select@1.1.0': {}
 
   '@types/trusted-types@2.0.7': {}
 

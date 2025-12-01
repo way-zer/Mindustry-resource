@@ -22,35 +22,38 @@
 </template>
 
 <script lang="ts" setup>
-import PageHeader from "@/components/PageHeader.vue";
-import MonacoEditor from './Editor.vue';
-import {compile, configTS, runCodes} from "./_myUtil";
-import {ref} from "vue";
+import { ref } from "vue"
+import PageHeader from "@/components/PageHeader.vue"
+import { compile, configTS, runCodes } from "./_myUtil"
+import MonacoEditor from "./Editor.vue"
 import IndexTs from "./res?raw"
 
 useHead({
-  title: '逻辑生成器',
-  meta: [
-    {name: 'description', content: '像素工厂资源站，逻辑生成器'},
-    {name: 'keywords', content: 'Mindustry,像素工厂,资源站,游戏,逻辑,Logic,mlog,微泽'},
-  ],
+	title: "逻辑生成器",
+	meta: [
+		{ name: "description", content: "像素工厂资源站，逻辑生成器" },
+		{
+			name: "keywords",
+			content: "Mindustry,像素工厂,资源站,游戏,逻辑,Logic,mlog,微泽",
+		},
+	],
 })
 
 const KEY = "masmSave"
 const file = "inmemory:/index.ts"
 
 const code = useLocalStorage(KEY, IndexTs)
-const outputs = ref([] as { name?: string, content: string }[])
+const outputs = ref([] as { name?: string; content: string }[])
 const error = ref("")
 const showDialog = ref(false)
 
 async function showOutput() {
-  outputs.value = [{content: "正在编译中"}]
-  const codes = await compile(file)
-  const res = await runCodes(codes)
-  error.value = res.error
-  outputs.value = res.outputs
-  showDialog.value = true
+	outputs.value = [{ content: "正在编译中" }]
+	const codes = await compile(file)
+	const res = await runCodes(codes)
+	error.value = res.error
+	outputs.value = res.outputs
+	showDialog.value = true
 }
 </script>
 

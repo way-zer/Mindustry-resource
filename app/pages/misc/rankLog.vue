@@ -111,23 +111,27 @@
 
 
 <script setup lang="ts">
-import data from '~/assets/rank_14690.jsonl?raw'
+import data from "~/assets/rank_14690.jsonl?raw"
 
 interface User {
-  qq: number
-  rank: number
-  before: number
-  after: number
+	qq: number
+	rank: number
+	before: number
+	after: number
 }
 
-const allMatches = (data as string).trim().split("\n").map(line => {
-  return JSON.parse(line) as {
-    map: number
-    duration: number
-    time: number
-    users: User[]
-  }
-}).reverse()
+const allMatches = (data as string)
+	.trim()
+	.split("\n")
+	.map((line) => {
+		return JSON.parse(line) as {
+			map: number
+			duration: number
+			time: number
+			users: User[]
+		}
+	})
+	.reverse()
 
 const filterQQ = useRouteQuery("q", "")
 const currentPage = ref(1)
@@ -135,50 +139,54 @@ const pageSize = 10
 
 // 筛选逻辑
 const filteredMatches = computed(() => {
-  if (!filterQQ.value) return allMatches
-  return allMatches.filter(match =>
-      match.users.some(user => user.qq.toString().includes(filterQQ.value))
-  )
+	if (!filterQQ.value) return allMatches
+	return allMatches.filter((match) =>
+		match.users.some((user) => user.qq.toString().includes(filterQQ.value)),
+	)
 })
 
 const playerStats = computed(() => {
-  const qq = filterQQ.value.trim()
-  const matches = allMatches.filter(match =>
-      match.users.some(user => user.qq.toString() === qq)
-  )
-  if (matches.length == 0) return null
+	const qq = filterQQ.value.trim()
+	const matches = allMatches.filter((match) =>
+		match.users.some((user) => user.qq.toString() === qq),
+	)
+	if (matches.length == 0) return null
 
-  const matchCount = matches.length
-  const winCount = matches.filter(match =>
-      match.users.find(u => u.qq.toString() === qq)?.rank === 1
-  ).length
+	const matchCount = matches.length
+	const winCount = matches.filter(
+		(match) => match.users.find((u) => u.qq.toString() === qq)?.rank === 1,
+	).length
 
-  const winRate = matchCount ? ((winCount / matchCount) * 100).toFixed(1) : '0.0'
+	const winRate = matchCount
+		? ((winCount / matchCount) * 100).toFixed(1)
+		: "0.0"
 
-  const lastMatch = [...matches].find(match =>
-      match.users.some(u => u.qq.toString() === qq)
-  )
-  const finalScore = lastMatch?.users.find(u => u.qq.toString() === qq)?.after ?? '-'
+	const lastMatch = [...matches].find((match) =>
+		match.users.some((u) => u.qq.toString() === qq),
+	)
+	const finalScore =
+		lastMatch?.users.find((u) => u.qq.toString() === qq)?.after ?? "-"
 
-  return {
-    qq,
-    matchCount,
-    winCount,
-    winRate,
-    finalScore
-  }
+	return {
+		qq,
+		matchCount,
+		winCount,
+		winRate,
+		finalScore,
+	}
 })
-
 
 const currentStart = computed(() => (currentPage.value - 1) * pageSize)
 
 const paginatedMatches = computed(() =>
-    filteredMatches.value.slice(currentStart.value, currentStart.value + pageSize)
+	filteredMatches.value.slice(
+		currentStart.value,
+		currentStart.value + pageSize,
+	),
 )
 
 // 时间格式化
 function formatTime(timestamp) {
-  return new Date(timestamp).toLocaleString()
+	return new Date(timestamp).toLocaleString()
 }
-
 </script>

@@ -1,10 +1,13 @@
 <script lang="tsx" setup>
 useHead({
-  title: '关于',
-  meta: [
-    {name: 'description', content: '像素工厂资源站，关于页面'},
-    {name: 'keywords', content: 'Mindustry,像素工厂,资源站,微泽,TinyLake,WayZer'},
-  ],
+	title: "关于",
+	meta: [
+		{ name: "description", content: "像素工厂资源站，关于页面" },
+		{
+			name: "keywords",
+			content: "Mindustry,像素工厂,资源站,微泽,TinyLake,WayZer",
+		},
+	],
 })
 </script>
 <template>

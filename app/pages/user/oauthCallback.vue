@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-const code = useRouteQuery("login_code", null, {transform: String})
+const code = useRouteQuery("login_code", null, { transform: String })
 const store = useUserStore()
 
 store.registerAutoRedirect()
 onMounted(async () => {
-  if (code.value) {
-    await store.login("oauth", {loginCode:code.value})
-  }
+	if (code.value) {
+		await store.login("oauth", { loginCode: code.value })
+	}
 })
 </script>
 <template>

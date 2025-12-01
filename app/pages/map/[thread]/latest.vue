@@ -112,46 +112,53 @@
 </template>
 
 <script lang="tsx" setup>
-import {JsonViewer} from 'vue3-json-viewer'
-import "vue3-json-viewer/dist/vue3-json-viewer.css";
-import {MapApi} from '@/backendApi/maps'
-import type {MapDetail, Rules, RulesV5, Tags} from '@/backendApi/maps/type'
-import ActionCopy from '../components/ActionCopy.vue'
-import ActionDownload from '../components/ActionDownload.vue'
-import ActionUpload from '../components/ActionUpload.vue'
-import ActionChangeMode from '../components/ActionChangeMode.vue'
+import { JsonViewer } from "vue3-json-viewer"
+import "vue3-json-viewer/dist/vue3-json-viewer.css"
+import { MapApi } from "@/backendApi/maps"
+import type { MapDetail, Rules, RulesV5, Tags } from "@/backendApi/maps/type"
+import ActionChangeMode from "../components/ActionChangeMode.vue"
+import ActionCopy from "../components/ActionCopy.vue"
+import ActionDownload from "../components/ActionDownload.vue"
+import ActionUpload from "../components/ActionUpload.vue"
 
 const userStore = useUserStore()
 const mapStore = useMapStore()
 const route = useRoute()
-const path = computed(() => import.meta.server ? useRequestURL() : location.toString())
+const path = computed(() =>
+	import.meta.server ? useRequestURL() : location.toString(),
+)
 const thread = computed(() => +route.params.thread)
 
-const {data: detail, error} = await useAsyncData(() => {
-  return MapApi.detail('' + thread.value)
-}, {deep: false, default: () => ({} as Partial<MapDetail>)})
-const tags = computed(() => ((detail.value.tags || {}) as Partial<Tags>))
-const rules = computed(() => ((tags.value.rules || {}) as Partial<Rules>))
-const rulesOld = computed(() => ((tags.value.rules || {}) as Partial<RulesV5>))
+const { data: detail, error } = await useAsyncData(
+	() => {
+		return MapApi.detail("" + thread.value)
+	},
+	{ deep: false, default: () => ({}) as Partial<MapDetail> },
+)
+const tags = computed(() => (detail.value.tags || {}) as Partial<Tags>)
+const rules = computed(() => (tags.value.rules || {}) as Partial<Rules>)
+const rulesOld = computed(() => (tags.value.rules || {}) as Partial<RulesV5>)
 const version = computed(() => {
-  let build = (tags.value.build || -1)
-  if (build > 104) return 6
-  if (build > 0) return 5
-  return 0
+	const build = tags.value.build || -1
+	if (build > 104) return 6
+	if (build > 0) return 5
+	return 0
 })
 const admin = computed(() => {
-  if (!userStore.logged) return false
-  return userStore.admin || userStore.info.gid == detail.value.user?.gid
+	if (!userStore.logged) return false
+	return userStore.admin || userStore.info.gid == detail.value.user?.gid
 })
 
 useHead({
-  title: computed(() => tags.value.name ? '地图详情 - ' + tags.value.name : '地图详情'),
+	title: computed(() =>
+		tags.value.name ? "地图详情 - " + tags.value.name : "地图详情",
+	),
 })
 
 async function doDelete() {
-  await MapApi.deleteThread('' + detail.value.thread)
-  mapStore.data = mapStore.data.filter(it => it.id != detail.value.thread)
-  navigateTo({path: '/map'}, {replace: true})
+	await MapApi.deleteThread("" + detail.value.thread)
+	mapStore.data = mapStore.data.filter((it) => it.id != detail.value.thread)
+	navigateTo({ path: "/map" }, { replace: true })
 }
 </script>
 

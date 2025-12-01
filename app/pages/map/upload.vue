@@ -24,26 +24,25 @@
 </template>
 
 <script lang="ts" setup>
-import {MapApi} from '@/backendApi/maps'
-
+import { MapApi } from "@/backendApi/maps"
 
 const userStore = useUserStore()
 const router = useRouter()
 const update = useRoute().query.update?.toString()
 
 async function upload(info: { file: File }) {
-  if (!userStore.logged) {
-    ElMessage.error({message: '请先登录后再进行上传', duration: 10_000})
-    await userStore.redirectToLogin()
-    return Promise.reject()
-  }
-  if (update) {
-    await MapApi.updateMap(+update, info.file)
-    await router.replace({path: `/map/${update}/latest`})
-  } else {
-    const thread = await MapApi.uploadNew(info.file)
-    await router.replace({path: `/map/${thread}/latest`})
-  }
+	if (!userStore.logged) {
+		ElMessage.error({ message: "请先登录后再进行上传", duration: 10_000 })
+		await userStore.redirectToLogin()
+		return Promise.reject()
+	}
+	if (update) {
+		await MapApi.updateMap(+update, info.file)
+		await router.replace({ path: `/map/${update}/latest` })
+	} else {
+		const thread = await MapApi.uploadNew(info.file)
+		await router.replace({ path: `/map/${thread}/latest` })
+	}
 }
 </script>
 

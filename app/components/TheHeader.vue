@@ -24,7 +24,7 @@ const userStore = useUserStore()
 const route = useRoute()
 
 onBeforeMount(() => {
-  userStore.refresh()
+	userStore.refresh()
 })
 </script>
 

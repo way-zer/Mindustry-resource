@@ -1,21 +1,23 @@
 <script lang="ts" setup>
-import {ServerApi} from "~/backendApi/server";
+import { ServerApi } from "~/backendApi/server"
 
 const user = useUserStore()
 const code = useRouteQuery<string>("code")
-const {data: info} = await useAsyncData(() => ServerApi.authInfo(code.value), {immediate: Boolean(code)})
+const { data: info } = await useAsyncData(
+	() => ServerApi.authInfo(code.value),
+	{ immediate: Boolean(code) },
+)
 const success = ref(false)
 
 async function submit() {
-  if (!user.logged) return user.redirectToLogin()
-  await ServerApi.auth(code.value)
-  success.value = true
+	if (!user.logged) return user.redirectToLogin()
+	await ServerApi.auth(code.value)
+	success.value = true
 }
 
 function exit() {
-  window.close()
+	window.close()
 }
-
 </script>
 <template>
   <el-result v-if="success" icon="success" title="操作成功" sub-title="你可以关闭当前页面，返回服务器继续操作"/>

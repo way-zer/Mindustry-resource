@@ -49,19 +49,19 @@
 </template>
 
 <script lang="ts" setup>
-import {UserApi} from "~/backendApi/user";
+import { UserApi } from "~/backendApi/user"
 
 const store = useUserStore()
 
-const method = ref<'username' | 'email'>("username")
+const method = ref<"username" | "email">("username")
 const formRef = useTemplateRef("formRef")
 const form1 = reactive({
-  login: '',
-  password: ''
+	login: "",
+	password: "",
 })
 const form2 = reactive({
-  qq: '',
-  code: ''
+	qq: "",
+	code: "",
 })
 
 store.registerAutoRedirect()
@@ -69,25 +69,31 @@ store.registerAutoRedirect()
 const sendEmailCoolDown = ref(0)
 
 async function SendEmailCode() {
-  if (!formRef.value || !await formRef.value?.validateField('qq')) return
-  sendEmailCoolDown.value = 60
-  const interval = setInterval(() => {
-    sendEmailCoolDown.value--
-    if (sendEmailCoolDown.value <= 0) clearInterval(interval)
-  }, 1000)
-  await UserApi.sendEmail(form2.qq + "@qq.com")
+	if (!formRef.value || !(await formRef.value?.validateField("qq"))) return
+	sendEmailCoolDown.value = 60
+	const interval = setInterval(() => {
+		sendEmailCoolDown.value--
+		if (sendEmailCoolDown.value <= 0) clearInterval(interval)
+	}, 1000)
+	await UserApi.sendEmail(form2.qq + "@qq.com")
 }
 
 async function onSubmit() {
-  if (!formRef.value || !await formRef.value.validate()) return;
-  if (method.value === 'username') {
-    if (form1.login.startsWith("qq")) {
-      ElMessage.error("QQ作为用户名已弃用，请使用QQ邮箱登录")
-      return
-    }
-    await store.login('username', {user: form1.login, password: form1.password})
-  } else if (method.value === 'email')
-    await store.login('email', {email: form2.qq + "@qq.com", code: form2.code})
+	if (!formRef.value || !(await formRef.value.validate())) return
+	if (method.value === "username") {
+		if (form1.login.startsWith("qq")) {
+			ElMessage.error("QQ作为用户名已弃用，请使用QQ邮箱登录")
+			return
+		}
+		await store.login("username", {
+			user: form1.login,
+			password: form1.password,
+		})
+	} else if (method.value === "email")
+		await store.login("email", {
+			email: form2.qq + "@qq.com",
+			code: form2.code,
+		})
 }
 </script>
 

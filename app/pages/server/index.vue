@@ -74,49 +74,52 @@
 </template>
 
 <script lang="ts" setup>
-import {ServerApi, type ServerInfo} from '~/backendApi/server';
+import { ServerApi, type ServerInfo } from "~/backendApi/server"
 
 useHead({
-  title: '服务器列表',
-  meta: [
-    {name: 'description', content: '像素工厂资源站，中文公共服务器排行榜'},
-    {name: 'keywords', content: 'Mindustry,像素工厂,资源站,服务器,多人,联机,微泽'},
-  ],
+	title: "服务器列表",
+	meta: [
+		{ name: "description", content: "像素工厂资源站，中文公共服务器排行榜" },
+		{
+			name: "keywords",
+			content: "Mindustry,像素工厂,资源站,服务器,多人,联机,微泽",
+		},
+	],
 })
 
-const {data, refresh, status} = await useAsyncData(ServerApi.list, {
-  default: () => [],
-  getCachedData: (k) => useNuxtApp().payload.data[k],
+const { data, refresh, status } = await useAsyncData(ServerApi.list, {
+	default: () => [],
+	getCachedData: (k) => useNuxtApp().payload.data[k],
 })
 const state = reactive({
-  autoRefresh: true,
-  showModal: false,
-  address: '',
-  adding: false,
+	autoRefresh: true,
+	showModal: false,
+	address: "",
+	adding: false,
 })
 
 watchPostEffect((cleanFn) => {
-  if (!state.autoRefresh || import.meta.server) return
-  const intervalId = setInterval(() => {
-    refresh().then()
-  }, 60000)
-  cleanFn(() => clearInterval(intervalId))
+	if (!state.autoRefresh || import.meta.server) return
+	const intervalId = setInterval(() => {
+		refresh().then()
+	}, 60000)
+	cleanFn(() => clearInterval(intervalId))
 })
 
 function i(scope: any) {
-  return scope.row as ServerInfo
+	return scope.row as ServerInfo
 }
 
 async function addServer(value: string) {
-  if (!value) return
-  state.adding = true
-  try {
-    await ServerApi.add(value)
-    await refresh()
-    state.address = ''
-    state.showModal = false
-  } finally {
-    state.adding = false
-  }
+	if (!value) return
+	state.adding = true
+	try {
+		await ServerApi.add(value)
+		await refresh()
+		state.address = ""
+		state.showModal = false
+	} finally {
+		state.adding = false
+	}
 }
 </script>

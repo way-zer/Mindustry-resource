@@ -16,23 +16,23 @@
 </template>
 
 <script lang="tsx" setup>
-import {gameModes} from '@/backendApi/maps/type'
-import {MapApi} from '@/backendApi/maps'
+import { MapApi } from "@/backendApi/maps"
+import { gameModes } from "@/backendApi/maps/type"
 
 const props = defineProps({
-  thread: Number,
-  now: {
-    type: String,
-    enums: gameModes,
-    default: 'UnKnown',
-  },
+	thread: Number,
+	now: {
+		type: String,
+		enums: gameModes,
+		default: "UnKnown",
+	},
 })
 
 const show = ref(false)
-const selectMode = ref('')
+const selectMode = ref("")
 
 async function submit() {
-  await MapApi.editMode(''+props.thread, selectMode.value);
-  history.back()
+	await MapApi.editMode("" + props.thread, selectMode.value)
+	history.back()
 }
 </script>

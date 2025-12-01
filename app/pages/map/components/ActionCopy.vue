@@ -12,25 +12,24 @@
 </template>
 
 <script lang="ts" setup>
-
 const props = defineProps({
-  thread: Number,
-  circle: {
-    type: Boolean,
-    default: false,
-  }
+	thread: Number,
+	circle: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 const buttonRef = ref<HTMLElement>()
 const commandRef = useTemplateRef<Node>("commandRef")
 const content = computed(() => `/vote map ${props.thread}`)
 const { copy, copied } = useClipboard({
-  source: content,
-  legacy: true,
+	source: content,
+	legacy: true,
 })
 watchPostEffect(() => {
-  if (copied.value) {
-    ElMessage.success('换图指令已复制到剪贴板')
-  }
+	if (copied.value) {
+		ElMessage.success("换图指令已复制到剪贴板")
+	}
 })
 </script>

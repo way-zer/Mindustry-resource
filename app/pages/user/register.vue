@@ -24,28 +24,28 @@
 </template>
 
 <script lang="ts" setup>
-import type {FormInstance} from "element-plus";
+import type { FormInstance } from "element-plus"
 
 const store = useUserStore()
 const route = useRoute()
 
 const formRef = ref<FormInstance>()
 const form = reactive({
-  name: '',
+	name: "",
 })
 
 store.registerAutoRedirect()
 
 async function onSubmit() {
-  if (!formRef.value || !await formRef.value.validate()) return;
-  await store.register({name: form.name})
+	if (!formRef.value || !(await formRef.value.validate())) return
+	await store.register({ name: form.name })
 }
 
 async function back(discard: boolean) {
-  if (discard) {
-    store.registerCode = null
-  }
-  navigateTo({path: '/user/login', query: route.query}, {replace: true})
+	if (discard) {
+		store.registerCode = null
+	}
+	navigateTo({ path: "/user/login", query: route.query }, { replace: true })
 }
 </script>
 

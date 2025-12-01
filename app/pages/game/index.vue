@@ -58,44 +58,51 @@
 const ReleaseList = createReusableTemplate<{ list: ReleaseType[] }>()
 
 interface ReleaseType {
-  html_url: string;
-  tag_name: string;
-  published_at: string;
-  assets: { name: string; browser_download_url: string; size: number }[];
+	html_url: string
+	tag_name: string
+	published_at: string
+	assets: { name: string; browser_download_url: string; size: number }[]
 }
 
 useHead({
-  title: '游戏下载',
-  meta: [
-    {name: 'description', content: '像素工厂资源站，最新游戏免费下载'},
-    {name: 'keywords', content: 'Mindustry,像素工厂,资源站,游戏,最新,免费下载,微泽'},
-  ],
+	title: "游戏下载",
+	meta: [
+		{ name: "description", content: "像素工厂资源站，最新游戏免费下载" },
+		{
+			name: "keywords",
+			content: "Mindustry,像素工厂,资源站,游戏,最新,免费下载,微泽",
+		},
+	],
 })
 
 const useMirror = ref(true)
 
 function getDownloadUrl(url: string) {
-  if (!useMirror.value) return url
-  return 'https://gh.tinylake.top/' + url
+	if (!useMirror.value) return url
+	return "https://gh.tinylake.top/" + url
 }
 
+const { data: releases } = await useAsyncData(
+	async () => {
+		function fetchRelease(repo: string, perPage = 5) {
+			return $fetch<ReleaseType[]>(
+				`https://api.github.com/repos/${repo}/releases?per_page=${perPage}`,
+			)
+		}
 
-const {data: releases} = await useAsyncData(async () => {
-  function fetchRelease(repo: string, perPage = 5) {
-    return $fetch<ReleaseType[]>(`https://api.github.com/repos/${repo}/releases?per_page=${perPage}`)
-  }
+		const releases = fetchRelease("Anuken/Mindustry", 5)
+		const mdtxReleases = fetchRelease("TinyLake/MindustryX", 5)
+		const beReleases = fetchRelease("Anuken/MindustryBuilds", 15)
 
-  const releases = fetchRelease('Anuken/Mindustry', 5)
-  const mdtxReleases = fetchRelease('TinyLake/MindustryX', 5)
-  const beReleases = fetchRelease('Anuken/MindustryBuilds', 15)
-
-  return {
-    releases: await releases,
-    mdtxReleases: await mdtxReleases,
-    be: await beReleases,
-  }
-}, {
-  default: () => ({releases: [], mdtxRelease: [], be: []}),
-  getCachedData: (k) => useNuxtApp().payload.data[k],
-})
+		return {
+			releases: await releases,
+			mdtxReleases: await mdtxReleases,
+			be: await beReleases,
+		}
+	},
+	{
+		default: () => ({ releases: [], mdtxRelease: [], be: [] }),
+		getCachedData: (k) => useNuxtApp().payload.data[k],
+	},
+)
 </script>

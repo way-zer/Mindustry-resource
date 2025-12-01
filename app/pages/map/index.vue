@@ -52,46 +52,45 @@
 </template>
 
 <script lang="tsx" setup>
-import { gameModes } from '@/backendApi/maps/type'
-import ActionUpload from './components/ActionUpload.vue'
-import MapCard from "~/pages/map/components/MapCard.vue";
+import { gameModes } from "@/backendApi/maps/type"
+import MapCard from "~/pages/map/components/MapCard.vue"
+import ActionUpload from "./components/ActionUpload.vue"
 
 useHead({
-  title: '地图分享',
-  meta: [
-    { name: 'description', content: '像素工厂资源站，丰富的地图资源下载' },
-    { name: 'keywords', content: 'Mindustry,像素工厂,资源站,地图,服务器,微泽' },
-  ],
+	title: "地图分享",
+	meta: [
+		{ name: "description", content: "像素工厂资源站，丰富的地图资源下载" },
+		{ name: "keywords", content: "Mindustry,像素工厂,资源站,地图,服务器,微泽" },
+	],
 })
 const store = useMapStore()
 const tmpSearch = ref(store.searchKey)
-watchEffect(() => tmpSearch.value = store.searchKey)
+watchEffect(() => (tmpSearch.value = store.searchKey))
 await callOnce(() => store.pullMore())
 const { isLoading } = useInfiniteScroll(document, store.pullMore, {
-  canLoadMore: () => !store.loading && !store.noMore,
-  distance: 300,
+	canLoadMore: () => !store.loading && !store.noMore,
+	distance: 300,
 })
 
 function regexForTag(tag: string) {
-  return new RegExp('@' + tag + ':(\\w+)')
+	return new RegExp("@" + tag + ":(\\w+)")
 }
 
 function getTag(tag: string) {
-  return store.searchKey.match(regexForTag(tag))?.[1]
+	return store.searchKey.match(regexForTag(tag))?.[1]
 }
 
 function replaceTag(tag: string, value: string | number | boolean | undefined) {
-  const regex = regexForTag(tag)
-  const search = store.searchKey
-  if (!search.match(regex)) {
-    if (!value) return
-    store.search(search + ` @${tag}:${value} `)
-  } else {
-    const v = !value ? '' : `@${tag}:${value}`
-    store.search(search.replace(regex, v))
-  }
+	const regex = regexForTag(tag)
+	const search = store.searchKey
+	if (!search.match(regex)) {
+		if (!value) return
+		store.search(search + ` @${tag}:${value} `)
+	} else {
+		const v = !value ? "" : `@${tag}:${value}`
+		store.search(search.replace(regex, v))
+	}
 }
-
 </script>
 
 <style lang="stylus" scoped>

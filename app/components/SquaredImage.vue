@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 const props = defineProps({
-  src: String
+	src: String,
 })
 </script>
 

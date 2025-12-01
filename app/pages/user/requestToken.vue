@@ -1,30 +1,31 @@
 <script lang="ts" setup>
-import {UserApi} from '~/backendApi/user';
+import { UserApi } from "~/backendApi/user"
 
 const user = useUserStore()
-const code = useRouteQuery("code", null, {transform: String})
-const {data} = useAsyncData(() => UserApi.tokenInfo(code.value), {immediate: Boolean(code.value)})
+const code = useRouteQuery("code", null, { transform: String })
+const { data } = useAsyncData(() => UserApi.tokenInfo(code.value), {
+	immediate: Boolean(code.value),
+})
 const clientName = computed(() => {
-  switch (data.value?.type) {
-    case 'CLIENT':
-      return 'Mindustry客户端'
-    case 'WEB':
-      return '网页/' + data.value.name
-    case 'SERVER':
-      return '服务端/' + data.value.name
-    default:
-      return data.value?.type
-  }
+	switch (data.value?.type) {
+		case "CLIENT":
+			return "Mindustry客户端"
+		case "WEB":
+			return "网页/" + data.value.name
+		case "SERVER":
+			return "服务端/" + data.value.name
+		default:
+			return data.value?.type
+	}
 })
 
 const success = ref(false)
 
-async function submit(op: 'confirm' | 'reject') {
-  if (!user.logged) return user.redirectToLogin()
-  await UserApi.tokenConfirm(code.value, op)
-  success.value = true
+async function submit(op: "confirm" | "reject") {
+	if (!user.logged) return user.redirectToLogin()
+	await UserApi.tokenConfirm(code.value, op)
+	success.value = true
 }
-
 </script>
 <template>
   <el-result v-if="success" icon="success" title="操作成功" sub-title="你可以关闭当前页面，返回应用继续操作"/>

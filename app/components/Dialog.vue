@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
-  onClose: () => void,
-  maxWidth?: number | string,
+	onClose: () => void
+	maxWidth?: number | string
 }>()
 </script>
 

@@ -4,7 +4,7 @@
 </template>
 <script lang="ts" setup>
 useHead({
-  title: '加载中',
+	title: "加载中",
 })
 navigateTo("/map")
 </script>

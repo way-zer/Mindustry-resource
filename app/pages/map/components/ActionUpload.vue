@@ -12,17 +12,18 @@
 
 <script lang="ts" setup>
 const props = defineProps({
-  thread: {//如果用于更新地图，不为空
-    type: Number,
-    require: false
-  },
-  circle: {
-    type: Boolean,
-    default: false
-  }
+	thread: {
+		//如果用于更新地图，不为空
+		type: Number,
+		require: false,
+	},
+	circle: {
+		type: Boolean,
+		default: false,
+	},
 })
 
 function click() {
-  navigateTo("/map/upload" + (props.thread ? `?update=${props.thread}` : ''))
+	navigateTo("/map/upload" + (props.thread ? `?update=${props.thread}` : ""))
 }
 </script>

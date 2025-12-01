@@ -7,15 +7,18 @@
 </template>
 
 <script lang="ts" setup>
-import {MapApi} from '@/backendApi/maps'
+import { MapApi } from "@/backendApi/maps"
 
-const props = withDefaults(defineProps<{
-  thread: number,
-  mapName?: string,
-  circle?: boolean
-}>(), {circle: false})
+const props = withDefaults(
+	defineProps<{
+		thread: number
+		mapName?: string
+		circle?: boolean
+	}>(),
+	{ circle: false },
+)
 
 async function download() {
-  await MapApi.download("" + props.thread)
+	await MapApi.download("" + props.thread)
 }
 </script>

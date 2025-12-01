@@ -35,14 +35,13 @@
 </template>
 
 <script lang="tsx" setup>
-import ActionCopy from "./ActionCopy.vue";
-import ActionDownload from "./ActionDownload.vue";
-import type {MapInfo} from "~/backendApi/maps/type";
+import type { MapInfo } from "~/backendApi/maps/type"
+import ActionCopy from "./ActionCopy.vue"
+import ActionDownload from "./ActionDownload.vue"
 
-const {map} = defineProps<{
-  map: MapInfo
+const { map } = defineProps<{
+	map: MapInfo
 }>()
-
 </script>
 
 <style lang="stylus" scoped>

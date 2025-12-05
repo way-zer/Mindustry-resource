@@ -17,6 +17,7 @@ export default defineStore("user", () => {
 		undefined,
 	)
 	const route = useRoute()
+	const devNoRedirect = useRouteQuery("dev")
 
 	async function refresh() {
 		info.value = await UserApi.info()
@@ -41,6 +42,7 @@ export default defineStore("user", () => {
 			watch(
 				() => logged.value,
 				async (val) => {
+					if (devNoRedirect.value !== undefined) return
 					if (val) {
 						ElMessage.success("登录成功")
 						if (redirectPath.value) {

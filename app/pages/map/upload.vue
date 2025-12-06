@@ -1,5 +1,5 @@
 <template>
-	<PureDialog max-width="800px" @close="() => navigateTo('/map')">
+	<PureDialog max-width="800px" @close="() => backOrNavigateTo('/map')">
 		<h2>{{ update ? "更新地图" : "上传地图" }}</h2>
 		<div class="divider" />
 		<el-alert

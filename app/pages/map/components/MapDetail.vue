@@ -34,11 +34,10 @@
 				<b>地图编号:</b> {{ detail.thread }} <b>游戏模式:</b> {{ detail.mode }}
 				<b>上传者:</b>
 				<el-tooltip content="点击查看该用户更多地图">
-					<a
-						@click="mapStore.navigateToMaps('@user:' + detail.user?.gid).then()"
+					<NuxtLink
+						:to="{ path: '/map', query: { q: '@user:' + detail.user?.gid } }"
+						>{{ detail.user?.name }}</NuxtLink
 					>
-						{{ detail.user?.name }}
-					</a>
 				</el-tooltip>
 			</h4>
 			<h4>
@@ -147,6 +146,10 @@
 <script lang="tsx" setup>
 import { JsonViewer } from "vue3-json-viewer"
 import "vue3-json-viewer/dist/vue3-json-viewer.css"
+import ActionCopy from "./ActionCopy.vue"
+import ActionChangeMode from "./ActionChangeMode.vue"
+import ActionDownload from "./ActionDownload.vue"
+import ActionUpload from "./ActionUpload.vue"
 import type { MapDetail, Rules, RulesV5, Tags } from "@/backendApi/maps/type"
 
 const props = defineProps<{
@@ -155,8 +158,6 @@ const props = defineProps<{
 	path: string
 	admin: boolean
 }>()
-
-const mapStore = useMapStore()
 
 const tags = computed(() => props.detail.tags as Tags)
 const rules = computed(() => tags.value.rules as Rules)

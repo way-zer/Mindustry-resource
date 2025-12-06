@@ -20,6 +20,10 @@ const props = withDefaults(
 )
 
 function click() {
-	navigateTo("/map/upload" + (props.thread ? `?update=${props.thread}` : ""))
+	navigateTo({
+		path: "/map/upload",
+		query: props.thread ? { update: props.thread } : {},
+		state: { backWhenClose: true },
+	})
 }
 </script>

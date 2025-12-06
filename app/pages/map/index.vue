@@ -5,7 +5,7 @@
 				v-model="tmpSearch"
 				placeholder="查找地图"
 				clearable
-				@change="store.search"
+				@change="search"
 			/>
 			<ActionUpload />
 		</template>
@@ -74,7 +74,7 @@
 
 		<el-row type="flex" :gutter="16">
 			<el-col v-for="map in store.data" :key="map.id" :xs="24" :sm="12" :lg="6">
-				<MapCard :map="map" />
+				<MapCard :map="map" :detail="detailRoute('' + map.id)" />
 			</el-col>
 			<el-empty
 				v-if="store.data.length === 0"
@@ -95,6 +95,7 @@
 import { gameModes } from "@/backendApi/maps/type"
 import MapCard from "~/pages/map/components/MapCard.vue"
 import ActionUpload from "./components/ActionUpload.vue"
+import type { TypedRouteLocationRaw } from "@typed-router/__router"
 
 useHead({
 	title: "地图分享",
@@ -122,14 +123,31 @@ function getTag(tag: string) {
 
 function replaceTag(tag: string, value: string | number | boolean | undefined) {
 	const regex = regexForTag(tag)
-	const search = store.searchKey
-	if (!search.match(regex)) {
+	const key = store.searchKey
+	if (!key.match(regex)) {
 		if (!value) return
-		store.search(search + ` @${tag}:${value} `)
+		search(key + ` @${tag}:${value} `)
 	} else {
 		const v = !value ? "" : `@${tag}:${value}`
-		store.search(search.replace(regex, v))
+		search(key.replace(regex, v))
 	}
+}
+
+function detailRoute(thread: string) {
+	return {
+		path: `/map/${thread}/latest`,
+		state: { backWhenClose: true },
+	} satisfies TypedRouteLocationRaw
+}
+
+function search(key: string) {
+	while (key.includes("  ")) key = key.replace("  ", " ")
+	key = key.trim() //reduce space
+	if (key.match(/^\d{5}$/)) {
+		navigateTo(detailRoute(key))
+		return
+	}
+	store.search(key)
 }
 </script>
 

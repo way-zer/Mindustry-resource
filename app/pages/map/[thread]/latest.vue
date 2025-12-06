@@ -1,5 +1,5 @@
 <template>
-	<PureDialog max-width="1200px" @close="() => navigateTo('/map')">
+	<PureDialog max-width="1200px" @close="close">
 		<MapDetail
 			v-if="detail"
 			:detail="detail"
@@ -40,9 +40,12 @@ useHead({
 })
 
 async function doDelete() {
-	await MapApi.deleteThread(thread.value)
-	mapStore.data = mapStore.data.filter((it) => "" + it.id !== thread.value)
-	navigateTo({ path: "/map" }, { replace: true })
+	await mapStore.deleteMap(thread.value)
+	await close()
+}
+
+function close() {
+	backOrNavigateTo("/map")
 }
 </script>
 

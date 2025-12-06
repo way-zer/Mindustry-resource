@@ -27,11 +27,7 @@
 				<el-divider direction="vertical" />
 				<ActionDownload :thread="map.id" :map-name="map.name" />
 				<el-divider direction="vertical" />
-				<NuxtLink
-					v-slot="{ href, navigate }"
-					:to="`/map/${map.id}/latest`"
-					custom
-				>
+				<NuxtLink v-slot="{ href, navigate }" :to="detail" custom>
 					<app-tooltip content="地图详情">
 						<el-button link tag="a" :href="href" @click="navigate">
 							<Icon name="ep:more" />
@@ -47,9 +43,11 @@
 import type { MapInfo } from "~/backendApi/maps/type"
 import ActionCopy from "./ActionCopy.vue"
 import ActionDownload from "./ActionDownload.vue"
+import type { RouteLocationRaw } from "vue-router"
 
-const { map } = defineProps<{
+const { map, detail } = defineProps<{
 	map: MapInfo
+	detail: RouteLocationRaw
 }>()
 </script>
 

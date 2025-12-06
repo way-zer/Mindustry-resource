@@ -25,12 +25,6 @@ export default defineStore("map", () => {
 			loading.value = false
 		},
 		async search(key: string) {
-			while (key.includes("  ")) key = key.replace("  ", " ")
-			key = key.trim() //reduce space
-			if (key.match(/^\d{5}$/)) {
-				navigateTo(`/map/${key}/latest`)
-				return
-			}
 			loading.value = true
 			searchKey.value = key
 			const newMaps = await MapApi.list(0, key)
@@ -38,13 +32,9 @@ export default defineStore("map", () => {
 			noMore.value = newMaps.length === 0
 			loading.value = false
 		},
-		async navigateToMaps(searchKey: string) {
-			navigateTo({
-				path: "/map",
-				query: {
-					q: searchKey,
-				},
-			})
+		async deleteMap(thread: string) {
+			await MapApi.deleteThread(thread)
+			data.value = data.value.filter((it) => "" + it.id !== thread)
 		},
 	}
 })

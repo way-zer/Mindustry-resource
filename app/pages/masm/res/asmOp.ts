@@ -7,6 +7,7 @@
 //扩展 End Jump Wait
 //单位 uBind uControl uRadar uLocate
 // noinspection JSUnusedGlobalSymbols
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 //======Flow======
 function end() {
@@ -169,7 +170,7 @@ function uLocate<T extends keyof ULocateOP>(
 	...arg: Parameters<ULocateOP[T]>
 ) {
 	const [outX, outY, isFound, build] = builder.tempVars(4)
-	const outArg = [] as any[]
+	const outArg = [] as unknown[]
 	if (type === "ore") outArg[2] = arg[0]
 	else {
 		outArg.push(arg[0], arg[1], null)

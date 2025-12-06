@@ -1,5 +1,5 @@
 import { ElMessage } from "element-plus"
-import type { FetchOptions } from "ofetch"
+import type { FetchOptions, IFetchError } from "ofetch"
 
 type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
@@ -39,9 +39,10 @@ export async function request<R>(
 			...option,
 			headers,
 		})
-	} catch (e: any) {
+	} catch (e) {
+		const error = e as IFetchError<ErrorData>
 		if (option?.skipErrorHandler) throw e
-		const data = e.data as ErrorData
+		const data = error.data
 		let message: string | ReturnType<typeof h>
 		if (data?.errorMessage) {
 			if (data.actions) {
@@ -63,14 +64,14 @@ export async function request<R>(
 				if (option?.onAction?.(data.actions)) throw e
 			}
 			message = h("div", {}, [
-				`请求失败(${e.status}): ${data.errorMessage}`,
+				`请求失败(${error.status}): ${data.errorMessage}`,
 				h("br"),
 				data.data && h("pre", {}, JSON.stringify(data.data)),
 			])
-		} else if (e.status) {
-			message = `请求失败(${e.status}): ${e.data ?? e.statusText}`
+		} else if (error.status) {
+			message = `请求失败(${error.status}): ${error.data ?? error.statusText}`
 		} else {
-			message = e.message ?? e.toString()
+			message = error.message ?? error.toString()
 		}
 
 		ElMessage.error({ message, duration: 30_000, showClose: true })

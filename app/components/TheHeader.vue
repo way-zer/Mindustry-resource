@@ -17,11 +17,11 @@
 			>
 		</el-menu-item>
 		<el-menu-item
-			v-for="route in navRoutes"
-			:key="route.path"
-			:index="route.path"
+			v-for="navRoute in navRoutes"
+			:key="navRoute.path"
+			:index="navRoute.path"
 		>
-			{{ route.name }}
+			{{ navRoute.name }}
 		</el-menu-item>
 		<ClientOnly>
 			<el-menu-item

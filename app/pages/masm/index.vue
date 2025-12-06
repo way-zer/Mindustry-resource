@@ -26,6 +26,7 @@
 		<el-tabs>
 			<el-tab-pane
 				v-for="(output, i) of outputs"
+				:key="i"
 				:label="output.name ?? 'Output #' + (i + 1)"
 			>
 				<pre>{{ output.content }}</pre>

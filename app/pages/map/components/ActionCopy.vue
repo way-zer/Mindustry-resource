@@ -27,13 +27,13 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
-	thread: Number,
-	circle: {
-		type: Boolean,
-		default: false,
-	},
-})
+const props = withDefaults(
+	defineProps<{
+		thread: number
+		circle?: boolean
+	}>(),
+	{ circle: false },
+)
 
 const buttonRef = ref<HTMLElement>()
 const commandRef = useTemplateRef<Node>("commandRef")

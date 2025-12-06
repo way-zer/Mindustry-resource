@@ -1,4 +1,5 @@
 // noinspection SpellCheckingInspection
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 const Vars = {
 	this: variable("@this"),

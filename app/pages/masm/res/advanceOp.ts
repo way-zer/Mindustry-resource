@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 type CodeBody = () => void
 type BoolExpOP =
 	| "notEqual"
@@ -52,7 +54,7 @@ function withDefault(v: Var, value: Var) {
 	})
 }
 
-function expr(body: (it: Var) => string | void): Var {
+function expr(body: (it: Var) => string | undefined): Var {
 	const v = variable()
 	const result = body(v)
 	if (typeof result === "string") builder.line(result)

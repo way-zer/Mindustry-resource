@@ -62,8 +62,7 @@ export function colorize(text: string): ColorData[] {
 	function colors(str: string): string {
 		if (str.match(/#[0-9a-f]{3,8}/i)) return str
 		else {
-			// @ts-expect-error
-			return colorMap[str.toLowerCase()]
+			return colorMap[str.toLowerCase() as keyof typeof colorMap] || ""
 		}
 	}
 

@@ -45,7 +45,7 @@
 		>
 			<el-table-column label="地址 (按版本筛选)" prop="address" min-width="200">
 				<template #default="scope">
-					<tooltip>
+					<app-tooltip>
 						<template #content>
 							<span v-if="i(scope).online">延迟{{ i(scope).timeMs }}ms</span>
 							<span v-else
@@ -71,7 +71,7 @@
 							<Icon v-else name="ep:remove-filled" class="text-error" />
 							版本 {{ i(scope).version }}
 						</div>
-					</tooltip>
+					</app-tooltip>
 				</template>
 			</el-table-column>
 			<el-table-column label="名字" prop="name" min-width="300">
@@ -148,8 +148,8 @@ watchPostEffect((cleanFn) => {
 	cleanFn(() => clearInterval(intervalId))
 })
 
-function i(scope: any) {
-	return scope.row as ServerInfo
+function i(scope: unknown) {
+	return (scope as { row: ServerInfo }).row
 }
 
 async function addServer(value: string) {

@@ -1,9 +1,9 @@
 <template>
-	<tooltip content="下载地图">
+	<app-tooltip content="下载地图">
 		<el-button :link="!circle" :circle="circle" @click="download">
 			<Icon name="ep:download" />
 		</el-button>
-	</tooltip>
+	</app-tooltip>
 </template>
 
 <script lang="ts" setup>
@@ -15,7 +15,7 @@ const props = withDefaults(
 		mapName?: string
 		circle?: boolean
 	}>(),
-	{ circle: false },
+	{ circle: false, mapName: undefined },
 )
 
 async function download() {

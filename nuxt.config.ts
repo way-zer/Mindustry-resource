@@ -81,7 +81,7 @@ export default defineNuxtConfig({
 	},
 	pwa: {
 		registerType: "autoUpdate",
-		manifest: pwaManifest as any,
+		manifest: pwaManifest as object,
 		workbox: {
 			globPatterns: ["**/index.html"],
 			navigateFallback: "/pwa-fallback",

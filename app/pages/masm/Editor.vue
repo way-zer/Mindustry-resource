@@ -8,30 +8,24 @@ import type { editor as Editor } from "monaco-editor"
 import { onBeforeUnmount, ref, watch } from "vue"
 import { loadMonaco } from "./_myUtil"
 
-const props = defineProps({
-	modelValue: {
-		type: String,
-		required: true,
+const props = withDefaults(
+	defineProps<{
+		modelValue: string
+		theme?: string
+		language?: string
+		file: string
+		options?: object
+		original?: string
+		diffEditor?: boolean
+	}>(),
+	{
+		theme: "vs",
+		language: "typescript",
+		options: () => ({}),
+		original: "",
+		diffEditor: false,
 	},
-	theme: {
-		type: String,
-		default: "vs",
-	},
-	language: String,
-	file: {
-		type: String,
-		required: true,
-	},
-	options: Object,
-	original: String,
-	amdRequire: {
-		type: Function,
-	},
-	diffEditor: {
-		type: Boolean,
-		default: false,
-	},
-})
+)
 const emit = defineEmits<{
 	(event: "editorWillMount", monaco: Monaco): void
 	(

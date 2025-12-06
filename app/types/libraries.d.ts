@@ -5,7 +5,6 @@ declare module "vue-monaco" {
 		theme?: string
 		language?: string
 		options?: object
-		amdRequire?: function
 		diffEditor?: boolean
 	}>
 	export default MonacoEditor

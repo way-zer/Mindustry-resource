@@ -32,11 +32,11 @@
 					:to="`/map/${map.id}/latest`"
 					custom
 				>
-					<tooltip content="地图详情">
+					<app-tooltip content="地图详情">
 						<el-button link tag="a" :href="href" @click="navigate">
 							<Icon name="ep:more" />
 						</el-button>
-					</tooltip>
+					</app-tooltip>
 				</NuxtLink>
 			</el-row>
 		</div>

@@ -1,20 +1,20 @@
 <template>
   <Dialog @close="() => navigateTo('/map')" maxWidth="1200px">
     <h2 class="text-center font-bold">
-      <ColorizeSpan :text="tags.name" no-color/>
+      <ColorizeSpan :text="tags.name" no-color />
     </h2>
     <el-row type="flex" justify="center">
       <el-col :md="10" :xs="18">
-        <SquaredImage :src="detail.preview"/>
+        <SquaredImage :src="detail.preview" />
         <el-row :gutter="24" justify="center" type="flex">
-          <ActionCopy :thread="detail.thread" circle/>
-          <ActionDownload :thread="thread" circle :map-name="tags.name"/>
-          <ActionChangeMode v-if="admin" :thread="detail.thread" :now="detail.mode"/>
-          <ActionUpload v-if="admin" :thread="detail.thread" circle/>
+          <ActionCopy :thread="detail.thread" circle />
+          <ActionDownload :thread="thread" circle :map-name="tags.name" />
+          <ActionChangeMode v-if="admin" :thread="detail.thread" :now="detail.mode" />
+          <ActionUpload v-if="admin" :thread="detail.thread" circle />
           <el-popconfirm title="确认删除地图？该操作不可恢复" @confirm="doDelete">
             <template #reference>
               <el-button circle>
-                <Icon name="ep:delete"/>
+                <Icon name="ep:delete" />
               </el-button>
             </template>
           </el-popconfirm>
@@ -25,7 +25,7 @@
           <b>宽高:</b> {{ tags.width }}x{{ tags.height }}
           <b>游戏版本:</b> {{ tags.build }}
           <b>作者:</b>
-          <ColorizeSpan :text="tags.author" no-color/>
+          <ColorizeSpan :text="tags.author" no-color />
         </h4>
         <h4><b>地图编号:</b> {{ detail.thread }} <b>游戏模式:</b> {{ detail.mode }} <b>上传者:</b>
           <el-tooltip content="点击查看该用户更多地图">
@@ -35,15 +35,15 @@
           </el-tooltip>
         </h4>
         <h4><b>描述:</b>
-          <ColorizeSpan :text="tags.description" no-color/>
+          <ColorizeSpan :text="tags.description" no-color />
         </h4>
         <h5><b>所需Mod:</b> {{ tags.mods }}</h5>
         <h4><b>规则:</b></h4>
         <ul>
           <li>刷怪: {{ rules.waves ? '开' : '关' }} 进攻模式: {{ rules.attackMode ? '开' : '关' }}</li>
           <li v-if="version >= 6">爆炸伤害: {{ rules.damageExplosions ? '开' : '关' }} 火焰: {{
-              rules.fire ? '开' : '关'
-            }}
+            rules.fire ? '开' : '关'
+          }}
             <span v-if="version < 7">弹药: {{ rules.unitAmmo ? '开' : '关' }}</span>
           </li>
           <li v-if="version === 5">单位血量: {{ rulesOld.unitHealthMultiplier || '1' }}倍</li>
@@ -101,11 +101,11 @@
           <li>太阳能发电: {{ rules.solarPowerMultiplier || '1' }}倍</li>
         </ul>
         <b>原始数据:</b>
-        <json-viewer :value="tags" :expandDepth="0" style="padding: 0"/>
+        <json-viewer :value="tags" :expandDepth="0" style="padding: 0" />
       </el-col>
     </el-row>
     <div id="footer">
-      <span>可以直接分享该页链接给他人</span><br/>
+      <span>可以直接分享该页链接给他人</span><br />
       <pre>{{ path }}</pre>
     </div>
   </Dialog>
@@ -125,50 +125,57 @@ const userStore = useUserStore()
 const mapStore = useMapStore()
 const route = useRoute()
 const path = computed(() =>
-	import.meta.server ? useRequestURL() : location.toString(),
+  import.meta.server ? useRequestURL() : location.toString(),
 )
 const thread = computed(() => +route.params.thread)
 
 const { data: detail, error } = await useAsyncData(
-	() => {
-		return MapApi.detail("" + thread.value)
-	},
-	{ deep: false, default: () => ({}) as Partial<MapDetail> },
+  () => {
+    return MapApi.detail("" + thread.value)
+  },
+  { deep: false, default: () => ({}) as Partial<MapDetail> },
 )
 const tags = computed(() => (detail.value.tags || {}) as Partial<Tags>)
 const rules = computed(() => (tags.value.rules || {}) as Partial<Rules>)
 const rulesOld = computed(() => (tags.value.rules || {}) as Partial<RulesV5>)
 const version = computed(() => {
-	const build = tags.value.build || -1
-	if (build > 104) return 6
-	if (build > 0) return 5
-	return 0
+  const build = tags.value.build || -1
+  if (build > 104) return 6
+  if (build > 0) return 5
+  return 0
 })
 const admin = computed(() => {
-	if (!userStore.logged) return false
-	return userStore.admin || userStore.info.gid == detail.value.user?.gid
+  if (!userStore.logged) return false
+  return userStore.admin || userStore.info.gid == detail.value.user?.gid
 })
 
 useHead({
-	title: computed(() =>
-		tags.value.name ? "地图详情 - " + tags.value.name : "地图详情",
-	),
+  title: computed(() =>
+    tags.value.name ? "地图详情 - " + tags.value.name : "地图详情",
+  ),
 })
 
 async function doDelete() {
-	await MapApi.deleteThread("" + detail.value.thread)
-	mapStore.data = mapStore.data.filter((it) => it.id != detail.value.thread)
-	navigateTo({ path: "/map" }, { replace: true })
+  await MapApi.deleteThread("" + detail.value.thread)
+  mapStore.data = mapStore.data.filter((it) => it.id !== detail.value.thread)
+  navigateTo({ path: "/map" }, { replace: true })
 }
 </script>
 
-<style scoped lang="stylus">
-h1, h2, h3, h4, h5, h6
-  margin-top 0;
-  margin-bottom .5em;
-  color rgba(0, 0, 0, .85);
-  font-weight 500;
+<style scoped>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: .5em;
+  color: rgba(0, 0, 0, .85);
+  font-weight: 500;
+}
 
-#footer
-  text-align center
+#footer {
+  text-align: center;
+}
 </style>

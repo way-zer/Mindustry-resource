@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ServerApi } from "~/backendApi/server"
+import { ServerApi } from "./_api"
 
 const user = useUserStore()
 const code = useRouteQuery<string>("code")
@@ -32,19 +32,10 @@ function exit() {
     <el-row class="relative mt-4 p-4 justify-evenly">
       <el-button type="warning" @click="() => submit()">登录</el-button>
       <el-button type="info" @click="exit">取消</el-button>
-      <div v-if="!user.logged" class="mask flex items-center justify-center rounded-4">
+      <div v-if="!user.logged" class="absolute w-full h-full left-0 top-0 bg-black/80 flex items-center justify-center rounded-4">
         <el-button type="primary" @click="user.redirectToLogin()">请先登录</el-button>
       </div>
     </el-row>
   </div>
   <el-result v-else icon="error" title="找不到授权请求,或请求已过期"/>
 </template>
-<style lang="stylus" scoped>
-.mask
-  position absolute
-  width 100%
-  height 100%
-  left 0
-  top 0
-  background-color rgba(0, 0, 0, 0.8)
-</style>

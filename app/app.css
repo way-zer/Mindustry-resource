@@ -3,11 +3,18 @@
 @plugin "@tailwindcss/typography";
 /*noinspection CssUnknownProperty*/
 @plugin "daisyui" {
-    themes: corporate --default;
+	themes: corporate --default;
 }
 
-
 /*Fix DaisyUI Modal bug*/
-:where( :root:has( .modal-open, .modal[open], .modal:target, .modal-toggle:checked, .drawer:not(.drawer-open) > .drawer-toggle:checked ) ) {
-    scrollbar-gutter: auto;
+:where(
+		:root:has(
+				.modal-open,
+				.modal[open],
+				.modal:target,
+				.modal-toggle:checked,
+				.drawer:not(.drawer-open) > .drawer-toggle:checked
+			)
+	) {
+	scrollbar-gutter: auto;
 }

@@ -20,7 +20,6 @@
 		"monaco-editor": "^0.55.1",
 		"nuxt": "^4.2.1",
 		"nuxt-typed-router": "^4.0.2",
-		"stylus": "^0.64.0",
 		"typescript": "^5.9.3",
 		"vue-tsc": "^3.1.5",
 		"workbox-build": "^7.4.0"

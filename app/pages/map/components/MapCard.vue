@@ -13,7 +13,7 @@
       <b>
         <ColorizeSpan :text="map.name" no-color/>
       </b>
-      <p class="desc">
+      <p class="line-clamp-3 h-16 overflow-hidden">
         <ColorizeSpan :text="map.desc" no-color/>
       </p>
       <div class="divider"/>
@@ -44,14 +44,8 @@ const { map } = defineProps<{
 }>()
 </script>
 
-<style lang="stylus" scoped>
-.desc
-  height 4rem
-  -webkit-line-clamp 3
-  display -webkit-box
-  -webkit-box-orient vertical
-  overflow hidden
-
-.divider
-  --divider-m 0
+<style scoped>
+.divider {
+	--divider-m: 0;
+}
 </style>

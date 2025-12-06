@@ -7,7 +7,7 @@
     <el-header>
       <the-header/>
     </el-header>
-    <el-main>
+    <el-main class="max-md:px-0 max-md:pb-2">
       <NuxtLoadingIndicator/>
       <NuxtPage/>
     </el-main>
@@ -18,11 +18,3 @@
 <script lang="ts" setup>
 const year = computed(() => new Date().getFullYear())
 </script>
-
-<style lang="stylus" scoped>
-.el-main
-  @media (max-width 756px)
-    padding 0 0 8px 0
-
-//let right less space due to scrollbar
-</style>

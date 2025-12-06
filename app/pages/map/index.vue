@@ -6,15 +6,15 @@
     </template>
     <el-alert type="info">你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert>
     <div class="filter">
-      <b>游戏模式: </b>
-      <el-radio-group size="small" :model-value="getTag('mode')" @change="(v) => { replaceTag('mode', v) }">
+      <b class="text-base">游戏模式: </b>
+      <el-radio-group size="small" class="inline-block" :model-value="getTag('mode')" @change="(v) => { replaceTag('mode', v) }">
         <el-radio-button v-for="mode in gameModes" :key="mode" :value="mode">{{ mode }}</el-radio-button>
         <el-radio-button :value="false">X</el-radio-button>
       </el-radio-group>
     </div>
     <div class="filter">
-      <b>游戏版本: </b>
-      <el-radio-group size="small" :model-value="getTag('version')" @change="(v) => { replaceTag('version', v) }">
+      <b class="text-base">游戏版本: </b>
+      <el-radio-group size="small" class="inline-block" :model-value="getTag('version')" @change="(v) => { replaceTag('version', v) }">
         <el-radio-button value="3">v5(104)</el-radio-button>
         <el-radio-button value="4">v6(126)</el-radio-button>
         <el-radio-button value="5">v7(135)</el-radio-button>
@@ -25,8 +25,8 @@
       </el-radio-group>
     </div>
     <div class="filter">
-      <b>排序方式: </b>
-      <el-radio-group size="small" :model-value="getTag('sort') || 'X'" @change="(v) => { replaceTag('sort', v) }">
+      <b class="text-base">排序方式: </b>
+      <el-radio-group size="small" class="inline-block" :model-value="getTag('sort') || 'X'" @change="(v) => { replaceTag('sort', v) }">
         <el-radio-button :value="false">热度</el-radio-button>
         <el-radio-button value="updateTime">更新时间</el-radio-button>
         <el-radio-button value="createTime">发布时间</el-radio-button>
@@ -93,13 +93,10 @@ function replaceTag(tag: string, value: string | number | boolean | undefined) {
 }
 </script>
 
-<style lang="stylus" scoped>
-.filter
-  b
-    font-size 16px
-  .el-radio-group
-    display inline-block
-  .el-radio-button :deep(span)
-    @media only screen and (max-width: 768px)
-      padding 9px 6px
+<style scoped>
+.el-radio-button :deep(span) {
+	@media only screen and (max-width: 768px) {
+		padding: 9px 6px;
+	}
+}
 </style>

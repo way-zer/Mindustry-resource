@@ -18,7 +18,7 @@ declare namespace grecaptcha {
 const key = "6LfGReEZAAAAAE5Uwrag1tf4HhVMtZtit3-hQwEC"
 const keyV2 = "6LcboCUpAAAAABrchmhhhZvIrxZpoVkx_mMlWpIE"
 
-let loadGRecaptcha: Promise<any>
+let loadGRecaptcha: Promise<void>
 
 async function loadRecaptcha() {
 	if (!loadGRecaptcha) {
@@ -28,7 +28,7 @@ async function loadRecaptcha() {
 		loadGRecaptcha = new Promise((resolve, reject) => {
 			script.onerror = reject
 			script.onload = () => {
-				grecaptcha.ready(resolve)
+				grecaptcha.ready(() => resolve())
 			}
 		})
 	}
@@ -38,7 +38,7 @@ async function loadRecaptcha() {
 	} catch (e) {
 		console.error(e)
 		ElMessage.error({
-			message: "加载reCaptcha组件失败,可能网络不佳",
+			message: "加载reCaptcha组件失败,网络不佳或被屏蔽，请检查网络设置后重试",
 			duration: 30_000,
 			showClose: true,
 		})

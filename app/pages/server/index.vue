@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ServerApi, type ServerInfo } from "~/backendApi/server"
+import { ServerApi, type ServerInfo } from "./_api"
 
 useHead({
 	title: "服务器列表",

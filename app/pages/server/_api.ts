@@ -3,15 +3,15 @@ export const ServerApi = {
 		return request("GET", "/api/servers/list")
 	},
 	async add(address: string) {
-		return request("GET", "/api/servers/add?address=" + address)
+		return request("GET", `/api/servers/add?address=${address}`)
 	},
 
 	async authInfo(code: string) {
 		if (code === "MOCK") return { name: "MOCK", uid: "MOCK", clientIp: "*" }
-		return request<AuthInfo>("GET", "/api/servers/auth/" + code)
+		return request<AuthInfo>("GET", `/api/servers/auth/${code}`)
 	},
 	async auth(code: string) {
-		return request("POST", "/api/servers/auth/" + code)
+		return request("POST", `/api/servers/auth/${code}`)
 	},
 }
 

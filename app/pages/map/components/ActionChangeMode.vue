@@ -15,13 +15,7 @@
 			</template>
 		</el-dialog>
 		<app-tooltip content="设置游戏模式">
-			<el-button
-				circle
-				@click="
-					selectMode = now
-					show = true
-				"
-			>
+			<el-button circle @click="((selectMode = now), (show = true))">
 				<Icon name="ep:edit" />
 			</el-button>
 		</app-tooltip>

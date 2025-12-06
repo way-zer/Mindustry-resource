@@ -1,26 +1,44 @@
 <template>
-  <Dialog @close="() => navigateTo('/map')" maxWidth="800px">
-    <h2>{{ update ? '更新地图' : '上传地图' }}</h2>
-    <div class="divider"/>
-    <el-alert v-if="!update" type="warning" :closable="false" show-icon center id="alert">
-      <ol>
-        <li class="text-orange-600" style="font-size: 4em">更新地图请在地图详情页进行上传</li>
-        <li>禁止上传像素画直接转地图</li>
-        <li>搬运地图禁止修改, 魔改地图需备注内容及原作者</li>
-        <li>上传地图前建议先单机游玩进行(评估难度和可玩性)</li>
-        <li>上传即代表你授予资源站展示和分发的权力,以及同意玩家使用和服务器网络换图</li>
-        <li>地图上传完成后,请在详情页设置正确的游戏模式</li>
-      </ol>
-      <span class="text-base">(违反规定,被封号别怪我没提醒)</span>
-    </el-alert>
-    <el-row align="middle">
-      <el-upload id="upload" action="ohno" drag :multiple="false" :http-request="upload" class="mx-auto">
-        <Icon name="ep:upload-filled" class="el-icon--upload"/>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <span>只能上传.msav文件,且不超过200KB</span>
-      </el-upload>
-    </el-row>
-  </Dialog>
+	<PureDialog max-width="800px" @close="() => navigateTo('/map')">
+		<h2>{{ update ? "更新地图" : "上传地图" }}</h2>
+		<div class="divider" />
+		<el-alert
+			v-if="!update"
+			id="alert"
+			type="warning"
+			:closable="false"
+			show-icon
+			center
+		>
+			<ol>
+				<li class="text-orange-600" style="font-size: 4em">
+					更新地图请在地图详情页进行上传
+				</li>
+				<li>禁止上传像素画直接转地图</li>
+				<li>搬运地图禁止修改, 魔改地图需备注内容及原作者</li>
+				<li>上传地图前建议先单机游玩进行(评估难度和可玩性)</li>
+				<li>
+					上传即代表你授予资源站展示和分发的权力,以及同意玩家使用和服务器网络换图
+				</li>
+				<li>地图上传完成后,请在详情页设置正确的游戏模式</li>
+			</ol>
+			<span class="text-base">(违反规定,被封号别怪我没提醒)</span>
+		</el-alert>
+		<el-row align="middle">
+			<el-upload
+				id="upload"
+				action="ohno"
+				drag
+				:multiple="false"
+				:http-request="upload"
+				class="mx-auto"
+			>
+				<Icon name="ep:upload-filled" class="el-icon--upload" />
+				<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+				<span>只能上传.msav文件,且不超过200KB</span>
+			</el-upload>
+		</el-row>
+	</PureDialog>
 </template>
 
 <script lang="ts" setup>

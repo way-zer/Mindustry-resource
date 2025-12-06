@@ -25,7 +25,7 @@ export const MapApi = {
 	async deleteThread(thread: string): Promise<void> {
 		return request("DELETE", `/api/maps/${thread}`)
 	},
-	async uploadNew(file: File, updateThread?: string): Promise<string> {
+	async uploadNew(file: File, _updateThread?: string): Promise<string> {
 		const form = new FormData()
 		form.append("file", file)
 		return request("POST", "/api/maps", {

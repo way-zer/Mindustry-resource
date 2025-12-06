@@ -1,5 +1,5 @@
 <template>
-  <Dialog @close="() => navigateTo('/map')" maxWidth="1200px">
+  <PureDialog max-width="1200px" @close="() => navigateTo('/map')">
     <h2 class="text-center font-bold">
       <ColorizeSpan :text="tags.name" no-color />
     </h2>
@@ -9,9 +9,16 @@
         <el-row :gutter="24" justify="center" type="flex">
           <ActionCopy :thread="detail.thread" circle />
           <ActionDownload :thread="thread" circle :map-name="tags.name" />
-          <ActionChangeMode v-if="admin" :thread="detail.thread" :now="detail.mode" />
+          <ActionChangeMode
+            v-if="admin"
+            :thread="detail.thread"
+            :now="detail.mode"
+          />
           <ActionUpload v-if="admin" :thread="detail.thread" circle />
-          <el-popconfirm title="确认删除地图？该操作不可恢复" @confirm="doDelete">
+          <el-popconfirm
+            title="确认删除地图？该操作不可恢复"
+            @confirm="doDelete"
+          >
             <template #reference>
               <el-button circle>
                 <Icon name="ep:delete" />
@@ -22,50 +29,78 @@
       </el-col>
       <el-col :md="10" :xs="18">
         <h4>
-          <b>宽高:</b> {{ tags.width }}x{{ tags.height }}
-          <b>游戏版本:</b> {{ tags.build }}
+          <b>宽高:</b> {{ tags.width }}x{{ tags.height }} <b>游戏版本:</b>
+          {{ tags.build }}
           <b>作者:</b>
           <ColorizeSpan :text="tags.author" no-color />
         </h4>
-        <h4><b>地图编号:</b> {{ detail.thread }} <b>游戏模式:</b> {{ detail.mode }} <b>上传者:</b>
+        <h4>
+          <b>地图编号:</b> {{ detail.thread }} <b>游戏模式:</b>
+          {{ detail.mode }} <b>上传者:</b>
           <el-tooltip content="点击查看该用户更多地图">
-            <a @click="mapStore.navigateToMaps('@user:' + detail.user?.gid).then()">
+            <a
+              @click="
+                mapStore.navigateToMaps('@user:' + detail.user?.gid).then()
+              "
+            >
               {{ detail.user?.name }}
             </a>
           </el-tooltip>
         </h4>
-        <h4><b>描述:</b>
+        <h4>
+          <b>描述:</b>
           <ColorizeSpan :text="tags.description" no-color />
         </h4>
         <h5><b>所需Mod:</b> {{ tags.mods }}</h5>
         <h4><b>规则:</b></h4>
         <ul>
-          <li>刷怪: {{ rules.waves ? '开' : '关' }} 进攻模式: {{ rules.attackMode ? '开' : '关' }}</li>
-          <li v-if="version >= 6">爆炸伤害: {{ rules.damageExplosions ? '开' : '关' }} 火焰: {{
-            rules.fire ? '开' : '关'
-          }}
-            <span v-if="version < 7">弹药: {{ rules.unitAmmo ? '开' : '关' }}</span>
+          <li>
+            刷怪: {{ rules.waves ? "开" : "关" }} 进攻模式:
+            {{ rules.attackMode ? "开" : "关" }}
           </li>
-          <li v-if="version === 5">单位血量: {{ rulesOld.unitHealthMultiplier || '1' }}倍</li>
-          <li>单位伤害: {{ rules.unitDamageMultiplier || '1' }}倍</li>
-          <li v-if="version >= 6">单位生产速度: {{ rules.unitBuildSpeedMultiplier || '1' }}倍</li>
-          <li v-if="version >= 6">单位上限: {{ rules.unitCap || 0 }}{{ rules.unitCapVariable ? '+核心加成' : '(固定)' }}
+          <li v-if="version >= 6">
+            爆炸伤害: {{ rules.damageExplosions ? "开" : "关" }} 火焰:
+            {{ rules.fire ? "开" : "关" }}
+            <span v-if="version < 7"
+              >弹药: {{ rules.unitAmmo ? "开" : "关" }}</span
+            >
           </li>
-          <li v-if="version === 5">玩家血量: {{ rulesOld.playerHealthMultiplier || '1' }}倍</li>
-          <li v-if="version === 5">玩家伤害: {{ rulesOld.playerDamageMultiplier || '1' }}倍</li>
-          <li>建筑资源消耗: {{ rules.buildCostMultiplier || '1' }}倍</li>
-          <li>建筑速度: {{ rules.buildSpeedMultiplier || '1' }}倍</li>
-          <li>建筑拆除返还: {{ rules.deconstructRefundMultiplier || '0.5' }}倍</li>
-          <li>建筑血量: {{ rules.blockHealthMultiplier || '1' }}倍</li>
-          <li>炮塔伤害: {{ rules.blockDamageMultiplier || '1' }}倍</li>
+          <li v-if="version === 5">
+            单位血量: {{ rulesOld.unitHealthMultiplier || "1" }}倍
+          </li>
+          <li>单位伤害: {{ rules.unitDamageMultiplier || "1" }}倍</li>
+          <li v-if="version >= 6">
+            单位生产速度: {{ rules.unitBuildSpeedMultiplier || "1" }}倍
+          </li>
+          <li v-if="version >= 6">
+            单位上限: {{ rules.unitCap || 0
+            }}{{ rules.unitCapVariable ? "+核心加成" : "(固定)" }}
+          </li>
+          <li v-if="version === 5">
+            玩家血量: {{ rulesOld.playerHealthMultiplier || "1" }}倍
+          </li>
+          <li v-if="version === 5">
+            玩家伤害: {{ rulesOld.playerDamageMultiplier || "1" }}倍
+          </li>
+          <li>建筑资源消耗: {{ rules.buildCostMultiplier || "1" }}倍</li>
+          <li>建筑速度: {{ rules.buildSpeedMultiplier || "1" }}倍</li>
+          <li>
+            建筑拆除返还: {{ rules.deconstructRefundMultiplier || "0.5" }}倍
+          </li>
+          <li>建筑血量: {{ rules.blockHealthMultiplier || "1" }}倍</li>
+          <li>炮塔伤害: {{ rules.blockDamageMultiplier || "1" }}倍</li>
           <li>核心保护: {{ (rules.enemyCoreBuildRadius ?? 0) / 8 || 50 }}格</li>
-          <li v-if="version === 5">重生时间: {{ (rulesOld.respawnTime ?? 0) / 60 }}秒</li>
+          <li v-if="version === 5">
+            重生时间: {{ (rulesOld.respawnTime ?? 0) / 60 }}秒
+          </li>
           <li>每波间隔: {{ (rules.waveSpacing ?? 0) / 60 || 120 }}秒</li>
           <li>
             <details>
               <summary>禁用建筑:</summary>
               <ul>
-                <li v-for="d in (rules.bannedBlocks?.values || [])" :key="d">{{ d }}</li>
+                <li v-for="d in rules.bannedBlocks?.values || []" :key="d">
+                  {{ d }}
+                </li>
               </ul>
             </details>
           </li>
@@ -73,7 +108,9 @@
             <details>
               <summary>初始物资:</summary>
               <ul>
-                <li v-for="d in rules.loadout || []" :key="d.item">{{ d.item }}: {{ d.amount }}</li>
+                <li v-for="d in rules.loadout || []" :key="d.item">
+                  {{ d.item }}: {{ d.amount }}
+                </li>
               </ul>
             </details>
           </li>
@@ -82,10 +119,11 @@
               <summary>波次刷怪:</summary>
               <ul>
                 <li v-for="(d, i) in rules.spawns" :key="i">
-                  {{ d.type }}{{ d.effect ? '(BOSS)' : '' }}:
-                  从{{ d.begin || 1 }}{{ d.end ? '到' + d.end : '开始' }}
-                  每{{ d.spacing ? 1 + d.spacing : 1 }}波
-                  生成{{ d.amount || 1 }}{{ d.scaling ? `+${d.scaling}T` : '' }}只
+                  {{ d.type }}{{ d.effect ? "(BOSS)" : "" }}: 从{{ d.begin || 1
+                  }}{{ d.end ? "到" + d.end : "开始" }} 每{{
+                    d.spacing ? 1 + d.spacing : 1
+                  }}波 生成{{ d.amount || 1
+                  }}{{ d.scaling ? `+${d.scaling}T` : "" }}只
                 </li>
               </ul>
             </details>
@@ -94,14 +132,16 @@
             <details>
               <summary>地形筛选器</summary>
               <ol>
-                <li v-for="(d, i) in tags.genfilters" :key="i">{{ JSON.stringify(d) }}</li>
+                <li v-for="(d, i) in tags.genfilters" :key="i">
+                  {{ JSON.stringify(d) }}
+                </li>
               </ol>
             </details>
           </li>
-          <li>太阳能发电: {{ rules.solarPowerMultiplier || '1' }}倍</li>
+          <li>太阳能发电: {{ rules.solarPowerMultiplier || "1" }}倍</li>
         </ul>
         <b>原始数据:</b>
-        <json-viewer :value="tags" :expandDepth="0" style="padding: 0" />
+        <json-viewer :value="tags" :expand-depth="0" style="padding: 0" />
       </el-col>
     </el-row>
     <div id="footer">
@@ -112,53 +152,53 @@
 </template>
 
 <script lang="tsx" setup>
-import { JsonViewer } from "vue3-json-viewer"
-import "vue3-json-viewer/dist/vue3-json-viewer.css"
-import { MapApi } from "@/backendApi/maps"
-import type { MapDetail, Rules, RulesV5, Tags } from "@/backendApi/maps/type"
-import ActionChangeMode from "../components/ActionChangeMode.vue"
-import ActionCopy from "../components/ActionCopy.vue"
-import ActionDownload from "../components/ActionDownload.vue"
-import ActionUpload from "../components/ActionUpload.vue"
+import { JsonViewer } from "vue3-json-viewer";
+import "vue3-json-viewer/dist/vue3-json-viewer.css";
+import { MapApi } from "@/backendApi/maps";
+import type { MapDetail, Rules, RulesV5, Tags } from "@/backendApi/maps/type";
+import ActionChangeMode from "../components/ActionChangeMode.vue";
+import ActionCopy from "../components/ActionCopy.vue";
+import ActionDownload from "../components/ActionDownload.vue";
+import ActionUpload from "../components/ActionUpload.vue";
 
-const userStore = useUserStore()
-const mapStore = useMapStore()
-const route = useRoute()
+const userStore = useUserStore();
+const mapStore = useMapStore();
+const route = useRoute();
 const path = computed(() =>
   import.meta.server ? useRequestURL() : location.toString(),
-)
-const thread = computed(() => +route.params.thread)
+);
+const thread = computed(() => +route.params.thread);
 
 const { data: detail, error } = await useAsyncData(
   () => {
-    return MapApi.detail("" + thread.value)
+    return MapApi.detail("" + thread.value);
   },
   { deep: false, default: () => ({}) as Partial<MapDetail> },
-)
-const tags = computed(() => (detail.value.tags || {}) as Partial<Tags>)
-const rules = computed(() => (tags.value.rules || {}) as Partial<Rules>)
-const rulesOld = computed(() => (tags.value.rules || {}) as Partial<RulesV5>)
+);
+const tags = computed(() => (detail.value.tags || {}) as Partial<Tags>);
+const rules = computed(() => (tags.value.rules || {}) as Partial<Rules>);
+const rulesOld = computed(() => (tags.value.rules || {}) as Partial<RulesV5>);
 const version = computed(() => {
-  const build = tags.value.build || -1
-  if (build > 104) return 6
-  if (build > 0) return 5
-  return 0
-})
+  const build = tags.value.build || -1;
+  if (build > 104) return 6;
+  if (build > 0) return 5;
+  return 0;
+});
 const admin = computed(() => {
-  if (!userStore.logged) return false
-  return userStore.admin || userStore.info.gid == detail.value.user?.gid
-})
+  if (!userStore.logged) return false;
+  return userStore.admin || userStore.info.gid == detail.value.user?.gid;
+});
 
 useHead({
   title: computed(() =>
     tags.value.name ? "地图详情 - " + tags.value.name : "地图详情",
   ),
-})
+});
 
 async function doDelete() {
-  await MapApi.deleteThread("" + detail.value.thread)
-  mapStore.data = mapStore.data.filter((it) => it.id !== detail.value.thread)
-  navigateTo({ path: "/map" }, { replace: true })
+  await MapApi.deleteThread("" + detail.value.thread);
+  mapStore.data = mapStore.data.filter((it) => it.id !== detail.value.thread);
+  navigateTo({ path: "/map" }, { replace: true });
 }
 </script>
 
@@ -170,8 +210,8 @@ h4,
 h5,
 h6 {
   margin-top: 0;
-  margin-bottom: .5em;
-  color: rgba(0, 0, 0, .85);
+  margin-bottom: 0.5em;
+  color: rgba(0, 0, 0, 0.85);
   font-weight: 500;
 }
 

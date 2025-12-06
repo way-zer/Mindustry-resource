@@ -18,13 +18,13 @@ export interface MapDetail {
 }
 
 export interface Tags {
-	mods: any[]
+	mods: string[]
 	name: string
 	wave: number
 	build: number
 	rules: RulesV5 | Rules
 	saved: number
-	stats: any
+	stats: object
 	width: number
 	author: string
 	height: number
@@ -34,7 +34,7 @@ export interface Tags {
 	description: string
 	saveVersion: number
 	controlledType: string
-	genfilters: any[]
+	genfilters: object[]
 }
 
 export const gameModes = [

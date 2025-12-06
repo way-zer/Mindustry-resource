@@ -1,76 +1,118 @@
 <template>
-  <PageHeader title="公共服务器列表">
-    <template #actions>
-      <el-switch active-text="自动刷新" inactive-text="手动刷新" v-model="state.autoRefresh"/>
-      <el-button size="small" round type="primary" @click="state.showModal = true">
-        <Icon name="ep:plus"/>
-        添加服务器
-      </el-button>
-      <client-only>
-        <el-dialog title="请输入服务器地址" v-model="state.showModal">
-          <el-form>
-            <el-form-item label="服务器地址" required>
-              <el-input type="text" v-model="state.address"/>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" :loading="state.adding" @click="addServer(state.address)">提交</el-button>
-            </el-form-item>
-          </el-form>
-          <!--          <el-row type="flex" justify="end">-->
-          <!--            <el-button type="primary" :loading="adding" @click="check">提交</el-button>-->
-          <!--          </el-row>-->
-        </el-dialog>
-      </client-only>
-    </template>
-    <el-table :data="data" v-loading="status==='pending'" row-key="address" id="table"
-              :default-sort="{ prop: 'players', order: 'descending' }">
-      <el-table-column label="地址 (按版本筛选)" prop="address" min-width="200">
-        <template #default="scope">
-          <tooltip>
-            <template #content>
-              <span v-if="i(scope).online">延迟{{ i(scope).timeMs }}ms</span>
-              <span v-else>最后在线{{ ((Date.now() - i(scope).lastOnline) / 60000).toFixed(2) }}分钟前</span>
-            </template>
-            <div>
-              <template v-if="i(scope).ext.sponsor">
-                <span style="color: goldenrod;font-size: 1.2em;font-weight: bold">赞助置顶</span>
-              </template>
-              {{ i(scope).address }}
-              <br/>
-              <Icon v-if="i(scope).online" name="ep:success-filled" class="text-success"/>
-              <Icon v-else name="ep:remove-filled" class="text-error"/>
-              版本 {{ i(scope).version }}
-            </div>
-          </tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column label="名字" prop="name" min-width="300">
-        <template #default="scope">
-          <ColorizeSpan :text="i(scope).name"/>
-          <br/>
-          <ColorizeSpan :text="i(scope).description"/>
-        </template>
-      </el-table-column>
-      <el-table-column label="人数" prop="players" min-width="100" :sort-by="it => it.ext.score" sortable>
-        <template #default="scope">
-          <b>{{ i(scope).players }}</b>/{{ i(scope).limit || '无限制' }}
-          <template v-if="i(scope).ext.isHub">
-            <br/>
-            <Icon name="ep:warning" class="text-warning"/>
-            本服为大厅服,人数非真实
-          </template>
-        </template>
-      </el-table-column>
-      <el-table-column label="地图 (按模式筛选)" prop="map" min-width="150" :filters="modeFilters"
-                       :filter-method="(f, v) => (v.mode === f)">
-        <template #default="scope">
-          <ColorizeSpan :text="i(scope).mapName"/>
-          <br/>
-          模式: {{ modeMap[i(scope).mode] }}, 第{{ i(scope).wave }}波
-        </template>
-      </el-table-column>
-    </el-table>
-  </PageHeader>
+	<PageHeader title="公共服务器列表">
+		<template #actions>
+			<el-switch
+				v-model="state.autoRefresh"
+				active-text="自动刷新"
+				inactive-text="手动刷新"
+			/>
+			<el-button
+				size="small"
+				round
+				type="primary"
+				@click="state.showModal = true"
+			>
+				<Icon name="ep:plus" />
+				添加服务器
+			</el-button>
+			<client-only>
+				<el-dialog v-model="state.showModal" title="请输入服务器地址">
+					<el-form>
+						<el-form-item label="服务器地址" required>
+							<el-input v-model="state.address" type="text" />
+						</el-form-item>
+						<el-form-item>
+							<el-button
+								type="primary"
+								:loading="state.adding"
+								@click="addServer(state.address)"
+								>提交</el-button
+							>
+						</el-form-item>
+					</el-form>
+					<!--          <el-row type="flex" justify="end">-->
+					<!--            <el-button type="primary" :loading="adding" @click="check">提交</el-button>-->
+					<!--          </el-row>-->
+				</el-dialog>
+			</client-only>
+		</template>
+		<el-table
+			id="table"
+			v-loading="status === 'pending'"
+			:data="data"
+			row-key="address"
+			:default-sort="{ prop: 'players', order: 'descending' }"
+		>
+			<el-table-column label="地址 (按版本筛选)" prop="address" min-width="200">
+				<template #default="scope">
+					<tooltip>
+						<template #content>
+							<span v-if="i(scope).online">延迟{{ i(scope).timeMs }}ms</span>
+							<span v-else
+								>最后在线{{
+									((Date.now() - i(scope).lastOnline) / 60000).toFixed(2)
+								}}分钟前</span
+							>
+						</template>
+						<div>
+							<template v-if="i(scope).ext.sponsor">
+								<span
+									style="color: goldenrod; font-size: 1.2em; font-weight: bold"
+									>赞助置顶</span
+								>
+							</template>
+							{{ i(scope).address }}
+							<br />
+							<Icon
+								v-if="i(scope).online"
+								name="ep:success-filled"
+								class="text-success"
+							/>
+							<Icon v-else name="ep:remove-filled" class="text-error" />
+							版本 {{ i(scope).version }}
+						</div>
+					</tooltip>
+				</template>
+			</el-table-column>
+			<el-table-column label="名字" prop="name" min-width="300">
+				<template #default="scope">
+					<ColorizeSpan :text="i(scope).name" />
+					<br />
+					<ColorizeSpan :text="i(scope).description" />
+				</template>
+			</el-table-column>
+			<el-table-column
+				label="人数"
+				prop="players"
+				min-width="100"
+				:sort-by="(it) => it.ext.score"
+				sortable
+			>
+				<template #default="scope">
+					<b>{{ i(scope).players }}</b
+					>/{{ i(scope).limit || "无限制" }}
+					<template v-if="i(scope).ext.isHub">
+						<br />
+						<Icon name="ep:warning" class="text-warning" />
+						本服为大厅服,人数非真实
+					</template>
+				</template>
+			</el-table-column>
+			<el-table-column
+				label="地图 (按模式筛选)"
+				prop="map"
+				min-width="150"
+				:filters="modeFilters"
+				:filter-method="(f, v) => v.mode === f"
+			>
+				<template #default="scope">
+					<ColorizeSpan :text="i(scope).mapName" />
+					<br />
+					模式: {{ modeMap[i(scope).mode] }}, 第{{ i(scope).wave }}波
+				</template>
+			</el-table-column>
+		</el-table>
+	</PageHeader>
 </template>
 
 <script lang="ts" setup>

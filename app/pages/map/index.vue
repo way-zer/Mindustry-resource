@@ -1,54 +1,94 @@
 <template>
-  <PageHeader title="地图分享">
-    <template #actions>
-      <el-input v-model="tmpSearch" placeholder="查找地图" clearable @change="store.search" />
-      <ActionUpload />
-    </template>
-    <el-alert type="info">你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert>
-    <div class="filter">
-      <b class="text-base">游戏模式: </b>
-      <el-radio-group size="small" class="inline-block" :model-value="getTag('mode')" @change="(v) => { replaceTag('mode', v) }">
-        <el-radio-button v-for="mode in gameModes" :key="mode" :value="mode">{{ mode }}</el-radio-button>
-        <el-radio-button :value="false">X</el-radio-button>
-      </el-radio-group>
-    </div>
-    <div class="filter">
-      <b class="text-base">游戏版本: </b>
-      <el-radio-group size="small" class="inline-block" :model-value="getTag('version')" @change="(v) => { replaceTag('version', v) }">
-        <el-radio-button value="3">v5(104)</el-radio-button>
-        <el-radio-button value="4">v6(126)</el-radio-button>
-        <el-radio-button value="5">v7(135)</el-radio-button>
-        <el-radio-button value="7">v7.5(136-146)</el-radio-button>
-        <el-radio-button value="8">v8a(147-149)</el-radio-button>
-        <el-radio-button value="9">v8b(150+)</el-radio-button>
-        <el-radio-button :value="false">X</el-radio-button>
-      </el-radio-group>
-    </div>
-    <div class="filter">
-      <b class="text-base">排序方式: </b>
-      <el-radio-group size="small" class="inline-block" :model-value="getTag('sort') || 'X'" @change="(v) => { replaceTag('sort', v) }">
-        <el-radio-button :value="false">热度</el-radio-button>
-        <el-radio-button value="updateTime">更新时间</el-radio-button>
-        <el-radio-button value="createTime">发布时间</el-radio-button>
-        <el-radio-button value="download">下载量</el-radio-button>
-        <el-radio-button value="rating">评分</el-radio-button>
-        <el-radio-button value="like">点赞数</el-radio-button>
-      </el-radio-group>
-    </div>
+	<PageHeader title="地图分享">
+		<template #actions>
+			<el-input
+				v-model="tmpSearch"
+				placeholder="查找地图"
+				clearable
+				@change="store.search"
+			/>
+			<ActionUpload />
+		</template>
+		<el-alert type="info"
+			>你知道吗? 在搜索栏输入地图id可以直接打开详情了。</el-alert
+		>
+		<div class="filter">
+			<b class="text-base">游戏模式: </b>
+			<el-radio-group
+				size="small"
+				class="inline-block"
+				:model-value="getTag('mode')"
+				@change="
+					(v) => {
+						replaceTag('mode', v)
+					}
+				"
+			>
+				<el-radio-button v-for="mode in gameModes" :key="mode" :value="mode">{{
+					mode
+				}}</el-radio-button>
+				<el-radio-button :value="false">X</el-radio-button>
+			</el-radio-group>
+		</div>
+		<div class="filter">
+			<b class="text-base">游戏版本: </b>
+			<el-radio-group
+				size="small"
+				class="inline-block"
+				:model-value="getTag('version')"
+				@change="
+					(v) => {
+						replaceTag('version', v)
+					}
+				"
+			>
+				<el-radio-button value="3">v5(104)</el-radio-button>
+				<el-radio-button value="4">v6(126)</el-radio-button>
+				<el-radio-button value="5">v7(135)</el-radio-button>
+				<el-radio-button value="7">v7.5(136-146)</el-radio-button>
+				<el-radio-button value="8">v8a(147-149)</el-radio-button>
+				<el-radio-button value="9">v8b(150+)</el-radio-button>
+				<el-radio-button :value="false">X</el-radio-button>
+			</el-radio-group>
+		</div>
+		<div class="filter">
+			<b class="text-base">排序方式: </b>
+			<el-radio-group
+				size="small"
+				class="inline-block"
+				:model-value="getTag('sort') || 'X'"
+				@change="
+					(v) => {
+						replaceTag('sort', v)
+					}
+				"
+			>
+				<el-radio-button :value="false">热度</el-radio-button>
+				<el-radio-button value="updateTime">更新时间</el-radio-button>
+				<el-radio-button value="createTime">发布时间</el-radio-button>
+				<el-radio-button value="download">下载量</el-radio-button>
+				<el-radio-button value="rating">评分</el-radio-button>
+				<el-radio-button value="like">点赞数</el-radio-button>
+			</el-radio-group>
+		</div>
 
-    <el-row type="flex" :gutter=16>
-      <el-col :xs=24 :sm=12 :lg=6 v-for="map in store.data" :key="map.id">
-        <MapCard :map="map" />
-      </el-col>
-      <el-empty v-if="store.data.length === 0" style="width: 100%" description="暂无数据，尝试切换关键词试试" />
-    </el-row>
+		<el-row type="flex" :gutter="16">
+			<el-col v-for="map in store.data" :key="map.id" :xs="24" :sm="12" :lg="6">
+				<MapCard :map="map" />
+			</el-col>
+			<el-empty
+				v-if="store.data.length === 0"
+				style="width: 100%"
+				description="暂无数据，尝试切换关键词试试"
+			/>
+		</el-row>
 
-    <div class="text-center" v-if="store.noMore">没有更多了</div>
-    <div class="text-center" v-else-if="isLoading">内容加载中..</div>
-    <el-button v-else @click="store.pullMore">加载更多</el-button>
-    <el-backtop />
-  </PageHeader>
-  <NuxtPage />
+		<div v-if="store.noMore" class="text-center">没有更多了</div>
+		<div v-else-if="isLoading" class="text-center">内容加载中..</div>
+		<el-button v-else @click="store.pullMore">加载更多</el-button>
+		<el-backtop />
+	</PageHeader>
+	<NuxtPage />
 </template>
 
 <script lang="tsx" setup>

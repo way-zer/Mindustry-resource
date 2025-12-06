@@ -16,6 +16,7 @@ export default defineNuxtConfig({
 		"@pinia/nuxt",
 		"pinia-plugin-persistedstate/nuxt",
 		"nuxt-typed-router",
+		"@nuxt/eslint",
 	],
 	icon: {
 		provider: "iconify",

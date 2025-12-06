@@ -4,45 +4,59 @@ import { UserApi } from "~/backendApi/user"
 const user = useUserStore()
 const code = useRouteQuery("code", null, { transform: String })
 const { data } = useAsyncData(() => UserApi.tokenInfo(code.value), {
-  immediate: Boolean(code.value),
+	immediate: Boolean(code.value),
 })
 const clientName = computed(() => {
-  switch (data.value?.type) {
-    case "CLIENT":
-      return "Mindustry客户端"
-    case "WEB":
-      return "网页/" + data.value.name
-    case "SERVER":
-      return "服务端/" + data.value.name
-    default:
-      return data.value?.type
-  }
+	switch (data.value?.type) {
+		case "CLIENT":
+			return "Mindustry客户端"
+		case "WEB":
+			return "网页/" + data.value.name
+		case "SERVER":
+			return "服务端/" + data.value.name
+		default:
+			return data.value?.type
+	}
 })
 
 const success = ref(false)
 
 async function submit(op: "confirm" | "reject") {
-  if (!user.logged) return user.redirectToLogin()
-  await UserApi.tokenConfirm(code.value, op)
-  success.value = true
+	if (!user.logged) return user.redirectToLogin()
+	await UserApi.tokenConfirm(code.value, op)
+	success.value = true
 }
 </script>
 <template>
-  <el-result v-if="success" icon="success" title="操作成功" sub-title="你可以关闭当前页面，返回应用继续操作" />
-  <div v-else-if="data" class="w-full max-w-[400px] m-auto p-4 text-center">
-    <h2 class="text-center w-full">API登录授权</h2>
-    <el-descriptions :column="1" border>
-      <el-descriptions-item label="请求ID">{{ code }}</el-descriptions-item>
-      <el-descriptions-item label="请求设备">{{ clientName }}</el-descriptions-item>
-      <el-descriptions-item label="请求IP">{{ data.ip }}</el-descriptions-item>
-    </el-descriptions>
-    <el-row class="relative mt-4 p-4 justify-evenly">
-      <el-button type="warning" @click="() => submit('confirm')">同意</el-button>
-      <el-button type="info" @click="() => submit('reject')">拒绝</el-button>
-      <div v-if="!user.logged" class="absolute w-full h-full left-0 top-0 bg-black/80 flex items-center justify-center rounded-4">
-        <el-button type="primary" @click="user.redirectToLogin()">请先登录</el-button>
-      </div>
-    </el-row>
-  </div>
-  <el-result v-else icon="error" title="找不到授权请求,或请求已过期" />
+	<el-result
+		v-if="success"
+		icon="success"
+		title="操作成功"
+		sub-title="你可以关闭当前页面，返回应用继续操作"
+	/>
+	<div v-else-if="data" class="w-full max-w-[400px] m-auto p-4 text-center">
+		<h2 class="text-center w-full">API登录授权</h2>
+		<el-descriptions :column="1" border>
+			<el-descriptions-item label="请求ID">{{ code }}</el-descriptions-item>
+			<el-descriptions-item label="请求设备">{{
+				clientName
+			}}</el-descriptions-item>
+			<el-descriptions-item label="请求IP">{{ data.ip }}</el-descriptions-item>
+		</el-descriptions>
+		<el-row class="relative mt-4 p-4 justify-evenly">
+			<el-button type="warning" @click="() => submit('confirm')"
+				>同意</el-button
+			>
+			<el-button type="info" @click="() => submit('reject')">拒绝</el-button>
+			<div
+				v-if="!user.logged"
+				class="absolute w-full h-full left-0 top-0 bg-black/80 flex items-center justify-center rounded-4"
+			>
+				<el-button type="primary" @click="user.redirectToLogin()"
+					>请先登录</el-button
+				>
+			</div>
+		</el-row>
+	</div>
+	<el-result v-else icon="error" title="找不到授权请求,或请求已过期" />
 </template>

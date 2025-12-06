@@ -20,7 +20,7 @@ export const MapsApiDesign = {
 		]
 	},
 	// GET /api/mods/{id}?versionOffset
-	async detail(id: number) {
+	async detail(_id: number) {
 		return {
 			id: 1000,
 			name: "beta-mindy",
@@ -61,5 +61,5 @@ export const MapsApiDesign = {
 		}
 	},
 	// GET /api/mods/{id}/download?version=1.1&file=xxx&link=github
-	async download(id: number) {},
+	async download(_id: number) {},
 }

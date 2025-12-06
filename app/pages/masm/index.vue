@@ -1,24 +1,37 @@
 <template>
-  <PageHeader title="高级逻辑编辑器">
-    <el-alert type="warning" show-icon>
-      该编辑器已弃用，推荐使用
-      <a class="link" href="https://mlogjs.github.io/mlogjs/editor.html">MLogJS</a>
-    </el-alert>
-    <el-alert type="info" show-icon>编辑会自动保存，但注意定期备份，以免丢失</el-alert>
-    <monaco-editor class="editor" v-model="code" language="typescript" @editorWillMount="configTS" :file="file"/>
-    <template #actions>
-      <el-button @click="code = IndexTs" type="danger">重置</el-button>
-      <el-button @click="showOutput">输出逻辑代码</el-button>
-    </template>
-  </PageHeader>
-  <el-dialog v-model="showDialog" title="MASM代码" center>
-    <el-alert type="warning" v-if="error">{{ error }}</el-alert>
-    <el-tabs>
-      <el-tab-pane v-for="(output,i) of outputs" :label="output.name??'Output #'+(i+1)">
-        <pre>{{ output.content }}</pre>
-      </el-tab-pane>
-    </el-tabs>
-  </el-dialog>
+	<PageHeader title="高级逻辑编辑器">
+		<el-alert type="warning" show-icon>
+			该编辑器已弃用，推荐使用
+			<a class="link" href="https://mlogjs.github.io/mlogjs/editor.html"
+				>MLogJS</a
+			>
+		</el-alert>
+		<el-alert type="info" show-icon
+			>编辑会自动保存，但注意定期备份，以免丢失</el-alert
+		>
+		<monaco-editor
+			v-model="code"
+			class="editor"
+			language="typescript"
+			:file="file"
+			@editor-will-mount="configTS"
+		/>
+		<template #actions>
+			<el-button type="danger" @click="code = IndexTs">重置</el-button>
+			<el-button @click="showOutput">输出逻辑代码</el-button>
+		</template>
+	</PageHeader>
+	<el-dialog v-model="showDialog" title="MASM代码" center>
+		<el-alert v-if="error" type="warning">{{ error }}</el-alert>
+		<el-tabs>
+			<el-tab-pane
+				v-for="(output, i) of outputs"
+				:label="output.name ?? 'Output #' + (i + 1)"
+			>
+				<pre>{{ output.content }}</pre>
+			</el-tab-pane>
+		</el-tabs>
+	</el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -59,7 +72,7 @@ async function showOutput() {
 
 <style scoped>
 .editor {
-  width: 100%;
-  height: 80vh;
+	width: 100%;
+	height: 80vh;
 }
 </style>

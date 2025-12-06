@@ -1,13 +1,13 @@
 <template>
-  <el-button v-if="!circle" type="primary" @click="click">
-    上传地图
-    <Icon name="ep:upload"/>
-  </el-button>
-  <tooltip v-else content="更新地图">
-    <el-button circle @click="click">
-      <Icon name="ep:upload"/>
-    </el-button>
-  </tooltip>
+	<el-button v-if="!circle" type="primary" @click="click">
+		上传地图
+		<Icon name="ep:upload" />
+	</el-button>
+	<tooltip v-else content="更新地图">
+		<el-button circle @click="click">
+			<Icon name="ep:upload" />
+		</el-button>
+	</tooltip>
 </template>
 
 <script lang="ts" setup>

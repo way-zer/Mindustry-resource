@@ -73,19 +73,21 @@
 		</div>
 
 		<el-row type="flex" :gutter="16">
-			<el-col v-for="map in store.data" :key="map.id" :xs="24" :sm="12" :lg="6">
+			<el-col v-for="map in data" :key="map.id" :xs="24" :sm="12" :lg="6">
 				<MapCard :map="map" :detail="detailRoute('' + map.id)" />
 			</el-col>
 			<el-empty
-				v-if="store.data.length === 0"
+				v-if="data.length === 0"
 				style="width: 100%"
 				description="暂无数据，尝试切换关键词试试"
 			/>
 		</el-row>
 
-		<div v-if="store.noMore" class="text-center">没有更多了</div>
-		<div v-else-if="isLoading" class="text-center">内容加载中..</div>
-		<el-button v-else @click="store.pullMore">加载更多</el-button>
+		<div v-if="query.isFetching" class="text-center">内容加载中..</div>
+		<el-button v-else-if="query.hasNextPage" @click="query.fetchNextPage()"
+			>加载更多</el-button
+		>
+		<div v-else class="text-center">没有更多了</div>
 		<el-backtop />
 	</PageHeader>
 	<NuxtPage />
@@ -104,32 +106,39 @@ useHead({
 		{ name: "keywords", content: "Mindustry,像素工厂,资源站,地图,服务器,微泽" },
 	],
 })
-const store = useMapStore()
-const tmpSearch = ref(store.searchKey)
-watchEffect(() => (tmpSearch.value = store.searchKey))
-await callOnce(() => store.pullMore())
-const { isLoading } = useInfiniteScroll(document, store.pullMore, {
-	canLoadMore: () => !store.loading && !store.noMore,
-	distance: 300,
-})
+
+const { searchKey, data, query } = useMapsList()
+
+const tmpSearch = ref(searchKey.value)
+watchEffect(() => (tmpSearch.value = searchKey.value))
+useInfiniteScroll(
+	document,
+	async () => {
+		await query.fetchNextPage()
+	},
+	{
+		canLoadMore: () => !query.isFetching.value && query.hasNextPage.value,
+		distance: 300,
+	},
+)
 
 function regexForTag(tag: string) {
 	return new RegExp("@" + tag + ":(\\w+)")
 }
 
 function getTag(tag: string) {
-	return store.searchKey.match(regexForTag(tag))?.[1]
+	return searchKey.value.match(regexForTag(tag))?.[1]
 }
 
 function replaceTag(tag: string, value: string | number | boolean | undefined) {
 	const regex = regexForTag(tag)
-	const key = store.searchKey
+	const key = searchKey.value
 	if (!key.match(regex)) {
 		if (!value) return
-		search(key + ` @${tag}:${value} `)
+		searchKey.value = key + ` @${tag}:${value} `
 	} else {
 		const v = !value ? "" : `@${tag}:${value}`
-		search(key.replace(regex, v))
+		searchKey.value = key.replace(regex, v)
 	}
 }
 
@@ -147,7 +156,7 @@ function search(key: string) {
 		navigateTo(detailRoute(key))
 		return
 	}
-	store.search(key)
+	searchKey.value = key
 }
 </script>
 

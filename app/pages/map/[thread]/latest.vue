@@ -14,7 +14,7 @@ import { MapApi } from "@/backendApi/maps"
 import MapDetail from "../components/MapDetail.vue"
 
 const userStore = useUserStore()
-const mapStore = useMapStore()
+const { deleteMutation } = useMapsActions()
 
 const path = computed(() =>
 	import.meta.server ? useRequestURL().toString() : location.toString(),
@@ -40,8 +40,8 @@ useHead({
 })
 
 async function doDelete() {
-	await mapStore.deleteMap(thread.value)
-	await close()
+	await deleteMutation.mutateAsync(thread.value)
+	close()
 }
 
 function close() {

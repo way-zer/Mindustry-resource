@@ -13,11 +13,11 @@ export const useMapsList = () => {
 
 	const query = useInfiniteQuery({
 		queryKey: ["maps", searchKey],
-		queryFn: ({ pageParam = 0 }) => MapApi.list(pageParam, searchKey.value),
-		initialPageParam: 0,
+		queryFn: ({ pageParam }) => MapApi.list(pageParam.begin, searchKey.value),
+		initialPageParam: { begin: 0 },
 		getNextPageParam: (lastPage, allPages) => {
-			if (lastPage.length === 0) return undefined
-			return allPages.flat().length
+			if (lastPage.length < 15) return undefined
+			return { begin: allPages.flat().length }
 		},
 		staleTime: 1000 * 60 * 5,
 	})

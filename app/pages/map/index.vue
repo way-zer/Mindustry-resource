@@ -84,8 +84,8 @@
 		</el-row>
 
 		<div ref="loadMoreTrigger" style="height: 10px"></div>
-		<div v-if="query.isFetching" class="text-center">内容加载中..</div>
-		<el-button v-else-if="query.hasNextPage" @click="query.fetchNextPage()"
+		<div v-if="isFetching" class="text-center">内容加载中..</div>
+		<el-button v-else-if="hasNextPage" @click="fetchNextPage()"
 			>加载更多</el-button
 		>
 		<div v-else class="text-center">没有更多了</div>
@@ -108,18 +108,18 @@ useHead({
 	],
 })
 
-const { searchKey, data, query } = useMapsList()
+const {
+	searchKey,
+	data,
+	query: { hasNextPage, isFetching, fetchNextPage },
+} = useMapsList()
 
 const tmpSearch = ref(searchKey.value)
 watchEffect(() => (tmpSearch.value = searchKey.value))
 const loadMoreTrigger = ref(null)
 useIntersectionObserver(loadMoreTrigger, ([state]) => {
-	if (
-		state?.isIntersecting &&
-		query.hasNextPage.value &&
-		!query.isFetching.value
-	) {
-		query.fetchNextPage()
+	if (state?.isIntersecting && hasNextPage.value && !isFetching.value) {
+		fetchNextPage()
 	}
 })
 

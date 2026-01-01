@@ -83,6 +83,7 @@
 			/>
 		</el-row>
 
+		<div ref="loadMoreTrigger" style="height: 10px"></div>
 		<div v-if="query.isFetching" class="text-center">内容加载中..</div>
 		<el-button v-else-if="query.hasNextPage" @click="query.fetchNextPage()"
 			>加载更多</el-button
@@ -111,16 +112,16 @@ const { searchKey, data, query } = useMapsList()
 
 const tmpSearch = ref(searchKey.value)
 watchEffect(() => (tmpSearch.value = searchKey.value))
-useInfiniteScroll(
-	document,
-	async () => {
-		await query.fetchNextPage()
-	},
-	{
-		canLoadMore: () => !query.isFetching.value && query.hasNextPage.value,
-		distance: 300,
-	},
-)
+const loadMoreTrigger = ref(null)
+useIntersectionObserver(loadMoreTrigger, ([state]) => {
+	if (
+		state?.isIntersecting &&
+		query.hasNextPage.value &&
+		!query.isFetching.value
+	) {
+		query.fetchNextPage()
+	}
+})
 
 function regexForTag(tag: string) {
 	return new RegExp("@" + tag + ":(\\w+)")

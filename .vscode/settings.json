@@ -1,4 +1,9 @@
 {
 	"editor.tabSize": 2,
-	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"files.exclude": {
+		".nuxt": true,
+		".idea": true,
+		"node_modules": true
+	}
 }

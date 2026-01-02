@@ -14,8 +14,8 @@ export interface LoginMethods {
 }
 
 export type LoginResult =
-	| { token: string }
-	| { token: undefined; loginCode: string }
+	| { success: true; token: string }
+	| { success: false; token: undefined; loginCode: string }
 
 export const UserApi = {
 	async info(): Promise<UserInfo> {

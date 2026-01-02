@@ -1,8 +1,9 @@
 <script lang="ts" setup>
+import { autoRedirectWhenLogged } from "./_/auth"
 const code = useRouteQuery("login_code", null, { transform: String })
 const store = useUserStore()
 
-store.registerAutoRedirect()
+autoRedirectWhenLogged()
 onMounted(async () => {
 	if (code.value) {
 		await store.login("oauth", { loginCode: code.value })

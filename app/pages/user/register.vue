@@ -1,5 +1,5 @@
 <template>
-	<el-card class="container max-w-[400px] m-auto">
+	<el-card class="container max-w-100 m-auto">
 		<h2 class="text-center text-lg font-bold m-4">你之前有账号吗？</h2>
 		<el-divider>关联已有账号</el-divider>
 		<el-button class="w-full my-1" size="large" @click="back(false)"
@@ -41,16 +41,16 @@
 
 <script lang="ts" setup>
 import type { FormInstance } from "element-plus"
+import { autoRedirectWhenLogged } from "./_/auth"
 
 const store = useUserStore()
 const route = useRoute()
+autoRedirectWhenLogged()
 
 const formRef = ref<FormInstance>()
 const form = reactive({
 	name: "",
 })
-
-store.registerAutoRedirect()
 
 async function onSubmit() {
 	if (!formRef.value || !(await formRef.value.validate())) return

@@ -43,8 +43,4 @@
 <script lang="ts" setup>
 const userStore = useUserStore()
 const route = useRoute()
-
-onBeforeMount(() => {
-	userStore.refresh()
-})
 </script>

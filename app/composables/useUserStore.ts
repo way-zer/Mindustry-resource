@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/vue-query"
 import { type LoginMethods, UserApi, type UserInfo } from "~/backendApi/user"
 
 const defaultUser: UserInfo = {
@@ -7,28 +8,26 @@ const defaultUser: UserInfo = {
 	authed: false,
 }
 export default defineStore("user", () => {
-	const info = ref<UserInfo>(defaultUser)
+	const { data: info, refetch } = useQuery({
+		queryKey: ["user", "info"],
+		queryFn: UserApi.info,
+		enabled: import.meta.client,
+		initialData: defaultUser,
+		staleTime: 1000 * 60 * 5,
+	})
 	const registerCode = ref<string | null>(null)
 
 	const logged = computed(() => info.value.authed || info.value.gid)
-	const token = useLocalStorage<string | undefined>("access_token", undefined)
-	const redirectPath = useLocalStorage<string | undefined>(
+	const redirectPath = useSessionStorage<string | undefined>(
 		"redirect_path",
 		undefined,
 	)
 	const route = useRoute()
-	const devNoRedirect = useRouteQuery("dev")
-
-	async function refresh() {
-		info.value = await UserApi.info()
-		if (info.value.authed) {
-			token.value = info.value.token
-		}
-	}
 
 	return {
 		info,
 		registerCode,
+		redirectPath,
 
 		logged,
 		admin: computed(
@@ -37,26 +36,6 @@ export default defineStore("user", () => {
 				info.value.role === "Admin" ||
 				info.value.role === "SuperAdmin",
 		),
-		refresh,
-		registerAutoRedirect() {
-			watch(
-				() => logged.value,
-				async (val) => {
-					if (devNoRedirect.value !== undefined) return
-					if (val) {
-						ElMessage.success("登录成功")
-						if (redirectPath.value) {
-							const path = decodeURIComponent(redirectPath.value)
-							redirectPath.value = undefined
-							await navigateTo(path)
-						} else {
-							await navigateTo({ path: "/" })
-						}
-					}
-				},
-				{ immediate: true },
-			)
-		},
 		async redirectToLogin(register = false) {
 			redirectPath.value = route.fullPath
 			navigateTo({
@@ -69,9 +48,8 @@ export default defineStore("user", () => {
 		) {
 			if (!logged.value) {
 				const res = await UserApi.login(method, registerCode.value, data)
-				if (res.token !== undefined) {
-					token.value = res.token
-					await refresh()
+				if (res.success || res.token !== undefined) {
+					await refetch()
 				} else {
 					//register
 					ElMessage.info(
@@ -82,18 +60,15 @@ export default defineStore("user", () => {
 				}
 			}
 		},
-		async oauthLogin(provider: string) {
-			const callback = "/user/oauthCallback"
-			window.location.href = UserApi.oauthUrl(provider, callback)
-		},
 		async register({ name }: { name: string }) {
 			if (!registerCode.value) {
 				ElMessage.error("SESSION已过期，请重新登录")
+				navigateTo({ path: "/user/login" })
 				return
 			}
 			if (!logged.value) {
 				await UserApi.register(registerCode.value, name)
-				await refresh()
+				await refetch()
 			}
 		},
 		async logout() {

@@ -12,8 +12,9 @@ export default defineStore("user", () => {
 		queryKey: ["user", "info"],
 		queryFn: UserApi.info,
 		enabled: import.meta.client,
-		initialData: defaultUser,
 		staleTime: 1000 * 60 * 5,
+		initialData: defaultUser,
+		initialDataUpdatedAt: 0,
 	})
 	const registerCode = ref<string | null>(null)
 

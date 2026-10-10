@@ -29,8 +29,8 @@ export async function request<R>(
 	url = mapUrl(url)
 	try {
 		const headers = { ...option?.headers } as Record<string, string>
-		if (!headers["X-ReCaptchaV2"] && option?.reCaptchaAction) {
-			headers["X-ReCaptcha"] = await requestToken(option?.reCaptchaAction)
+		if (option?.reCaptchaAction) {
+			headers["X-Turnstile"] = await requestToken(option.reCaptchaAction)
 		}
 		return await $fetch(url, {
 			method,
@@ -46,15 +46,6 @@ export async function request<R>(
 		let message: string | ReturnType<typeof h>
 		if (data?.errorMessage) {
 			if (data.actions) {
-				if (data.actions?.includes("ReCaptchaV2")) {
-					const token = await requestTokenV2()
-					const headers = {
-						...option?.headers,
-						"X-ReCaptcha": "",
-						"X-ReCaptchaV2": token,
-					}
-					return await request(method, url, { ...option, headers })
-				}
 				if (data.actions?.includes("LOGIN")) {
 					await useUserStore().redirectToLogin()
 				}

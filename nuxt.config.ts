@@ -49,7 +49,13 @@ export default defineNuxtConfig({
 			charset: "utf-8",
 			htmlAttrs: { lang: "zh-CN" },
 			meta: [{ name: "theme-color", content: "#001529" }],
+			link: [{ rel: "preconnect", href: "https://challenges.cloudflare.com" }],
 			script: [
+				{
+					src: "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit",
+					async: true,
+					defer: true,
+				},
 				{
 					src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4298329918186847",
 					async: true,
